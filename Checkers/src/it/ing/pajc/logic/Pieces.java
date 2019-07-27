@@ -1,10 +1,15 @@
 package it.ing.pajc.logic;
 
-public abstract class Pieces {
+import javafx.scene.shape.Circle;
+
+public abstract class Pieces extends Circle {
+    private Position position;
+
     private PiecesColors player;
 
-    public Pieces(PiecesColors player){
-        this.player=player;
+    public Pieces(PiecesColors player,Position position){
+        this.player = player;
+        this.position = position;
     }
 
     public PiecesColors getPlayer() {
@@ -15,5 +20,12 @@ public abstract class Pieces {
         this.player = player;
     }
 
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
 }
 

@@ -1,52 +1,25 @@
 package it.ing.pajc.model;
 import it.ing.pajc.logic.*;
 
-public class Board {
-    private Pieces [] [] pieces;
+import java.awt.*;
 
-    public Board(BoardTypes type){
-        if(type==BoardTypes.ITALIAN_CHECKERS) {
-            this.pieces = new Pieces[8][8];
-            for(int posR=0;posR<3;posR++)
-                for(int posC=0;posC<8;posC++)
-                    if((posC+posR)%2==0)
-                        pieces[posR][posC]=new Man(PiecesColors.BLACK);
-            for(int posR=5;posR<8;posR++)
-                for(int posC=0;posC<8;posC++)
-                    if((posC+posR)%2==0)
-                        pieces[posR][posC]=new Man(PiecesColors.WHITE);
+public interface Board {
 
-        }
-        else if(type==BoardTypes.INTERNATIONAL_CHECKERS) {
-            this.pieces = new Pieces[10][10];
-            for(int posR=0;posR<4;posR++)
-                for(int posC=0;posC<10;posC++)
-                    if((posC+posR)%2==0)
-                        pieces[posR][posC]=new Man(PiecesColors.BLACK);
-            for(int posR=6;posR<10;posR++)
-                for(int posC=0;posC<8;posC++)
-                    if((posC+posR)%2==0)
-                        pieces[posR][posC]=new Man(PiecesColors.WHITE);
-        }
+    int DIMENSION_ITALIAN_BOARD = 8;
+    int DIMENSION_INTERNATIONAL_BOARD = 8;
+    void printBoardConsole();
 
-        printBoardConsole();
-    }
+    /**
+     * To be ovverridden
+     * @return Pieces[][]
+     */
+    Pieces[][] getBoard();
 
-    public void printBoardConsole(){
-        for(int posR=0;posR<8;posR++) {
-            for (int posC = 0; posC < 8; posC++) {
-                if(pieces[posR][posC]==null)
-                    System.out.print("[ ]");
-                else {
-                    if (pieces[posR][posC].getPlayer() == PiecesColors.BLACK)
-                        System.out.print("[m]");
-                    else if (pieces[posR][posC].getPlayer() == PiecesColors.WHITE)
-                        System.out.print("[M]");
+    /**
+     * To be ovverridden
+     * @param board
+     */
+    void setBoard(Pieces[][] board);
 
-                }
-            }
-            System.out.println(" ");
-        }
-    }
 
 }
