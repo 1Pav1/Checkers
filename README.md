@@ -1,2 +1,3 @@
 # Checkers
-Pajc Checker
+Graphics created in javaFX
+
