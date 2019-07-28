@@ -1,5 +1,6 @@
 package it.ing.pajc.model;
 
+import it.ing.pajc.graphics.CheckerBoardController;
 import it.ing.pajc.logic.*;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -103,11 +104,12 @@ public class ItalianBoard implements Board{
                     int finalI = i;
                     circle.setOnMousePressed(event -> {
                         resetBoardFXColors();
-                        int x = finalJ;
+                        /*int x = finalJ;
                         int y = finalI;
                         MovementList list = ((Man)(board[x][y])).possibleMoves(this);
                         for (Position position : list.getPossibleMoves())
-                            boardFX[position.getPosC()][position.getPosR()].setFill(Color.rgb(0,255,0));
+                            boardFX[position.getPosC()][position.getPosR()].setFill(Color.rgb(0,255,0));*/
+                        CheckerBoardController.showPossibleMoves(grid,new Position(finalJ,finalI));
                     });
                 }
 
@@ -117,9 +119,9 @@ public class ItalianBoard implements Board{
 
 
     @Override
-    public void move() {
-
-
+    public void move(Position init, Position fin) {
+        board[fin.getPosR()][fin.getPosC()] = board[init.getPosR()][init.getPosC()];
+        board[init.getPosR()][init.getPosC()] = null;
     }
 
     @Override

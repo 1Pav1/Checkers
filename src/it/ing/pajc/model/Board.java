@@ -7,7 +7,7 @@ public interface Board {
 
     int DIMENSION_ITALIAN_BOARD = 8;
     int DIMENSION_INTERNATIONAL_BOARD = 8;
-    void move();
+    void move(Position init, Position fin);
     void printBoardConsole();
 
     /**

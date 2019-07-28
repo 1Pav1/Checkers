@@ -31,8 +31,9 @@ public class InternationalBoard implements Board{
     }
 
     @Override
-    public void move() {
-
+    public void move(Position init, Position fin) {
+        board[fin.getPosR()][fin.getPosC()] = board[init.getPosR()][init.getPosC()];
+        board[init.getPosR()][init.getPosC()] = null;
     }
 
     @Override
