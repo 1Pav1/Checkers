@@ -31,6 +31,11 @@ public class InternationalBoard implements Board{
     }
 
     @Override
+    public void move() {
+
+    }
+
+    @Override
     public void printBoardConsole(){
         for(int posR=0;posR<DIMENSION_INTERNATIONAL_BOARD;posR++) {
             for (int posC = 0; posC < DIMENSION_INTERNATIONAL_BOARD; posC++) {

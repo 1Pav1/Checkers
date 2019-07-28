@@ -62,6 +62,7 @@ public class ItalianBoard implements Board{
 
     }
 
+
     private void resetBoardFXColors(){
         for(int x=0; x < DIMENSION_ITALIAN_BOARD; x++){
             for(int j=0; j < DIMENSION_ITALIAN_BOARD; j++){
@@ -80,13 +81,15 @@ public class ItalianBoard implements Board{
         for(int i=0;i<DIMENSION_ITALIAN_BOARD;i++){
             for (int j=0;j<DIMENSION_ITALIAN_BOARD;j++){
                 grid.add(boardFX[i][j], i,j );
+                grid.setPrefWidth(479);
+                grid.setPrefHeight(479);
                 grid.setHgap(0);
                 grid.setVgap(0);
                 if(board[j][i]!=null){
                     if(board[j][i].getPlayer()== PiecesColors.WHITE) {
                         circle = board[j][i];
                         circle.setFill(Color.WHITE);
-                        circle.setRadius(30);
+                        circle.setRadius(29);
                         grid.add(circle, i, j);
                     }
 
@@ -110,6 +113,13 @@ public class ItalianBoard implements Board{
 
             }
         }
+    }
+
+
+    @Override
+    public void move() {
+
+
     }
 
     @Override
