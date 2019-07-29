@@ -44,6 +44,6 @@ public class CheckerBoardController {
         for (Position position : list.getPossibleMoves())
             boardFX[position.getPosC()][position.getPosR()].setFill(Color.rgb(0,255,0));
             */
-         
+
     }
 }

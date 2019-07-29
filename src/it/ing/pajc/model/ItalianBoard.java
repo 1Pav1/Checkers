@@ -48,7 +48,6 @@ public class ItalianBoard implements Board{
                 int finalY1 = y;
                 int finalX1 = x;
                 boardFX[x][y].setOnMousePressed(event -> {
-                    System.out.println("hello");
                     //resetBoardFXColors();
                     //int i = finalX;
                     //int j = finalY;
@@ -104,12 +103,12 @@ public class ItalianBoard implements Board{
                     int finalI = i;
                     circle.setOnMousePressed(event -> {
                         resetBoardFXColors();
-                        /*int x = finalJ;
+                        int x = finalJ;
                         int y = finalI;
-                        MovementList list = ((Man)(board[x][y])).possibleMoves(this);
+                        MovementList list = ((Man) (board[x][y])).possibleMoves(ItalianBoard.this);
                         for (Position position : list.getPossibleMoves())
-                            boardFX[position.getPosC()][position.getPosR()].setFill(Color.rgb(0,255,0));*/
-                        CheckerBoardController.showPossibleMoves(grid,new Position(finalJ,finalI));
+                            boardFX[position.getPosC()][position.getPosR()].setFill(Color.rgb(255, 255, 0));
+                        CheckerBoardController.showPossibleMoves(grid, new Position(finalJ, finalI));
                     });
                 }
 

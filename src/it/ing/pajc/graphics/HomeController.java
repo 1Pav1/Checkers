@@ -53,6 +53,27 @@ public class HomeController {
 
     }
 
+    public void settings() throws IOException {
+
+
+
+        Parent root = FXMLLoader.load(getClass().getResource("Settings.fxml"));
+        Scene scene = new Scene(root);
+
+        primaryStage.setTitle("Settings");
+        primaryStage.setScene(scene);
+        //we gonna drag the frame
+        root.setOnMousePressed(event -> {
+            x = event.getSceneX();
+            y = event.getSceneY();
+        });
+
+        root.setOnMouseDragged(event -> {
+            primaryStage.setX(event.getScreenX() - x);
+            primaryStage.setY(event.getScreenY() - y);
+        });
+    }
+
     public void close(){
         Platform.exit();
     }
