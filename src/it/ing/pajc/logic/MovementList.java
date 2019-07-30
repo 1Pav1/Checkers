@@ -2,7 +2,11 @@ package it.ing.pajc.logic;
 
 import java.util.ArrayList;
 
-public class MovementList {
+/**
+ * This class takes a movement list that a piece can make
+ */
+public class MovementList{
+
     ArrayList<Position> possibleMoves;
 
     public MovementList() {

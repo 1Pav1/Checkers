@@ -1,9 +1,6 @@
 package it.ing.pajc.model;
 
-import it.ing.pajc.logic.Man;
-import it.ing.pajc.logic.Pieces;
-import it.ing.pajc.logic.PiecesColors;
-import it.ing.pajc.logic.Position;
+import it.ing.pajc.logic.*;
 
 public class InternationalBoard implements Board{
 
@@ -28,19 +25,24 @@ public class InternationalBoard implements Board{
             for (int posC = 0; posC < DIMENSION_INTERNATIONAL_BOARD; posC++)
                 if ((posC + posR) % 2 == 0)
                     board[posR][posC] = new Man(PiecesColors.WHITE,new Position(posR,posC));
+        for (int posR = 0; posR < DIMENSION_INTERNATIONAL_BOARD; posR++)
+            for (int posC = 0; posC < DIMENSION_INTERNATIONAL_BOARD; posC++)
+                if(board[posR][posC]==null)
+                    board[posR][posC]=new Empty(PiecesColors.EMPTY, new Position(posR,posC));
+
     }
 
     @Override
     public void move(Position init, Position fin) {
-        board[fin.getPosR()][fin.getPosC()] = board[init.getPosR()][init.getPosC()];
-        board[init.getPosR()][init.getPosC()] = null;
+        board[init.getPosR()][init.getPosC()].setPosition(fin);
+        board[init.getPosR()][init.getPosC()].setPlayer(PiecesColors.EMPTY);
     }
 
     @Override
     public void printBoardConsole(){
         for(int posR=0;posR<DIMENSION_INTERNATIONAL_BOARD;posR++) {
             for (int posC = 0; posC < DIMENSION_INTERNATIONAL_BOARD; posC++) {
-                if(board[posR][posC]==null)
+                if(board[posR][posC].getPlayer()==PiecesColors.EMPTY)
                     System.out.print("[ ]");
                 else {
                     if (board[posR][posC].getPlayer() == PiecesColors.BLACK)
