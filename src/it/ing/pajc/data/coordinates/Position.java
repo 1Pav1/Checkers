@@ -1,4 +1,4 @@
-package it.ing.pajc.logic;
+package it.ing.pajc.data.coordinates;
 
 /**
  * Position class with all getters and setters
@@ -49,7 +49,7 @@ public class Position {
     }
 
     /**
-     * Change Column position.
+     * Change column position.
      * @param posC new column position
      */
     public void setPosC(int posC) {

@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="539.0" style="-fx-border-radius: 30;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ing.pajc.graphics.HomeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="539.0" style="-fx-border-radius: 30;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ing.pajc.controller.HomeController">
     <children>
-      <Pane prefHeight="111.0" prefWidth="539.0" style="-fx-background-color: #005b9f;">
+      <Pane fx:id="windowPanel" prefHeight="111.0" prefWidth="539.0" stylesheets="@style.css">
          <children>
               <Label layoutX="182.0" layoutY="32.0" text="Checkers" textFill="#ddd9d9">
                   <font>
@@ -18,11 +18,11 @@
                   </font>
               </Label>
          </children></Pane>
-        <Pane layoutY="92.0" prefHeight="403.0" prefWidth="539.0" style="-fx-background-color: #0288d1;">
+        <Pane fx:id="centerWindow" layoutY="92.0" prefHeight="403.0" prefWidth="539.0">
             <children>
                 <Separator layoutX="56.0" layoutY="383.0" opacity="0.15" prefHeight="3.0" prefWidth="423.0" />
                 <Separator layoutX="54.0" layoutY="36.0" opacity="0.15" prefHeight="3.0" prefWidth="423.0" />
-            <Button fx:id="singlePlayer" layoutX="120.0" layoutY="72.0" mnemonicParsing="false" onAction="#singlePlayer" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: #5eb8ff;" text="Singleplayer" textFill="WHITE">
+            <Button fx:id="singlePlayer" layoutX="120.0" layoutY="72.0" mnemonicParsing="false" onAction="#singlePlayer" prefHeight="35.0" prefWidth="300.0" text="Singleplayer" textFill="WHITE">
                <font>
                   <Font name="Franklin Gothic Heavy" size="32.0" />
                </font>
@@ -30,7 +30,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button layoutX="120.0" layoutY="175.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: #5eb8ff;" text="Multiplayer" textFill="WHITE">
+            <Button layoutX="120.0" layoutY="175.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="300.0" text="Multiplayer" textFill="WHITE">
                <font>
                   <Font name="Franklin Gothic Heavy" size="32.0" />
                </font>
@@ -38,7 +38,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button layoutX="116.0" layoutY="285.0" mnemonicParsing="false" onMouseClicked="#settings" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: #5eb8ff;" text="Settings" textFill="WHITE">
+            <Button layoutX="116.0" layoutY="285.0" mnemonicParsing="false" onMouseClicked="#settings" prefHeight="35.0" prefWidth="300.0" text="Settings" textFill="WHITE">
                <font>
                   <Font name="Franklin Gothic Heavy" size="32.0" />
                </font>

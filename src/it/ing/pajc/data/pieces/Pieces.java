@@ -1,5 +1,6 @@
-package it.ing.pajc.logic;
+package it.ing.pajc.data.pieces;
 
+import it.ing.pajc.data.coordinates.Position;
 import javafx.scene.shape.Circle;
 
 public abstract class Pieces extends Circle {
@@ -11,7 +12,7 @@ public abstract class Pieces extends Circle {
      * @param player Player color
      * @param position Piece's position
      */
-    Pieces(PiecesColors player, Position position){
+     public Pieces(PiecesColors player, Position position){
         this.player = player;
         this.position = position;
     }

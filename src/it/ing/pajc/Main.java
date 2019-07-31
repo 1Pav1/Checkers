@@ -1,23 +1,29 @@
-package it.ing.pajc.graphics;
+package it.ing.pajc;
+import it.ing.pajc.controller.CheckerBoardController;
+import it.ing.pajc.controller.HomeController;
+import javafx.application.Application;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+
+
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.IOException;
 
-public class SettingsController {
-    private double x,y;
-    public static Stage primaryStage;
+public class Main extends Application {
+    private double x, y;
 
-    public static void setPrimaryStage(Stage primaryStage) {
-        SettingsController.primaryStage = primaryStage;
-    }
 
-    public void back() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+        HomeController.setPrimaryStage(primaryStage);
+        CheckerBoardController.setPrimaryStage(primaryStage);
+
+        Parent root = FXMLLoader.load(getClass().getResource("graphics/Home.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Checker main menu");
@@ -33,5 +39,16 @@ public class SettingsController {
             primaryStage.setY(event.getScreenY() - y);
         });
 
+
+
+
+        primaryStage.show();
+
+
+    }
+
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }

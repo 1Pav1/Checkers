@@ -1,5 +1,7 @@
-package it.ing.pajc.model;
-import it.ing.pajc.logic.*;
+package it.ing.pajc.data.board;
+
+import it.ing.pajc.data.coordinates.Position;
+import it.ing.pajc.data.pieces.Pieces;
 
 public interface Board {
 

@@ -1,13 +1,9 @@
-package it.ing.pajc.graphics;
+package it.ing.pajc.controller;
 
-import it.ing.pajc.logic.Man;
-import it.ing.pajc.logic.MovementList;
-import it.ing.pajc.logic.Position;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -38,12 +34,5 @@ public class CheckerBoardController {
 
     }
 
-    public static void showPossibleMoves(GridPane grid, Position position){
-        /*
-        MovementList list = ((Man)(board[x][y])).possibleMoves(this);
-        for (Position position : list.getPossibleMoves())
-            boardFX[position.getPosC()][position.getPosR()].setFill(Color.rgb(0,255,0));
-            */
 
-    }
 }

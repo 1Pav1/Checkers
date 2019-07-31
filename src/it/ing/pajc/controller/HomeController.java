@@ -1,8 +1,8 @@
-package it.ing.pajc.graphics;
+package it.ing.pajc.controller;
 
-import it.ing.pajc.logic.Man;
-import it.ing.pajc.model.Board;
-import it.ing.pajc.model.ItalianBoard;
+import it.ing.pajc.data.pieces.Man;
+import it.ing.pajc.data.board.Board;
+import it.ing.pajc.data.board.ItalianBoard;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -33,7 +33,7 @@ public class HomeController {
 
 
 
-        Parent root = FXMLLoader.load(getClass().getResource("CheckerBoard.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../graphics/CheckerBoard.fxml"));
         Scene scene = new Scene(root);
         GridPane checkerBoard = (GridPane) scene.lookup("#grid");
         ((ItalianBoard)board).placeboard(checkerBoard);
@@ -57,7 +57,7 @@ public class HomeController {
 
 
 
-        Parent root = FXMLLoader.load(getClass().getResource("Settings.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../graphics/Settings.fxml"));
         Scene scene = new Scene(root);
 
         primaryStage.setTitle("Settings");

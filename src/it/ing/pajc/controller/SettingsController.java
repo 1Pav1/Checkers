@@ -1,26 +1,22 @@
-package it.ing.pajc.graphics;
-import javafx.application.Application;
+package it.ing.pajc.controller;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
-
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.IOException;
 
-public class Main extends Application {
-    private double x, y;
+public class SettingsController {
+    private double x,y;
+    public static Stage primaryStage;
 
+    public static void setPrimaryStage(Stage primaryStage) {
+        SettingsController.primaryStage = primaryStage;
+    }
 
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-
-        HomeController.setPrimaryStage(primaryStage);
-        CheckerBoardController.setPrimaryStage(primaryStage);
-
+    public void back() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
@@ -37,16 +33,5 @@ public class Main extends Application {
             primaryStage.setY(event.getScreenY() - y);
         });
 
-
-
-
-        primaryStage.show();
-
-
-    }
-
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

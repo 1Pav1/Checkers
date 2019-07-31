@@ -1,12 +1,22 @@
-package it.ing.pajc.model;
+package it.ing.pajc.data.board;
 
-import it.ing.pajc.graphics.CheckerBoardController;
-import it.ing.pajc.logic.*;
+import it.ing.pajc.data.coordinates.MovementList;
+import it.ing.pajc.data.coordinates.Position;
+import it.ing.pajc.data.pieces.Empty;
+import it.ing.pajc.data.pieces.Man;
+import it.ing.pajc.data.pieces.Pieces;
+import it.ing.pajc.data.pieces.PiecesColors;
+import javafx.animation.TranslateTransition;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.shape.Rectangle;
+
+import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 
 /**
  * Creates and manage ItalianBoard
@@ -48,7 +58,9 @@ public class ItalianBoard implements Board{
         boardFX = new Rectangle[DIMENSION_ITALIAN_BOARD][DIMENSION_ITALIAN_BOARD];
         for (int x = 0; x < DIMENSION_ITALIAN_BOARD; x++) {
             for (int y = 0; y < DIMENSION_ITALIAN_BOARD; y++) {
+
                 boardFX[x][y] = new Rectangle();
+                boardFX[x][y].setId("rectangle");
                 boardFX[x][y].setWidth(60);
                 boardFX[x][y].setHeight(60);
                 boardFX[x][y].setX(60);
@@ -64,8 +76,8 @@ public class ItalianBoard implements Board{
                     //resetBoardFXColors();
                     //int i = finalX;
                     //int j = finalY;
-                    if (board[finalX1][finalY1].getFill() == Color.rgb(0, 255, 0)) {//Controlla warning perche' usi == la posto di equal per degli oggetti
-
+                    if (board[finalX1][finalY1].getFill().equals(Color.rgb(255, 255, 0))) {//Controlla warning perche' usi == la posto di equal per degli oggetti
+                        System.out.println("ciao");
                     }
                 });
             }
@@ -79,11 +91,12 @@ public class ItalianBoard implements Board{
     private void resetBoardFXColors(){
         for(int x=0; x < DIMENSION_ITALIAN_BOARD; x++){
             for(int j=0; j < DIMENSION_ITALIAN_BOARD; j++){
+                //questo e' sempre vero controlla warning
                 if((x%2==0 && j%2==1) || (x%2==1 && j%2==0)){
                     boardFX[x][j].setFill(Color.rgb(204,183,174));
                 }
-                else if((x%2==0 && j%2==0) || (x%2==1 && j%2==1)){//questo e' sempre vero controlla warning
-                    boardFX[x][j].setFill(Color.rgb(112,102,119));
+                else {
+                    boardFX[x][j].setFill(Color.rgb(112, 102, 119));
                 }
             }
         }
@@ -98,7 +111,7 @@ public class ItalianBoard implements Board{
                 grid.setPrefHeight(479);
                 grid.setHgap(0);
                 grid.setVgap(0);
-                if(board[j][i].getPlayer()!=PiecesColors.EMPTY){ //da board[j][i]!=null
+                if(board[j][i].getPlayer()!=PiecesColors.EMPTY){
                     if(board[j][i].getPlayer()== PiecesColors.WHITE) {
                         circle = board[j][i];
                         circle.setFill(Color.WHITE);
@@ -109,19 +122,28 @@ public class ItalianBoard implements Board{
                     else {
                         circle = board[j][i];
                         circle.setFill(Color.BLACK);
+                        circle.setStyle("-fx-background-image:  url(../../graphics/giphy.gif)");
                         circle.setRadius(30);
                         grid.add(circle, i, j);
                     }
                     int finalJ = j;
                     int finalI = i;
+                    Circle finalCircle = circle;
+
                     circle.setOnMousePressed(event -> {
                         resetBoardFXColors();
+                        TranslateTransition transition = new TranslateTransition();
+                        transition.setToX(50);
+                        transition.setToY(-50);
+                        transition.setToZ(100);
+                        transition.setNode(finalCircle);
+                        transition.play();
+
                         int x = finalJ;
                         int y = finalI;
                         MovementList list = ((Man) (board[x][y])).possibleMoves(ItalianBoard.this);
                         for (Position position : list.getPossibleMoves())
                             boardFX[position.getPosC()][position.getPosR()].setFill(Color.rgb(255, 255, 0));
-                        CheckerBoardController.showPossibleMoves(grid, new Position(finalJ, finalI));
                     });
                 }
 
@@ -137,10 +159,8 @@ public class ItalianBoard implements Board{
      */
     @Override
     public void move(Position init, Position fin) {
-        board[init.getPosR()][init.getPosC()].setPosition(fin);//modificato da sotto a cosi,elimina sotto se ti va bene
-        //board[fin.getPosR()][fin.getPosC()] = board[init.getPosR()][init.getPosC()];
-        board[init.getPosR()][init.getPosC()].setPlayer(PiecesColors.EMPTY);//come sopra al posto di null Empty
-        //board[init.getPosR()][init.getPosC()] = null;
+        board[init.getPosR()][init.getPosC()].setPosition(fin);
+        board[init.getPosR()][init.getPosC()].setPlayer(PiecesColors.EMPTY);
     }
 
     /**
@@ -150,7 +170,7 @@ public class ItalianBoard implements Board{
     public void printBoardConsole(){
         for(int posR=0;posR<DIMENSION_ITALIAN_BOARD;posR++) {
             for (int posC = 0; posC < DIMENSION_ITALIAN_BOARD; posC++) {
-                if(board[posR][posC].getPlayer()==PiecesColors.EMPTY)//da board[posR][posC]==null
+                if(board[posR][posC].getPlayer()==PiecesColors.EMPTY)
                     System.out.print("[ ]");
                 else {
                     if (board[posR][posC].getPlayer() == PiecesColors.BLACK)

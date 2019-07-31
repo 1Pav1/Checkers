@@ -1,10 +1,12 @@
-package it.ing.pajc.logic;
+package it.ing.pajc.data.pieces;
 
-import it.ing.pajc.model.InternationalBoard;
-import it.ing.pajc.model.ItalianBoard;
+import it.ing.pajc.data.board.InternationalBoard;
+import it.ing.pajc.data.board.ItalianBoard;
+import it.ing.pajc.data.coordinates.MovementList;
+import it.ing.pajc.data.coordinates.Position;
 
 public class Man extends Pieces {
-    public Man(PiecesColors player,Position pos){
+    public Man(PiecesColors player, Position pos){
         super(player,pos);
     }
 

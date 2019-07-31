@@ -1,4 +1,4 @@
-package it.ing.pajc.logic;
+package it.ing.pajc.data.pieces;
 
 /**
  * Pieces colors and empty case.

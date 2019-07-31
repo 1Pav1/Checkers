@@ -1,6 +1,10 @@
-package it.ing.pajc.model;
+package it.ing.pajc.data.board;
 
-import it.ing.pajc.logic.*;
+import it.ing.pajc.data.coordinates.Position;
+import it.ing.pajc.data.pieces.Empty;
+import it.ing.pajc.data.pieces.Man;
+import it.ing.pajc.data.pieces.Pieces;
+import it.ing.pajc.data.pieces.PiecesColors;
 
 public class InternationalBoard implements Board{
 

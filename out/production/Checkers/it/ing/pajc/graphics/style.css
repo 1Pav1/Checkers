@@ -1,3 +1,7 @@
+.circle
+{
+    -fx-background-image: url("giphy.gif")!important;
+}
 .text-input
 {
     -fx-text-fill : #fff;
@@ -6,4 +10,26 @@
 {
     -fx-mark-highlight-color : #9643A9;
     -fx-mark-color : #CE201C;
+}
+
+#windowPanel
+{
+    -fx-background-color: #004ba0;
+}
+
+#centerWindow
+{
+    -fx-background-image: url("wood.jpeg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.button
+{
+    -fx-background-color: #63a4ff;
+}
+
+#rectangle
+{
+-fx-background-color: #63a4ff;!important
 }
