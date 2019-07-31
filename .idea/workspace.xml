@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="added:&#10;Settings&#10;Possible Moves" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Javadoc:&#10;added documentation and comments for several methods&#10;Class:&#10;added new class Empty&#10;PiecesColors:&#10;added new color Empty in order to avoid nullPointerException&#10;&#10;&#10;Change some null in if statements into empty&#10;Added an utility method in Position">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Checkers/META-INF/Checkers.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Checkers/it/ing/pajc/logic/Pieces.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Checkers/it/ing/pajc/logic/Pieces.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/logic/MovementList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/logic/MovementList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/model/InternationalBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/model/InternationalBoard.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,6 +106,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dynamic.classpath" value="false" />
+    <property name="extract.method.default.visibility" value="private" />
     <property name="last_opened_file_path" value="C:/javafx-sdk-12.0.2/lib" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
@@ -244,6 +251,7 @@
       <workItem from="1564316063824" duration="1285000" />
       <workItem from="1564318654241" duration="146000" />
       <workItem from="1564387803546" duration="8774000" />
+      <workItem from="1564474935801" duration="6568000" />
     </task>
     <task id="LOCAL-00001" summary="added:&#10;Settings&#10;Possible Moves">
       <created>1564397017327</created>
@@ -252,7 +260,14 @@
       <option name="project" value="LOCAL" />
       <updated>1564397017327</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="addded .idea">
+      <created>1564405846202</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1564405846202</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -275,6 +290,8 @@
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
     <MESSAGE value="added:&#10;Settings&#10;Possible Moves" />
-    <option name="LAST_COMMIT_MESSAGE" value="added:&#10;Settings&#10;Possible Moves" />
+    <MESSAGE value="addded .idea" />
+    <MESSAGE value="Javadoc:&#10;added documentation and comments for several methods&#10;Class:&#10;added new class Empty&#10;PiecesColors:&#10;added new color Empty in order to avoid nullPointerException&#10;&#10;&#10;Change some null in if statements into empty&#10;Added an utility method in Position" />
+    <option name="LAST_COMMIT_MESSAGE" value="Javadoc:&#10;added documentation and comments for several methods&#10;Class:&#10;added new class Empty&#10;PiecesColors:&#10;added new color Empty in order to avoid nullPointerException&#10;&#10;&#10;Change some null in if statements into empty&#10;Added an utility method in Position" />
   </component>
 </project>

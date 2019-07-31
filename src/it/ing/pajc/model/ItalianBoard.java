@@ -2,20 +2,24 @@ package it.ing.pajc.model;
 
 import it.ing.pajc.graphics.CheckerBoardController;
 import it.ing.pajc.logic.*;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.shape.Rectangle;
 
-
+/**
+ * Creates and manage ItalianBoard
+ */
 public class ItalianBoard implements Board{
 
     private Pieces[][] board;
     private Rectangle[][] boardFX;
 
+
+    /**
+     * ItalianBoard constructor.
+     */
     public ItalianBoard() {
         board = new Pieces[DIMENSION_ITALIAN_BOARD][DIMENSION_ITALIAN_BOARD];
 
@@ -25,12 +29,21 @@ public class ItalianBoard implements Board{
                     board[posR][posC] = new Man(PiecesColors.BLACK,new Position(posR,posC));
         for (int posR = 5; posR < DIMENSION_ITALIAN_BOARD; posR++)
             for (int posC = 0; posC < DIMENSION_ITALIAN_BOARD; posC++)
-                if ((posC + posR) % 2 == 0)
+                if ((posC + posR) % 2 == 0) {
                     board[posR][posC] = new Man(PiecesColors.WHITE,new Position(posR,posC));
+                }
+        //riempio gli spazi vuoti(null) con l'oggetto empty
+        for (int posR = 0; posR < DIMENSION_ITALIAN_BOARD; posR++)
+            for (int posC = 0; posC < DIMENSION_ITALIAN_BOARD; posC++)
+                if(board[posR][posC]==null)
+                    board[posR][posC]=new Empty(PiecesColors.EMPTY, new Position(posR,posC));
 
         initializeBoardFX();
     }
 
+    /**
+     * Board initializer using JavaFX.
+     */
     private void initializeBoardFX() {
         boardFX = new Rectangle[DIMENSION_ITALIAN_BOARD][DIMENSION_ITALIAN_BOARD];
         for (int x = 0; x < DIMENSION_ITALIAN_BOARD; x++) {
@@ -51,31 +64,31 @@ public class ItalianBoard implements Board{
                     //resetBoardFXColors();
                     //int i = finalX;
                     //int j = finalY;
-                    if (board[finalX1][finalY1].getFill() == Color.rgb(0, 255, 0)) {
+                    if (board[finalX1][finalY1].getFill() == Color.rgb(0, 255, 0)) {//Controlla warning perche' usi == la posto di equal per degli oggetti
 
                     }
                 });
-
             }
         }
         resetBoardFXColors();
-
     }
 
-
+    /**
+     * Reset colors of the pieces on the board
+     */
     private void resetBoardFXColors(){
         for(int x=0; x < DIMENSION_ITALIAN_BOARD; x++){
             for(int j=0; j < DIMENSION_ITALIAN_BOARD; j++){
                 if((x%2==0 && j%2==1) || (x%2==1 && j%2==0)){
                     boardFX[x][j].setFill(Color.rgb(204,183,174));
                 }
-                else if((x%2==0 && j%2==0) || (x%2==1 && j%2==1)){
+                else if((x%2==0 && j%2==0) || (x%2==1 && j%2==1)){//questo e' sempre vero controlla warning
                     boardFX[x][j].setFill(Color.rgb(112,102,119));
                 }
             }
         }
     }
-
+    //TODO: COMMENTA TU
     public void placeboard(GridPane grid){
         Circle circle;
         for(int i=0;i<DIMENSION_ITALIAN_BOARD;i++){
@@ -85,7 +98,7 @@ public class ItalianBoard implements Board{
                 grid.setPrefHeight(479);
                 grid.setHgap(0);
                 grid.setVgap(0);
-                if(board[j][i]!=null){
+                if(board[j][i].getPlayer()!=PiecesColors.EMPTY){ //da board[j][i]!=null
                     if(board[j][i].getPlayer()== PiecesColors.WHITE) {
                         circle = board[j][i];
                         circle.setFill(Color.WHITE);
@@ -117,17 +130,27 @@ public class ItalianBoard implements Board{
     }
 
 
+    /**
+     * Change the position of a piece on the board.
+     * @param init initial position
+     * @param fin  final position
+     */
     @Override
     public void move(Position init, Position fin) {
-        board[fin.getPosR()][fin.getPosC()] = board[init.getPosR()][init.getPosC()];
-        board[init.getPosR()][init.getPosC()] = null;
+        board[init.getPosR()][init.getPosC()].setPosition(fin);//modificato da sotto a cosi,elimina sotto se ti va bene
+        //board[fin.getPosR()][fin.getPosC()] = board[init.getPosR()][init.getPosC()];
+        board[init.getPosR()][init.getPosC()].setPlayer(PiecesColors.EMPTY);//come sopra al posto di null Empty
+        //board[init.getPosR()][init.getPosC()] = null;
     }
 
+    /**
+     * Print the board, only console.
+     */
     @Override
     public void printBoardConsole(){
         for(int posR=0;posR<DIMENSION_ITALIAN_BOARD;posR++) {
             for (int posC = 0; posC < DIMENSION_ITALIAN_BOARD; posC++) {
-                if(board[posR][posC]==null)
+                if(board[posR][posC].getPlayer()==PiecesColors.EMPTY)//da board[posR][posC]==null
                     System.out.print("[ ]");
                 else {
                     if (board[posR][posC].getPlayer() == PiecesColors.BLACK)
@@ -140,11 +163,19 @@ public class ItalianBoard implements Board{
             System.out.println(" ");
         }
     }
+
+    /**
+     * @return The board
+     */
     @Override
     public Pieces[][] getBoard() {
         return board;
     }
 
+    /**
+     * Set a new board of pieces.
+     * @param board Of pieces
+     */
     @Override
     public void setBoard(Pieces[][] board) {
         this.board = board;
