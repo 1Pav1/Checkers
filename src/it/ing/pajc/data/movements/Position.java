@@ -1,4 +1,4 @@
-package it.ing.pajc.data.coordinates;
+package it.ing.pajc.data.movements;
 
 /**
  * Position class with all getters and setters

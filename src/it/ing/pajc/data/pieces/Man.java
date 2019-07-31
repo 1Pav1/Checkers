@@ -2,51 +2,77 @@ package it.ing.pajc.data.pieces;
 
 import it.ing.pajc.data.board.InternationalBoard;
 import it.ing.pajc.data.board.ItalianBoard;
-import it.ing.pajc.data.coordinates.MovementList;
-import it.ing.pajc.data.coordinates.Position;
+import it.ing.pajc.data.movements.MovementList;
+import it.ing.pajc.data.movements.Position;
+
+import java.util.ArrayList;
 
 public class Man extends Pieces {
-    public Man(PiecesColors player, Position pos){
-        super(player,pos);
+    public Man(PiecesColors player, Position pos) {
+        super(player, pos);
     }
-
 
     /**
      * This method calculates empty spaces close to the selected Man.
      * Managing the outOfBoundException(Not the nullPointerException)
+     *
      * @param board The board in question
      * @return Possible moves(only empty spaces)
      */
-    public MovementList possibleMoves(ItalianBoard board){
-
-        MovementList possibleMovementList = new MovementList();
-        System.out.println();System.out.println();System.out.println();
+    public MovementList possibleMoves(ItalianBoard board) {
+        MovementList possibleMovementList = new MovementList(this.getPosition());
 
         int posRow = this.getPosition().getPosR();
         int posColumn = this.getPosition().getPosC();
-        if(getPlayer()==PiecesColors.WHITE) {
+        if (getPlayer() == PiecesColors.WHITE) {
             try {
-                if (board.getBoard()[posRow - 1][posColumn - 1] == null)
-                    possibleMovementList.addMovement(new Position( posRow- 1, posColumn- 1));
+                if (board.getBoard()[posRow - 1][posColumn - 1].getPlayer() == PiecesColors.EMPTY)
+                    possibleMovementList.addNewPossibleMove(new Position(posRow - 1, posColumn - 1));
 
-                if (board.getBoard()[posRow - 1][posColumn + 1] == null)
-                    possibleMovementList.addMovement(new Position(posRow - 1,posColumn + 1));
-            } catch (ArrayIndexOutOfBoundsException a) { }
-        }
-
-        else{
+                if (board.getBoard()[posRow - 1][posColumn + 1].getPlayer() == PiecesColors.EMPTY)
+                    possibleMovementList.addNewPossibleMove(new Position(posRow - 1, posColumn + 1));
+            } catch (ArrayIndexOutOfBoundsException a) {
+            }
+        } else {
             try {
-                if (board.getBoard()[posRow + 1][posColumn + 1] == null)
-                    possibleMovementList.addMovement(new Position(posRow + 1,posColumn + 1));
+                if (board.getBoard()[posRow + 1][posColumn + 1].getPlayer() == PiecesColors.EMPTY)
+                    possibleMovementList.addNewPossibleMove(new Position(posRow + 1, posColumn + 1));
 
-                if (board.getBoard()[posRow + 1][posColumn - 1] == null)
-                    possibleMovementList.addMovement(new Position(posRow + 1,posColumn - 1));
-            } catch (ArrayIndexOutOfBoundsException a) { }
+                if (board.getBoard()[posRow + 1][posColumn - 1].getPlayer() == PiecesColors.EMPTY)
+                    possibleMovementList.addNewPossibleMove(new Position(posRow + 1, posColumn - 1));
+            } catch (ArrayIndexOutOfBoundsException a) {
+            }
         }
 
         return possibleMovementList;
     }
 
+    public ArrayList<Position> possibleMovesInEmptySpaces(ItalianBoard board) {
+        ArrayList<Position> possibleMovementList = new ArrayList<>();
+
+        int posRow = this.getPosition().getPosR();
+        int posColumn = this.getPosition().getPosC();
+        if (getPlayer() == PiecesColors.WHITE) {
+            try {
+                if (board.getBoard()[posRow - 1][posColumn - 1].getPlayer() == PiecesColors.EMPTY)
+                    possibleMovementList.add(new Position(posRow - 1, posColumn - 1));
+
+                if (board.getBoard()[posRow - 1][posColumn + 1].getPlayer() == PiecesColors.EMPTY)
+                    possibleMovementList.add(new Position(posRow - 1, posColumn + 1));
+            } catch (ArrayIndexOutOfBoundsException a) {
+            }
+        } else {
+            try {
+                if (board.getBoard()[posRow + 1][posColumn + 1].getPlayer() == PiecesColors.EMPTY)
+                    possibleMovementList.add(new Position(posRow + 1, posColumn + 1));
+
+                if (board.getBoard()[posRow + 1][posColumn - 1].getPlayer() == PiecesColors.EMPTY)
+                    possibleMovementList.add(new Position(posRow + 1, posColumn - 1));
+            } catch (ArrayIndexOutOfBoundsException a) {
+            }
+        }
+        return possibleMovementList;
+    }
     public void possibleMoves(InternationalBoard board){
 
     }

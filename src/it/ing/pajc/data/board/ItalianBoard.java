@@ -1,7 +1,7 @@
 package it.ing.pajc.data.board;
 
-import it.ing.pajc.data.coordinates.MovementList;
-import it.ing.pajc.data.coordinates.Position;
+import it.ing.pajc.data.movements.MovementList;
+import it.ing.pajc.data.movements.Position;
 import it.ing.pajc.data.pieces.Empty;
 import it.ing.pajc.data.pieces.Man;
 import it.ing.pajc.data.pieces.Pieces;
@@ -9,14 +9,9 @@ import it.ing.pajc.data.pieces.PiecesColors;
 import javafx.animation.TranslateTransition;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.shape.Rectangle;
-
-import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 
 /**
  * Creates and manage ItalianBoard
