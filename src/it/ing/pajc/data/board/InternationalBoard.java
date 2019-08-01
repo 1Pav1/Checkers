@@ -53,7 +53,6 @@ public class InternationalBoard implements Board{
                         System.out.print("[m]");
                     else if (board[posR][posC].getPlayer() == PiecesColors.WHITE)
                         System.out.print("[M]");
-
                 }
             }
             System.out.println(" ");

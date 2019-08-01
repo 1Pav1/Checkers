@@ -137,8 +137,9 @@ public class ItalianBoard implements Board{
                         int x = finalJ;
                         int y = finalI;
                         MovementList list = ((Man) (board[x][y])).possibleMoves(ItalianBoard.this);
-                        for (Position position : list.getPossibleMoves())
-                            boardFX[position.getPosC()][position.getPosR()].setFill(Color.rgb(255, 255, 0));
+                       /*TODO for (Position position : list.getPossibleMoves())
+                            boardFX[position.getPosC()][position.getPosR()].setFill(Color.rgb(255, 255, 0));*/
+                       //modifica del list da un errore
                     });
                 }
 
