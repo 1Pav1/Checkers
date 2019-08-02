@@ -3,6 +3,7 @@ package it.ing.pajc.controller;
 import it.ing.pajc.data.pieces.Man;
 import it.ing.pajc.data.board.Board;
 import it.ing.pajc.data.board.ItalianBoard;
+import it.ing.pajc.data.pieces.PiecesColors;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -36,7 +37,7 @@ public class HomeController {
         Parent root = FXMLLoader.load(getClass().getResource("../graphics/CheckerBoard.fxml"));
         Scene scene = new Scene(root);
         GridPane checkerBoard = (GridPane) scene.lookup("#grid");
-        ((ItalianBoard)board).placeboard(checkerBoard);
+        ((ItalianBoard)board).placeboard(checkerBoard, PiecesColors.WHITE);
 
         primaryStage.setTitle("CheckerBoard");
         primaryStage.setScene(scene);

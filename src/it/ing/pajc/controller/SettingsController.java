@@ -22,7 +22,7 @@ public class SettingsController {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Checker main menu");
         primaryStage.initStyle(StageStyle.UNDECORATED);
-        //we gonna drag the frame
+
         root.setOnMousePressed(event -> {
             x = event.getSceneX();
             y = event.getSceneY();

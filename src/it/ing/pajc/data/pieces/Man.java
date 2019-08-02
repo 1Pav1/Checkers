@@ -26,20 +26,20 @@ public class Man extends Pieces {
         int posColumn = this.getPosition().getPosC();
         if(getPlayer()==PiecesColors.WHITE) {
             try {
-                if (board.getBoard()[posRow - 1][posColumn - 1] == null)
+                if (board.getBoard()[posRow - 1][posColumn - 1].getPlayer() == PiecesColors.EMPTY)
                     possibleMovementList.addMovement(new Position( posRow- 1, posColumn- 1));
 
-                if (board.getBoard()[posRow - 1][posColumn + 1] == null)
+                if (board.getBoard()[posRow - 1][posColumn + 1].getPlayer() == PiecesColors.EMPTY)
                     possibleMovementList.addMovement(new Position(posRow - 1,posColumn + 1));
             } catch (ArrayIndexOutOfBoundsException a) { }
         }
 
         else{
             try {
-                if (board.getBoard()[posRow + 1][posColumn + 1] == null)
+                if (board.getBoard()[posRow + 1][posColumn + 1].getPlayer() == PiecesColors.EMPTY)
                     possibleMovementList.addMovement(new Position(posRow + 1,posColumn + 1));
 
-                if (board.getBoard()[posRow + 1][posColumn - 1] == null)
+                if (board.getBoard()[posRow + 1][posColumn - 1].getPlayer() == PiecesColors.EMPTY)
                     possibleMovementList.addMovement(new Position(posRow + 1,posColumn - 1));
             } catch (ArrayIndexOutOfBoundsException a) { }
         }

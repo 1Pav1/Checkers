@@ -55,4 +55,9 @@ public class Position {
     public void setPosC(int posC) {
         this.posC = posC;
     }
+
+    @Override
+    public String toString() {
+        return "posR : "+posR+" posC : "+posC;
+    }
 }

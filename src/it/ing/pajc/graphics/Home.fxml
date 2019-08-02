@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -12,11 +14,11 @@
     <children>
       <Pane fx:id="windowPanel" prefHeight="111.0" prefWidth="539.0" stylesheets="@style.css">
          <children>
-              <Label layoutX="182.0" layoutY="32.0" text="Checkers" textFill="#ddd9d9">
-                  <font>
-                      <Font name="Franklin Gothic Heavy" size="40.0" />
-                  </font>
-              </Label>
+            <ImageView fitHeight="111.0" fitWidth="284.0" layoutX="128.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/Checkers.png" />
+               </image>
+            </ImageView>
          </children></Pane>
         <Pane fx:id="centerWindow" layoutY="92.0" prefHeight="403.0" prefWidth="539.0">
             <children>
