@@ -1,6 +1,5 @@
 package it.ing.pajc.data.board;
 
-import it.ing.pajc.data.movements.MovementList;
 import it.ing.pajc.data.movements.Position;
 import it.ing.pajc.data.pieces.Empty;
 import it.ing.pajc.data.pieces.Man;
@@ -136,7 +135,8 @@ public class ItalianBoard implements Board{
 
                         int x = finalJ;
                         int y = finalI;
-                        MovementList list = ((Man) (board[x][y])).possibleMoves(ItalianBoard.this);
+                        //To modify cause of Tree
+                       // MovementList list = ((Man) (board[x][y])).possibleMoves(ItalianBoard.this);
                        /*TODO for (Position position : list.getPossibleMoves())
                             boardFX[position.getPosC()][position.getPosR()].setFill(Color.rgb(255, 255, 0));*/
                        //modifica del list da un errore

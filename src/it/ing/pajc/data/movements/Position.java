@@ -26,6 +26,11 @@ public class Position {
         posR=fPosR;
         posC=fPosC;
     }
+
+
+    public Position getPosition(){
+        return this;
+    }
     /**
      * @return Row position
      */

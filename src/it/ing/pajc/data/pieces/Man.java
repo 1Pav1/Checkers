@@ -2,82 +2,122 @@ package it.ing.pajc.data.pieces;
 
 import it.ing.pajc.data.board.InternationalBoard;
 import it.ing.pajc.data.board.ItalianBoard;
-import it.ing.pajc.data.movements.MovementList;
-import it.ing.pajc.data.movements.Position;
-import it.ing.pajc.data.movements.TreeNode;
+import it.ing.pajc.data.movements.*;
 
 import java.util.ArrayList;
 
 public class Man extends Pieces {
+    private GenericTreeNode<Position> root = new GenericTreeNode<>(this.getPosition());
+    private GenericTree<Position> possibleMovementsList = new GenericTree<>();
+
     public Man(PiecesColors player, Position pos) {
         super(player, pos);
+        possibleMovementsList.setRoot(root);
+
     }
+    //TO USE
+    public GenericTree possibleMoves(ItalianBoard board) {
+        if (!canCapture(board, this.getPosition())) {
+            ArrayList<Position> positions = possibleMovesInEmptySpaces(board);
+            for (int i = 0; i < positions.size(); i++)
+                root.addChild(new GenericTreeNode<>(positions.get(i)));
+            return possibleMovementsList;
+        }
+        else{
+            allPossibleCaptures(board);//to modify, it doesn't take in consideration of rules
 
-    public MovementList possibleMoves(ItalianBoard board) {
-        MovementList possibleMovementList = new MovementList(this.getPosition());
-
-
-        return possibleMovementList;
+        }
+        return possibleMovementsList;
     }
 
 
     public void possibleMoves(InternationalBoard board) {
-
     }
 
-    public void possibleCapturesUpRightAndLeft(ItalianBoard board) {
-        TreeNode<Position> possibleCaptures = new TreeNode<>(this.getPosition());
-        possibleCaptureUpLeft(board, possibleCaptures);
-        possibleCaptureUpRight(board, possibleCaptures);
+    public void bestCaptures(ItalianBoard board){
+        allPossibleCaptures(board);
+        possibleMovementsList.getNumberOfNodes();
+
+
+    }
+    private void allPossibleCaptures(ItalianBoard board) {
+        possibleCapturesUpRightAndLeft(board, root);
+        childrenPossibleCaptures(board, root);
     }
 
-    private void possibleCaptureUpRight(ItalianBoard board, TreeNode<Position> parent) {
+    private void childrenPossibleCaptures(ItalianBoard board, GenericTreeNode<Position> parent) {
+        for (int i = 0; i < parent.getNumberOfChildren(); i++) {
+            possibleCapturesUpRightAndLeft(board, parent.getChildAt(i));
+            if (canCapture(board, parent.getChildAt(i).getData()))
+                childrenPossibleCaptures(board, parent.getChildAt(i));
+        }
+    }
+
+    private void possibleCapturesUpRightAndLeft(ItalianBoard board, GenericTreeNode<Position> parent) {
+        possibleCaptureUpLeft(board, parent);
+        possibleCaptureUpRight(board, parent);
+    }
+
+    private void possibleCaptureUpRight(ItalianBoard board, GenericTreeNode<Position> parent) {
         if (board.getBoard()[parent.getData().getPosR()][parent.getData().getPosC()].getPlayer() == PiecesColors.WHITE)
             possibleWhiteCaptureUpRight(board, parent);
-        else
+        else if (board.getBoard()[parent.getData().getPosR()][parent.getData().getPosC()].getPlayer() == PiecesColors.BLACK)
             possibleBlackCaptureUpRight(board, parent);
 
     }
 
-    private void possibleCaptureUpLeft(ItalianBoard board, TreeNode<Position> parent) {
+    private void possibleCaptureUpLeft(ItalianBoard board, GenericTreeNode<Position> parent) {
         if (board.getBoard()[parent.getData().getPosR()][parent.getData().getPosC()].getPlayer() == PiecesColors.WHITE)
             possibleWhiteCaptureUpLeft(board, parent);
-        else
+        else if (board.getBoard()[parent.getData().getPosR()][parent.getData().getPosC()].getPlayer() == PiecesColors.BLACK)
             possibleBlackCaptureUpLeft(board, parent);
-
-
     }
 
-    private void possibleWhiteCaptureUpLeft(ItalianBoard board, TreeNode<Position> parent) {
+    private void possibleWhiteCaptureUpLeft(ItalianBoard board, GenericTreeNode<Position> parent) {
         if ((board.getBoard()[parent.getData().getPosR() - 1][parent.getData().getPosC() - 1].getPlayer() == PiecesColors.BLACK) &&
                 (board.getBoard()[parent.getData().getPosR() - 2][parent.getData().getPosC() - 2].getPlayer() == PiecesColors.EMPTY)) {
-            parent.addNewChild(new Position(parent.getData().getPosR() - 2, parent.getData().getPosC() - 2));
+            parent.addChild(new GenericTreeNode<>(new Position(parent.getData().getPosR() - 2, parent.getData().getPosC() - 2)));
             //board.getBoard()[parent.getData().getPosR()-1][parent.getData().getPosC()-1].setPlayer(PiecesColors.EMPTY);
         }
     }
 
-    private void possibleWhiteCaptureUpRight(ItalianBoard board, TreeNode<Position> parent) {
+    private void possibleWhiteCaptureUpRight(ItalianBoard board, GenericTreeNode<Position> parent) {
         if ((board.getBoard()[parent.getData().getPosR() - 1][parent.getData().getPosC() + 1].getPlayer() == PiecesColors.BLACK) &&
                 (board.getBoard()[parent.getData().getPosR() - 2][parent.getData().getPosC() + 2].getPlayer() == PiecesColors.EMPTY)) {
-            parent.addNewChild(new Position(parent.getData().getPosR() - 2, parent.getData().getPosC() + 2));
+            parent.addChild(new GenericTreeNode<>(new Position(parent.getData().getPosR() - 2, parent.getData().getPosC() + 2)));
         }
     }
 
-    private void possibleBlackCaptureUpLeft(ItalianBoard board, TreeNode<Position> parent) {
+    private void possibleBlackCaptureUpLeft(ItalianBoard board, GenericTreeNode<Position> parent) {
         if ((board.getBoard()[parent.getData().getPosR() + 1][parent.getData().getPosC() + 1].getPlayer() == PiecesColors.WHITE) &&
                 (board.getBoard()[parent.getData().getPosR() + 2][parent.getData().getPosC() + 2].getPlayer() == PiecesColors.EMPTY)) {
-            parent.addNewChild(new Position(parent.getData().getPosR() + 2, parent.getData().getPosC() + 2));
+            parent.addChild(new GenericTreeNode<>(new Position(parent.getData().getPosR() + 2, parent.getData().getPosC() + 2)));
         }
     }
 
-    private void possibleBlackCaptureUpRight(ItalianBoard board, TreeNode<Position> parent) {
+    private void possibleBlackCaptureUpRight(ItalianBoard board, GenericTreeNode<Position> parent) {
         if ((board.getBoard()[parent.getData().getPosR() + 1][parent.getData().getPosC() - 1].getPlayer() == PiecesColors.WHITE) &&
                 (board.getBoard()[parent.getData().getPosR() + 2][parent.getData().getPosC() - 2].getPlayer() == PiecesColors.EMPTY)) {
-            parent.addNewChild(new Position(parent.getData().getPosR() + 2, parent.getData().getPosC() - 2));
+            parent.addChild(new GenericTreeNode<>(new Position(parent.getData().getPosR() + 2, parent.getData().getPosC() - 2)));
         }
     }
 
-    public ArrayList<Position> possibleMovesInEmptySpaces(ItalianBoard board) {
+    private boolean canCapture(ItalianBoard board, Position piece) {
+        if (board.getBoard()[piece.getPosR()][piece.getPosC()].getPlayer() == PiecesColors.WHITE) {
+            return ((board.getBoard()[piece.getPosR() - 1][piece.getPosC() - 1].getPlayer() == PiecesColors.BLACK) &&
+                    (board.getBoard()[piece.getPosR() - 2][piece.getPosC() - 2].getPlayer() == PiecesColors.EMPTY)) ||
+                    ((board.getBoard()[piece.getPosR() - 1][piece.getPosC() + 1].getPlayer() == PiecesColors.BLACK) &&
+                            (board.getBoard()[piece.getPosR() - 2][piece.getPosC() + 2].getPlayer() == PiecesColors.EMPTY));
+        } else if (board.getBoard()[piece.getPosR()][piece.getPosC()].getPlayer() == PiecesColors.BLACK) {
+            return ((board.getBoard()[piece.getPosR() + 1][piece.getPosC() + 1].getPlayer() == PiecesColors.WHITE) &&
+                    (board.getBoard()[piece.getPosR() + 2][piece.getPosC() + 2].getPlayer() == PiecesColors.EMPTY)) ||
+                    ((board.getBoard()[piece.getPosR() + 1][piece.getPosC() - 1].getPlayer() == PiecesColors.WHITE) &&
+                            (board.getBoard()[piece.getPosR() + 2][piece.getPosC() - 2].getPlayer() == PiecesColors.EMPTY));
+        }
+        return false;
+    }
+
+    private ArrayList<Position> possibleMovesInEmptySpaces(ItalianBoard board) {
         ArrayList<Position> possibleMovementList;
 
         if (getPlayer() == PiecesColors.WHITE) {
