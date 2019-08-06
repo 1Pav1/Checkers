@@ -5,6 +5,8 @@ import it.ing.pajc.data.pieces.Empty;
 import it.ing.pajc.data.pieces.Man;
 import it.ing.pajc.data.pieces.Pieces;
 import it.ing.pajc.data.pieces.PiecesColors;
+import it.ing.pajc.data.pieces.black.BlackMan;
+import it.ing.pajc.data.pieces.white.WhiteMan;
 
 public class InternationalBoard implements Board{
 
@@ -24,15 +26,15 @@ public class InternationalBoard implements Board{
         for (int posR = 0; posR < 4; posR++)
             for (int posC = 0; posC < DIMENSION_INTERNATIONAL_BOARD; posC++)
                 if ((posC + posR) % 2 == 0)
-                    board[posR][posC] = new Man(PiecesColors.BLACK,new Position(posR,posC));
+                    board[posR][posC] = new BlackMan(new Position(posR,posC));
         for (int posR = 6; posR < DIMENSION_INTERNATIONAL_BOARD; posR++)
             for (int posC = 0; posC < DIMENSION_INTERNATIONAL_BOARD; posC++)
                 if ((posC + posR) % 2 == 0)
-                    board[posR][posC] = new Man(PiecesColors.WHITE,new Position(posR,posC));
+                    board[posR][posC] = new WhiteMan(new Position(posR,posC));
         for (int posR = 0; posR < DIMENSION_INTERNATIONAL_BOARD; posR++)
             for (int posC = 0; posC < DIMENSION_INTERNATIONAL_BOARD; posC++)
                 if(board[posR][posC]==null)
-                    board[posR][posC]=new Empty(PiecesColors.EMPTY, new Position(posR,posC));
+                    board[posR][posC]=new Empty( new Position(posR,posC));
 
     }
 

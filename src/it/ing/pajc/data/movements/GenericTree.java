@@ -20,17 +20,21 @@ public class GenericTree<T> {
     //TODO
     public int getBiggestNumberOfGeneration(){
         int numberOfGeneration = 0;
-        numberOfGeneration(numberOfGeneration,root);
+        if(root.hasChildren())
+            numberOfGeneration++;
         for(int i=0;i<root.getNumberOfChildren();i++){
+
 
 
         }
         return numberOfGeneration;
     }
     //TODO
-    private int numberOfGeneration(int counter, GenericTreeNode parent){
-        if(parent.hasChildren())
-        counter++;
+    private int counterOfGeneration(int counter, GenericTreeNode parent){
+        for(int i=0;i<parent.getNumberOfChildren();i++){
+            if(parent.getChildAt(i).hasChildren())
+                counter++;//break
+        }
         return counter;
     }
 
