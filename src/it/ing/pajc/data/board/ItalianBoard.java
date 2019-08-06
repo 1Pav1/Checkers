@@ -78,7 +78,8 @@ public class ItalianBoard implements Board{
                     public int a;
                     @Override
                     public void handle(MouseEvent event) {
-                        if (piecesBoard[finalX1][finalY1].isDisable()) {//Controlla warning perche' usi == la posto di equal per degli oggetti
+                        System.out.println(piecesBoard[finalY1][finalX1].isDisable());
+                        if (piecesBoard[finalY1][finalX1].isDisable()==false) {
                             System.out.println("final x:"+finalY1+" final y:"+finalX1);
                             System.out.println("ini x:"+clickedPieceR+" ini y:"+clickedPieceC);
                             move(new Position(clickedPieceR,clickedPieceC),new Position(finalY1,finalX1));
