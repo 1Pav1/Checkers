@@ -1,6 +1,6 @@
 package it.ing.pajc.data.board;
 
-import it.ing.pajc.data.coordinates.Position;
+import it.ing.pajc.data.movements.Position;
 import it.ing.pajc.data.pieces.Pieces;
 
 public interface Board {

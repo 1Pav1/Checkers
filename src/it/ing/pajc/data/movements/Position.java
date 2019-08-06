@@ -1,4 +1,4 @@
-package it.ing.pajc.data.coordinates;
+package it.ing.pajc.data.movements;
 
 /**
  * Position class with all getters and setters
@@ -25,6 +25,11 @@ public class Position {
     public void changePosition(int fPosR, int fPosC){
         posR=fPosR;
         posC=fPosC;
+    }
+
+
+    public Position getPosition(){
+        return this;
     }
     /**
      * @return Row position
@@ -54,10 +59,5 @@ public class Position {
      */
     public void setPosC(int posC) {
         this.posC = posC;
-    }
-
-    @Override
-    public String toString() {
-        return "posR : "+posR+" posC : "+posC;
     }
 }

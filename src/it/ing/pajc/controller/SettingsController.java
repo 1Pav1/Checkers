@@ -20,10 +20,10 @@ public class SettingsController {
 
     public void back() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../graphics/Home.fxml"));
+
         Scene scene = new Scene(root);
         Main.getPrimaryStage().setScene(scene);
         Main.getPrimaryStage().setTitle("Checker main menu");
-        Main.getPrimaryStage().initStyle(StageStyle.UNDECORATED);
 
         root.setOnMousePressed(event -> {
             x = event.getSceneX();

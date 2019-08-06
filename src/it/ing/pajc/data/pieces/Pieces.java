@@ -1,6 +1,6 @@
 package it.ing.pajc.data.pieces;
 
-import it.ing.pajc.data.coordinates.Position;
+import it.ing.pajc.data.movements.Position;
 import javafx.scene.shape.Circle;
 
 public abstract class Pieces extends Circle {

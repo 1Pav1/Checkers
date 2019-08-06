@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Changes&#10;SettingsController&#10;Color changed to blue theme&#10;Animation testing">
-      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/coordinates/TreeNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Changes&#10;SettingsController&#10;Color changed to wood theme">
+      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/GenericTree.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/GenericTreeNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/GenericTreeTraversalOrderEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Images/WoodenStyle/Board/darkWood.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Images/WoodenStyle/Board/lightWood.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Images/WoodenStyle/Checkers.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Images/WoodenStyle/background.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Checkers/it/ing/pajc/graphics/Settings.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Checkers/it/ing/pajc/graphics/Settings.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/CheckerBoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/CheckerBoardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/HomeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/SettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/SettingsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/Board.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/InternationalBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/InternationalBoard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/coordinates/MovementList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/coordinates/MovementList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/coordinates/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/coordinates/Position.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/coordinates/MovementList.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/coordinates/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/Position.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/coordinates/TreeNode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Empty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Empty.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/King.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Man.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Man.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Settings.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Settings.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Pieces.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Pieces.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -97,6 +102,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="KEEP" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
+    <option name="UPDATE_TYPE" value="MERGE" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectId" id="1OV8RsJtFCPmfejqRAxHChHRaDp" />
@@ -126,12 +132,13 @@
     <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Pav\Documents\GitHub\Checkers\src\it\ing\pajc" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Pav\IdeaProjects\Checker\src\sample" />
       <recent name="C:\Users\Pav\IdeaProjects\Checker\src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Pav\Documents\GitHub\Checkers\src\it\ing\pajc\data\movements" />
+      <recent name="C:\Users\Pav\Documents\GitHub\Checkers\src\it\ing\pajc" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -260,7 +267,7 @@
       <workItem from="1564691494487" duration="1751000" />
       <workItem from="1564757447465" duration="6084000" />
       <workItem from="1564903490542" duration="2014000" />
-      <workItem from="1565022740640" duration="1316000" />
+      <workItem from="1565022740640" duration="6147000" />
     </task>
     <task id="LOCAL-00001" summary="added:&#10;Settings&#10;Possible Moves">
       <created>1564397017327</created>
@@ -283,7 +290,14 @@
       <option name="project" value="LOCAL" />
       <updated>1564571765846</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Changes&#10;SettingsController&#10;Color changed to wood theme">
+      <created>1565072635179</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1565072635179</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -309,6 +323,7 @@
     <MESSAGE value="addded .idea" />
     <MESSAGE value="Javadoc:&#10;added documentation and comments for several methods&#10;Class:&#10;added new class Empty&#10;PiecesColors:&#10;added new color Empty in order to avoid nullPointerException&#10;&#10;&#10;Change some null in if statements into empty&#10;Added an utility method in Position" />
     <MESSAGE value="Changes&#10;SettingsController&#10;Color changed to blue theme&#10;Animation testing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes&#10;SettingsController&#10;Color changed to blue theme&#10;Animation testing" />
+    <MESSAGE value="Changes&#10;SettingsController&#10;Color changed to wood theme" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes&#10;SettingsController&#10;Color changed to wood theme" />
   </component>
 </project>
