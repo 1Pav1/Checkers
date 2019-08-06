@@ -1,6 +1,9 @@
 package it.ing.pajc.data.board;
 
 import it.ing.pajc.controller.CheckerBoardController;
+import it.ing.pajc.data.movements.GenericTree;
+import it.ing.pajc.data.movements.GenericTreeNode;
+import it.ing.pajc.data.movements.GenericTreeTraversalOrderEnum;
 import it.ing.pajc.data.movements.Position;
 import it.ing.pajc.data.pieces.Empty;
 import it.ing.pajc.data.pieces.Man;
@@ -12,6 +15,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+
+import java.util.List;
 
 
 /**
@@ -32,11 +37,14 @@ public class ItalianBoard implements Board{
 
     public ItalianBoard() {
         piecesBoard = new Pieces[DIMENSION_ITALIAN_BOARD][DIMENSION_ITALIAN_BOARD];
-
-        for (int posR = 0; posR < 3; posR++)
+        piecesBoard[4][4] = new Man(PiecesColors.BLACK,new Position(4,4));
+        piecesBoard[2][4] = new Man(PiecesColors.BLACK,new Position(2,4));
+        /*for (int posR = 0; posR < 3; posR++)
             for (int posC = 0; posC < DIMENSION_ITALIAN_BOARD; posC++)
                 if ((posC + posR) % 2 == 0)
                     piecesBoard[posR][posC] = new Man(PiecesColors.BLACK,new Position(posR,posC));
+
+         */
         for (int posR = 5; posR < DIMENSION_ITALIAN_BOARD; posR++)
             for (int posC = 0; posC < DIMENSION_ITALIAN_BOARD; posC++)
                 if ((posC + posR) % 2 == 0) {
@@ -147,6 +155,25 @@ public class ItalianBoard implements Board{
                         clickedPieceC=finalI;
                         int x = finalJ;
                         int y = finalI;
+                        GenericTree genericTree = ((Man) (piecesBoard[x][y])).bestCaptures(ItalianBoard.this);
+                        System.out.println(genericTree.getNumberOfNodes());
+                        List<GenericTreeNode> list = genericTree.build(GenericTreeTraversalOrderEnum.PRE_ORDER);
+                        for(int p=1;p<list.size();p++) {
+                            Position position = (Position) list.get(p).getData();
+                            System.out.println(position.getPosR()+" "+position.getPosC());
+                            stackPaneBoard[position.getPosC()][position.getPosR()].setDisable(false);
+                            System.out.println(stackPaneBoard[position.getPosC()][position.getPosR()].isDisable());
+                            stackPaneBoard[position.getPosC()][position.getPosR()].setId("captureHighlight");
+                        }
+
+                        genericTree = ((Man) (piecesBoard[x][y])).possibleMoves(ItalianBoard.this);
+                        list = genericTree.build(GenericTreeTraversalOrderEnum.PRE_ORDER);
+                        for(int p=1;p<list.size();p++) {
+                            Position position = (Position) list.get(p).getData();
+                            System.out.println(position.getPosR()+" "+position.getPosC());
+                            stackPaneBoard[position.getPosC()][position.getPosR()].setDisable(false);
+                            stackPaneBoard[position.getPosC()][position.getPosR()].setId("movementHighlight");
+                        }
                         //MovementList list = ((Man) (piecesBoard[x][y])).possibleMoves(ItalianBoard.this);
                         /*for (Position position : list.getPossibleMoves()) {
                             stackPaneBoard[position.getPosC()][position.getPosR()].setDisable(false);

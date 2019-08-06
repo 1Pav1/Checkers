@@ -38,9 +38,15 @@
     -fx-opacity:90%;
 }
 
-#highlighted
+#movementHighlight
 {
     -fx-background-color:rgb(0,255,0);
+    -fx-opacity:75%;
+}
+
+#captureHighlight
+{
+    -fx-background-color:rgb(255,0,0);
     -fx-opacity:75%;
 }
 

@@ -17,28 +17,30 @@ public class Man extends Pieces {
     }
     //TO USE
     public GenericTree possibleMoves(ItalianBoard board) {
-        if (!canCapture(board, this.getPosition())) {
+        root.removeChildren();
+        //if (!canCapture(board, this.getPosition())) {
             ArrayList<Position> positions = possibleMovesInEmptySpaces(board);
             for (int i = 0; i < positions.size(); i++)
                 root.addChild(new GenericTreeNode<>(positions.get(i)));
             return possibleMovementsList;
-        }
-        else{
+        //}
+        /*else{
             allPossibleCaptures(board);//to modify, it doesn't take in consideration of rules
 
         }
-        return possibleMovementsList;
+
+         */
+        //return possibleMovementsList;
     }
 
 
     public void possibleMoves(InternationalBoard board) {
     }
 
-    public void bestCaptures(ItalianBoard board){
+    public GenericTree<Position> bestCaptures(ItalianBoard board){
         allPossibleCaptures(board);
         possibleMovementsList.getNumberOfNodes();
-
-
+        return possibleMovementsList;
     }
     private void allPossibleCaptures(ItalianBoard board) {
         possibleCapturesUpRightAndLeft(board, root);

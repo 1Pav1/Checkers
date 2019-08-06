@@ -23,7 +23,6 @@ public class HomeController {
 
         Board board = new ItalianBoard();
         board.printBoardConsole();
-        ((Man) board.getBoard()[2][2]).possibleMoves(((ItalianBoard) board));
 
         StackPane layout = new StackPane();
 
