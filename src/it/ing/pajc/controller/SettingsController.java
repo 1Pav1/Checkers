@@ -1,5 +1,7 @@
 package it.ing.pajc.controller;
 
+import it.ing.pajc.Main;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,11 +19,11 @@ public class SettingsController {
     }
 
     public void back() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../graphics/Home.fxml"));
         Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Checker main menu");
-        primaryStage.initStyle(StageStyle.UNDECORATED);
+        Main.getPrimaryStage().setScene(scene);
+        Main.getPrimaryStage().setTitle("Checker main menu");
+        Main.getPrimaryStage().initStyle(StageStyle.UNDECORATED);
 
         root.setOnMousePressed(event -> {
             x = event.getSceneX();
@@ -29,9 +31,13 @@ public class SettingsController {
         });
 
         root.setOnMouseDragged(event -> {
-            primaryStage.setX(event.getScreenX() - x);
-            primaryStage.setY(event.getScreenY() - y);
+            Main.getPrimaryStage().setX(event.getScreenX() - x);
+            Main.getPrimaryStage().setY(event.getScreenY() - y);
         });
 
+    }
+
+    public void close(){
+        Platform.exit();
     }
 }

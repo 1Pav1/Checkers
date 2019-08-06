@@ -1,5 +1,6 @@
 package it.ing.pajc.controller;
 
+import it.ing.pajc.Main;
 import it.ing.pajc.data.pieces.Man;
 import it.ing.pajc.data.board.Board;
 import it.ing.pajc.data.board.ItalianBoard;
@@ -17,12 +18,6 @@ import java.io.IOException;
 public class HomeController {
     private double x, y;
 
-    public static Stage primaryStage;
-
-
-    public static void setPrimaryStage(Stage primaryStage) {
-        HomeController.primaryStage = primaryStage;
-    }
 
     public void  singlePlayer() throws IOException {
 
@@ -33,14 +28,17 @@ public class HomeController {
         StackPane layout = new StackPane();
 
 
+        FXMLLoader loader = new FXMLLoader();
+        Parent root = (Parent) loader.load(getClass().getResource("../graphics/CheckerBoard.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource(""));
+        CheckerBoardController cbc = loader.getController();
 
-        Parent root = FXMLLoader.load(getClass().getResource("../graphics/CheckerBoard.fxml"));
         Scene scene = new Scene(root);
         GridPane checkerBoard = (GridPane) scene.lookup("#grid");
         ((ItalianBoard)board).placeboard(checkerBoard, PiecesColors.WHITE);
 
-        primaryStage.setTitle("CheckerBoard");
-        primaryStage.setScene(scene);
+        Main.getPrimaryStage().setTitle("CheckerBoard");
+        Main.getPrimaryStage().setScene(scene);
         //we gonna drag the frame
         root.setOnMousePressed(event -> {
             x = event.getSceneX();
@@ -48,8 +46,8 @@ public class HomeController {
         });
 
         root.setOnMouseDragged(event -> {
-            primaryStage.setX(event.getScreenX() - x);
-            primaryStage.setY(event.getScreenY() - y);
+            Main.getPrimaryStage().setX(event.getScreenX() - x);
+            Main.getPrimaryStage().setY(event.getScreenY() - y);
         });
 
     }
@@ -61,8 +59,8 @@ public class HomeController {
         Parent root = FXMLLoader.load(getClass().getResource("../graphics/Settings.fxml"));
         Scene scene = new Scene(root);
 
-        primaryStage.setTitle("Settings");
-        primaryStage.setScene(scene);
+        Main.getPrimaryStage().setTitle("Settings");
+        Main.getPrimaryStage().setScene(scene);
         //we gonna drag the frame
         root.setOnMousePressed(event -> {
             x = event.getSceneX();
@@ -70,8 +68,8 @@ public class HomeController {
         });
 
         root.setOnMouseDragged(event -> {
-            primaryStage.setX(event.getScreenX() - x);
-            primaryStage.setY(event.getScreenY() - y);
+            Main.getPrimaryStage().setX(event.getScreenX() - x);
+            Main.getPrimaryStage().setY(event.getScreenY() - y);
         });
     }
 

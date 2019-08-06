@@ -12,7 +12,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
 
@@ -149,12 +148,12 @@ public class ItalianBoard implements Board{
                         clickedPieceC=finalI;
                         int x = finalJ;
                         int y = finalI;
-                        MovementList list = ((Man) (piecesBoard[x][y])).possibleMoves(ItalianBoard.this);
-                        for (Position position : list.getPossibleMoves()) {
+                        //MovementList list = ((Man) (piecesBoard[x][y])).possibleMoves(ItalianBoard.this);
+                        /*for (Position position : list.getPossibleMoves()) {
                             stackPaneBoard[position.getPosC()][position.getPosR()].setDisable(false);
                             stackPaneBoard[position.getPosC()][position.getPosR()].setId("highlighted");
 
-                        }
+                        }*/
                     });
                 }
 

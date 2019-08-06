@@ -17,9 +17,9 @@ public class Man extends Pieces {
      * @param board The board in question
      * @return Possible moves(only empty spaces)
      */
-    public MovementList possibleMoves(ItalianBoard board){
+    /*public MovementList possibleMoves(ItalianBoard board){
 
-        MovementList possibleMovementList = new MovementList();
+        //MovementList possibleMovementList = new MovementList();
         System.out.println();System.out.println();System.out.println();
 
         int posRow = this.getPosition().getPosR();
@@ -45,9 +45,9 @@ public class Man extends Pieces {
         }
 
         return possibleMovementList;
-    }
+    }*/
 
-    public void possibleMoves(InternationalBoard board){
+    public void possibleMoves(ItalianBoard board){
 
     }
 

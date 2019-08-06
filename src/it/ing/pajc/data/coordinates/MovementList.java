@@ -1,36 +1,29 @@
 package it.ing.pajc.data.coordinates;
 
-import java.util.ArrayList;
-
 /**
  * This class takes a movement list that a piece can make
  */
 public class MovementList{
+    private TreeNode<Position> possibleMoves;
 
-    ArrayList<Position> possibleMoves;
-
-    public MovementList() {
-        possibleMoves = new ArrayList<>();
+    public MovementList(Position startPos) {
+        possibleMoves = new TreeNode<>(startPos);
     }
 
-    public ArrayList<Position> getPossibleMoves() {
+    public void addNewPossibleMove(Position pos){
+        possibleMoves.addNewChild(pos);
+    }
+
+    public TreeNode<Position> getPossibleMoves() {
         return possibleMoves;
     }
 
-    public void setPossibleMovements(ArrayList<Position> possibleMoves) {
+    public void setPossibleMovements(TreeNode<Position> possibleMoves) {
         this.possibleMoves = possibleMoves;
     }
 
-    public void addMovement(Position pos){
-        possibleMoves.add(pos);
-    }
+    //Manca metodo che ritorna l'arraylist delle uniche mosse possibili
 
-    public int searchMovement(Position pos){
-        for(int i=0;i<possibleMoves.size();i++) {
-            if(possibleMoves.get(i).getPosR()==pos.getPosR() && possibleMoves.get(i).getPosC()==pos.getPosC())
-                return i;
-        }
-        return -1;
-    }
+
 
 }

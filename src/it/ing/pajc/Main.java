@@ -14,14 +14,18 @@ import javafx.stage.StageStyle;
 
 public class Main extends Application {
     private double x, y;
+    private static Stage primaryStage;
+
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
 
 
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
-        HomeController.setPrimaryStage(primaryStage);
-        CheckerBoardController.setPrimaryStage(primaryStage);
+        this.primaryStage = primaryStage;
 
         Parent root = FXMLLoader.load(getClass().getResource("graphics/Home.fxml"));
         Scene scene = new Scene(root);
