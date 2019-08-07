@@ -31,21 +31,25 @@ public class WhiteMan extends Man {
         return possibleMovementsList;
     }
 
+    @Override
     public void possibleMoves(InternationalBoard board) {
     }
 
+    @Override
     public GenericTree<Position> bestCaptures(ItalianBoard board) {
         allPossibleCaptures(board);
         possibleMovementsList.getNumberOfNodes();
         return possibleMovementsList;
     }
 
+    @Override
     public void allPossibleCaptures(ItalianBoard board) {
             possibleCapturesUpRightAndLeft(board, root);
             childrenPossibleCaptures(board, root);
 
     }
 
+    @Override
     public void childrenPossibleCaptures(ItalianBoard board, GenericTreeNode<Position> parent) {
         for (int i = 0; i < parent.getNumberOfChildren(); i++) {
             possibleCapturesUpRightAndLeft(board, parent.getChildAt(i));
@@ -54,11 +58,13 @@ public class WhiteMan extends Man {
         }
     }
 
+    @Override
     public void possibleCapturesUpRightAndLeft(ItalianBoard board, GenericTreeNode<Position> parent) {
         possibleCaptureUpLeft(board, parent);
         possibleCaptureUpRight(board, parent);
     }
 
+    @Override
     public void possibleCaptureUpLeft(ItalianBoard board, GenericTreeNode<Position> parent) {
         try {
             if ((board.getBoard()[parent.getData().getPosR() - 1][parent.getData().getPosC() - 1].getPlayer() == PiecesColors.BLACK) &&
@@ -70,6 +76,7 @@ public class WhiteMan extends Man {
         }
     }
 
+    @Override
     public void possibleCaptureUpRight(ItalianBoard board, GenericTreeNode<Position> parent) {
         try {
             if ((board.getBoard()[parent.getData().getPosR() - 1][parent.getData().getPosC() + 1].getPlayer() == PiecesColors.BLACK) &&
@@ -80,6 +87,7 @@ public class WhiteMan extends Man {
         }
     }
 
+    @Override
     public boolean canCapture(ItalianBoard board, Position piece) {
         try {
             return ((board.getBoard()[piece.getPosR() - 1][piece.getPosC() - 1].getPlayer() == PiecesColors.BLACK) &&
@@ -91,6 +99,7 @@ public class WhiteMan extends Man {
         return false;
     }
 
+    @Override
     public ArrayList<Position> possibleMovesInEmptySpaces(ItalianBoard board) {
         ArrayList<Position> possibleMovementList = new ArrayList<>();
 

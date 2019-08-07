@@ -7,15 +7,12 @@ import it.ing.pajc.data.movements.*;
 import java.util.ArrayList;
 
 public abstract class Man extends Pieces {
-    private GenericTreeNode<Position> root = new GenericTreeNode<>(this.getPosition());
-    private GenericTree<Position> possibleMovementsList = new GenericTree<>();
 
     public Man(Position pos) {
         super(pos);
         setType(PiecesType.MAN);
-        possibleMovementsList.setRoot(root);
-
     }
+
     public  abstract GenericTree possibleMoves(ItalianBoard board);
 
     public abstract void possibleMoves(InternationalBoard board);
@@ -35,6 +32,4 @@ public abstract class Man extends Pieces {
     public abstract boolean canCapture(ItalianBoard board,Position piece);
 
     public abstract ArrayList<Position> possibleMovesInEmptySpaces(ItalianBoard board);
-
-
 }
