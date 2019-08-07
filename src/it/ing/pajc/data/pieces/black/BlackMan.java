@@ -8,6 +8,7 @@ import it.ing.pajc.data.movements.Position;
 import it.ing.pajc.data.pieces.Man;
 import it.ing.pajc.data.pieces.PiecesColors;
 
+
 import java.util.ArrayList;
 
 public class BlackMan extends Man {
