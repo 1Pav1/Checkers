@@ -264,12 +264,12 @@ public class ItalianBoard implements Board{
         for(int x=0; x < DIMENSION_ITALIAN_BOARD; x++){
             for(int y=0; y < DIMENSION_ITALIAN_BOARD; y++){
                     //fen+=piecesBoard[x][y].getClass().getName();
-                    if (piecesBoard[x][y].getClass().getName() == "it.ing.pajc.data.pieces.Man")
+                    if (piecesBoard[x][y].getClass().getName() == "it.ing.pajc.data.pieces.black.BlackMan" || piecesBoard[x][y].getClass().getName() == "it.ing.pajc.data.pieces.white.WhiteMan")
                         if (piecesBoard[x][y].getPlayer() == PiecesColors.BLACK)
                             fen += "m";
                         else
                             fen += "M";
-                    else if (piecesBoard[x][y].getClass().getName() == "it.ing.pajc.data.pieces.King")
+                    else if (piecesBoard[x][y].getClass().getName() == "it.ing.pajc.data.pieces.black.BlackKing" || piecesBoard[x][y].getClass().getName() == "it.ing.pajc.data.pieces.white.WhiteKing")
                         if (piecesBoard[x][y].getPlayer() == PiecesColors.BLACK)
                             fen += "k";
                         else
