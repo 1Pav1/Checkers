@@ -6,15 +6,14 @@ import javafx.scene.shape.Circle;
 public abstract class Pieces extends Circle {
     private Position position;
     private PiecesColors player;
+    private PiecesType type;
 
     /**
      * Pieces constructor giving color and position.
-     * @param player Player color
      * @param position Piece's position
      */
-     public Pieces(PiecesColors player, Position position){
-        this.player = player;
-        this.position = position;
+     public Pieces(Position position){
+         this.position = position;
     }
 
     /**
@@ -45,6 +44,14 @@ public abstract class Pieces extends Circle {
      */
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    public PiecesType getType() {
+        return type;
+    }
+
+    public void setType(PiecesType type) {
+        this.type = type;
     }
 }
 
