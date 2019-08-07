@@ -5,12 +5,12 @@ import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.data.movements.GenericTree;
 import it.ing.pajc.data.movements.GenericTreeNode;
 import it.ing.pajc.data.movements.Position;
-import it.ing.pajc.data.pieces.King;
+import it.ing.pajc.data.pieces.Man;
 import it.ing.pajc.data.pieces.PiecesColors;
 
 import java.util.ArrayList;
 
-public class BlackMan extends King {
+public class BlackMan extends Man {
     private GenericTreeNode<Position> root = new GenericTreeNode<>(this.getPosition());
     private GenericTree<Position> possibleMovementsList = new GenericTree<>();
 

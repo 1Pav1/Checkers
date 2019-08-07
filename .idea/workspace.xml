@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Added WhiteKing and BlackKing">
-      <change beforePath="$PROJECT_DIR$/out/production/Checkers/it/ing/pajc/graphics/CheckerBoard.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Checkers/it/ing/pajc/graphics/Home.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Checkers/it/ing/pajc/graphics/Settings.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Checkers/it/ing/pajc/graphics/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/black/BlackMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/black/BlackMan.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -305,7 +301,14 @@
       <option name="project" value="LOCAL" />
       <updated>1565177516353</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Added WhiteKing and BlackKing">
+      <created>1565177967407</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1565177967407</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
