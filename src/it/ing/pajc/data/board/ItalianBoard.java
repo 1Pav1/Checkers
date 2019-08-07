@@ -6,6 +6,10 @@ import it.ing.pajc.data.movements.GenericTreeNode;
 import it.ing.pajc.data.movements.GenericTreeTraversalOrderEnum;
 import it.ing.pajc.data.movements.Position;
 import it.ing.pajc.data.pieces.*;
+import it.ing.pajc.data.pieces.black.BlackKing;
+import it.ing.pajc.data.pieces.black.BlackMan;
+import it.ing.pajc.data.pieces.white.WhiteKing;
+import it.ing.pajc.data.pieces.white.WhiteMan;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -36,19 +40,19 @@ public class ItalianBoard implements Board{
         for (int posR = 0; posR < 3; posR++)
             for (int posC = 0; posC < DIMENSION_ITALIAN_BOARD; posC++)
                 if ((posC + posR) % 2 == 0)
-                    piecesBoard[posR][posC] = new Man(PiecesColors.BLACK,new Position(posR,posC));
+                    piecesBoard[posR][posC] = new BlackMan(new Position(posR,posC));
 
 
         for (int posR = 5; posR < DIMENSION_ITALIAN_BOARD; posR++)
             for (int posC = 0; posC < DIMENSION_ITALIAN_BOARD; posC++)
                 if ((posC + posR) % 2 == 0) {
-                    piecesBoard[posR][posC] = new Man(PiecesColors.WHITE,new Position(posR,posC));
+                    piecesBoard[posR][posC] = new WhiteMan(new Position(posR,posC));
                 }
         //putting object of type Empty in the empty spaces
         for (int posR = 0; posR < DIMENSION_ITALIAN_BOARD; posR++)
             for (int posC = 0; posC < DIMENSION_ITALIAN_BOARD; posC++)
                 if(piecesBoard[posR][posC]==null)
-                    piecesBoard[posR][posC]=new Empty(PiecesColors.EMPTY, new Position(posR,posC));
+                    piecesBoard[posR][posC]=new Empty(new Position(posR,posC));
         System.out.println(toString());
         initializeBoardFX();
     }
@@ -201,7 +205,10 @@ public class ItalianBoard implements Board{
      */
     @Override
     public void move(Position init, Position fin) {
-        piecesBoard[fin.getPosR()][fin.getPosC()] = new Man(piecesBoard[init.getPosR()][init.getPosC()].getPlayer(),fin);
+        if(piecesBoard[init.getPosR()][init.getPosC()].getPlayer()==PiecesColors.WHITE)
+        piecesBoard[fin.getPosR()][fin.getPosC()] = new WhiteMan(fin);
+        else if(piecesBoard[init.getPosR()][init.getPosC()].getPlayer()==PiecesColors.WHITE)
+            piecesBoard[fin.getPosR()][fin.getPosC()] = new BlackMan(fin);
         System.out.println(fin.getPosR());
         System.out.println(fin.getPosC());
         System.out.println(piecesBoard[fin.getPosR()][fin.getPosC()].getPlayer());
@@ -291,25 +298,25 @@ public class ItalianBoard implements Board{
                 switch (fen.charAt(i)) {
 
                     case 'm': {
-                        pieces[boardPosition / 8][boardPosition % 8]  = new Man(PiecesColors.BLACK,new Position(boardPosition / 8,boardPosition % 8));
+                        pieces[boardPosition / 8][boardPosition % 8]  = new BlackMan(new Position(boardPosition / 8,boardPosition % 8));
                     }
                     break;
                     case 'k': {
-                        pieces[boardPosition / 8][boardPosition % 8] = new King(PiecesColors.BLACK,new Position(boardPosition / 8,boardPosition % 8));
+                        pieces[boardPosition / 8][boardPosition % 8] = new BlackKing(new Position(boardPosition / 8,boardPosition % 8));
                     }
                     break;
                     //------------------------------------------------------------------
                     case 'M': {
-                        pieces[boardPosition / 8][boardPosition % 8]  = new Man(PiecesColors.WHITE,new Position(boardPosition / 8,boardPosition % 8));
+                        pieces[boardPosition / 8][boardPosition % 8]  = new WhiteMan(new Position(boardPosition / 8,boardPosition % 8));
                     }
                     break;
                     case 'K': {
-                        pieces[boardPosition / 8][boardPosition % 8]  = new King(PiecesColors.WHITE,new Position(boardPosition / 8,boardPosition % 8));
+                        pieces[boardPosition / 8][boardPosition % 8]  = new WhiteKing(new Position(boardPosition / 8,boardPosition % 8));
                     }
                     break;
                     //------------------------------------------------------------------
                     case 'e':{
-                        pieces[boardPosition / 8][boardPosition % 8]  = new Empty(PiecesColors.EMPTY,new Position(boardPosition / 8,boardPosition % 8));
+                        pieces[boardPosition / 8][boardPosition % 8]  = new Empty(new Position(boardPosition / 8,boardPosition % 8));
                     }
                 }
 
