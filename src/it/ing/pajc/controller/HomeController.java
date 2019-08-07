@@ -21,8 +21,8 @@ public class HomeController {
 
     public void  singlePlayer() throws IOException {
 
-        Board board = new ItalianBoard();
-        board.printBoardConsole();
+        Board board = new ItalianBoard("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
+        //board.printBoardConsole();
 
         StackPane layout = new StackPane();
 
