@@ -5,10 +5,7 @@ import it.ing.pajc.data.movements.GenericTree;
 import it.ing.pajc.data.movements.GenericTreeNode;
 import it.ing.pajc.data.movements.GenericTreeTraversalOrderEnum;
 import it.ing.pajc.data.movements.Position;
-import it.ing.pajc.data.pieces.Empty;
-import it.ing.pajc.data.pieces.Man;
-import it.ing.pajc.data.pieces.Pieces;
-import it.ing.pajc.data.pieces.PiecesColors;
+import it.ing.pajc.data.pieces.*;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -34,29 +31,32 @@ public class ItalianBoard implements Board{
     /**
      * ItalianBoard constructor.
      */
-
     public ItalianBoard() {
         piecesBoard = new Pieces[DIMENSION_ITALIAN_BOARD][DIMENSION_ITALIAN_BOARD];
-        piecesBoard[4][4] = new Man(PiecesColors.BLACK,new Position(4,4));
-        piecesBoard[2][4] = new Man(PiecesColors.BLACK,new Position(2,4));
-        /*for (int posR = 0; posR < 3; posR++)
+        for (int posR = 0; posR < 3; posR++)
             for (int posC = 0; posC < DIMENSION_ITALIAN_BOARD; posC++)
                 if ((posC + posR) % 2 == 0)
                     piecesBoard[posR][posC] = new Man(PiecesColors.BLACK,new Position(posR,posC));
 
-         */
+
         for (int posR = 5; posR < DIMENSION_ITALIAN_BOARD; posR++)
             for (int posC = 0; posC < DIMENSION_ITALIAN_BOARD; posC++)
                 if ((posC + posR) % 2 == 0) {
                     piecesBoard[posR][posC] = new Man(PiecesColors.WHITE,new Position(posR,posC));
                 }
-        //riempio gli spazi vuoti(null) con l'oggetto empty
+        //putting object of type Empty in the empty spaces
         for (int posR = 0; posR < DIMENSION_ITALIAN_BOARD; posR++)
             for (int posC = 0; posC < DIMENSION_ITALIAN_BOARD; posC++)
                 if(piecesBoard[posR][posC]==null)
                     piecesBoard[posR][posC]=new Empty(PiecesColors.EMPTY, new Position(posR,posC));
-
+        System.out.println(toString());
         initializeBoardFX();
+    }
+
+    public ItalianBoard(String fen) {
+        piecesBoard = fenToMultidimensionalArray(fen);
+        initializeBoardFX();
+        System.out.println(toString());
     }
 
     /**
@@ -112,7 +112,12 @@ public class ItalianBoard implements Board{
             }
         }
     }
-    //TODO: COMMENTA TU
+
+    /**
+     * Creation of pieces on the board graphically
+     * @param grid Defines the positions on whom the pieces can move
+     * @param player Defines the color of the pieces of a specific player
+     */
     public void placeboard(GridPane grid,PiecesColors player){
         gridPane = grid;
         Circle circle;
@@ -241,5 +246,80 @@ public class ItalianBoard implements Board{
         this.piecesBoard = board;
     }
 
+    /**
+     * Creates a string where the whole board and the pieces postions are saved
+     * @return The string generated or AKA FEN notion
+     */
+    @Override
+    public String toString() {
+        String fen="";
+        int i = 0;
+        for(int x=0; x < DIMENSION_ITALIAN_BOARD; x++){
+            for(int y=0; y < DIMENSION_ITALIAN_BOARD; y++){
+                    //fen+=piecesBoard[x][y].getClass().getName();
+                    if (piecesBoard[x][y].getClass().getName() == "it.ing.pajc.data.pieces.Man")
+                        if (piecesBoard[x][y].getPlayer() == PiecesColors.BLACK)
+                            fen += "m";
+                        else
+                            fen += "M";
+                    else if (piecesBoard[x][y].getClass().getName() == "it.ing.pajc.data.pieces.King")
+                        if (piecesBoard[x][y].getPlayer() == PiecesColors.BLACK)
+                            fen += "k";
+                        else
+                            fen += "K";
+
+                    else if (piecesBoard[x][y].getClass().getName() == "it.ing.pajc.data.pieces.Empty")
+                            fen += "e";
+            }
+            fen+="/";
+        }
+        return fen;
+    }
+
+    /**
+     * Creation of board from specific positions of each piece
+     * @param fen Defines the postions of the pieces
+     * @return Generated board
+     */
+    public static Pieces [] [] fenToMultidimensionalArray(String fen){
+        int i = 0;
+        Pieces pieces [][] = new Pieces [DIMENSION_ITALIAN_BOARD] [DIMENSION_ITALIAN_BOARD];
+        int boardPosition = 0;
+        do {
+
+            if(fen.charAt(i) !='/') {
+                switch (fen.charAt(i)) {
+
+                    case 'm': {
+                        pieces[boardPosition / 8][boardPosition % 8]  = new Man(PiecesColors.BLACK,new Position(boardPosition / 8,boardPosition % 8));
+                    }
+                    break;
+                    case 'k': {
+                        pieces[boardPosition / 8][boardPosition % 8] = new King(PiecesColors.BLACK,new Position(boardPosition / 8,boardPosition % 8));
+                    }
+                    break;
+                    //------------------------------------------------------------------
+                    case 'M': {
+                        pieces[boardPosition / 8][boardPosition % 8]  = new Man(PiecesColors.WHITE,new Position(boardPosition / 8,boardPosition % 8));
+                    }
+                    break;
+                    case 'K': {
+                        pieces[boardPosition / 8][boardPosition % 8]  = new King(PiecesColors.WHITE,new Position(boardPosition / 8,boardPosition % 8));
+                    }
+                    break;
+                    //------------------------------------------------------------------
+                    case 'e':{
+                        pieces[boardPosition / 8][boardPosition % 8]  = new Empty(PiecesColors.EMPTY,new Position(boardPosition / 8,boardPosition % 8));
+                    }
+                }
+
+                boardPosition++;
+            }
+
+            i++;
+        }while (i< fen.length());
+
+        return pieces;
+    }
 }
 
