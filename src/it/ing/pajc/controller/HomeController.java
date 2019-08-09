@@ -14,8 +14,9 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.Serializable;
 
-public class HomeController {
+public class HomeController implements Serializable {
     private double x, y;
 
 

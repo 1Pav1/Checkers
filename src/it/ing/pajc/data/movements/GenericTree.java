@@ -1,8 +1,9 @@
 package it.ing.pajc.data.movements;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class GenericTree<T> {
+public class GenericTree<T> implements Serializable {
 
     private GenericTreeNode<T> root;
 

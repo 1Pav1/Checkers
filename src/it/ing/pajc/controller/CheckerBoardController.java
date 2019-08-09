@@ -9,8 +9,9 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.Serializable;
 
-public class CheckerBoardController {
+public class CheckerBoardController implements Serializable {
     private double x,y;
 
     public void close(){

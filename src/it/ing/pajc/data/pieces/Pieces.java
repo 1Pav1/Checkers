@@ -3,7 +3,9 @@ package it.ing.pajc.data.pieces;
 import it.ing.pajc.data.movements.Position;
 import javafx.scene.shape.Circle;
 
-public abstract class Pieces extends Circle {
+import java.io.Serializable;
+
+public abstract class Pieces extends Circle implements Serializable {
     private Position position;
     private PiecesColors player;
     private PiecesType type;
