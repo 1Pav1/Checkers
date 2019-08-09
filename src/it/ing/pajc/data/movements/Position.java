@@ -1,9 +1,11 @@
 package it.ing.pajc.data.movements;
 
+import java.io.Serializable;
+
 /**
  * Position class with all getters and setters
  */
-public class Position {
+public class Position implements Serializable {
     private int posR;
     private int posC;
 

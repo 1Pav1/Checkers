@@ -9,8 +9,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.io.Serializable;
 
-public class SettingsController {
+public class SettingsController implements Serializable {
     private double x,y;
     public static Stage primaryStage;
 

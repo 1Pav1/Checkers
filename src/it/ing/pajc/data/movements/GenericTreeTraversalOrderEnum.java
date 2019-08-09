@@ -5,7 +5,9 @@
 
 package it.ing.pajc.data.movements;
 
-public enum GenericTreeTraversalOrderEnum {
+import java.io.Serializable;
+
+public enum GenericTreeTraversalOrderEnum implements Serializable {
     PRE_ORDER,
     POST_ORDER
 }

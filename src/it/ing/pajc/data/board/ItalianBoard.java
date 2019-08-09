@@ -53,14 +53,14 @@ public class ItalianBoard implements Board{
             for (int posC = 0; posC < DIMENSION_ITALIAN_BOARD; posC++)
                 if(piecesBoard[posR][posC]==null)
                     piecesBoard[posR][posC]=new Empty(new Position(posR,posC));
-        System.out.println(toString());
+        //System.out.println(toString());
         initializeBoardFX();
     }
 
     public ItalianBoard(String fen) {
         piecesBoard = fenToMultidimensionalArray(fen);
         initializeBoardFX();
-        System.out.println(toString());
+        //System.out.println(toString());
     }
 
     /**

@@ -3,7 +3,12 @@ package it.ing.pajc.data.board;
 import it.ing.pajc.data.movements.Position;
 import it.ing.pajc.data.pieces.Pieces;
 
-public interface Board {
+import java.io.Serializable;
+
+
+public interface Board extends java.io.Serializable {
+
+    public static final long serialversionUID = 1L;
 
     int DIMENSION_ITALIAN_BOARD = 8;
     int DIMENSION_INTERNATIONAL_BOARD = 10;
