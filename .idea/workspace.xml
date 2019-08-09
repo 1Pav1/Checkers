@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Added WhiteKing and BlackKing">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Fix of FEN creation with new man and king classes">
+      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Multiplayer.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/black/BlackMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/black/BlackMan.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -109,7 +108,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dynamic.classpath" value="false" />
     <property name="extract.method.default.visibility" value="private" />
-    <property name="last_opened_file_path" value="C:/javafx-sdk-12.0.2/lib" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/it/ing/pajc/graphics" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -117,13 +116,14 @@
     <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Pav\IdeaProjects\Checker\src\sample" />
-      <recent name="C:\Users\Pav\IdeaProjects\Checker\src" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Pav\Documents\GitHub\Checkers\src\it\ing\pajc\data\movements" />
       <recent name="C:\Users\Pav\Documents\GitHub\Checkers\src\it\ing\pajc" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Pav\Documents\GitHub\Checkers\src\it\ing\pajc\graphics" />
+      <recent name="C:\Users\Pav\IdeaProjects\Checker\src\sample" />
+      <recent name="C:\Users\Pav\IdeaProjects\Checker\src" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -253,6 +253,7 @@
       <workItem from="1564757447465" duration="6084000" />
       <workItem from="1564903490542" duration="2014000" />
       <workItem from="1565022740640" duration="10677000" />
+      <workItem from="1565274237567" duration="945000" />
     </task>
     <task id="LOCAL-00001" summary="added:&#10;Settings&#10;Possible Moves">
       <created>1564397017327</created>
@@ -317,7 +318,14 @@
       <option name="project" value="LOCAL" />
       <updated>1565178223792</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Fix of FEN creation with new man and king classes">
+      <created>1565181156951</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1565181156951</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -348,6 +356,7 @@
     <MESSAGE value="Changes&#10;graphics of capture positions and movements" />
     <MESSAGE value="Added WhiteKing and BlackKing" />
     <MESSAGE value="Fix BlackMan" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix BlackMan" />
+    <MESSAGE value="Fix of FEN creation with new man and king classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix of FEN creation with new man and king classes" />
   </component>
 </project>
