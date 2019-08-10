@@ -57,8 +57,19 @@ public class ItalianBoard implements Board{
         initializeBoardFX();
     }
 
-    public ItalianBoard(String fen) {
-        piecesBoard = fenToMultidimensionalArray(fen);
+    public ItalianBoard(String fen,PiecesColors color) {
+        if(color==PiecesColors.WHITE)
+            piecesBoard = fenToMultidimensionalArray(fen);
+        else{
+            StringBuilder sb = new StringBuilder();
+
+            for(int i = fen.length() - 1; i >= 0; i--)
+            {
+                sb.append(fen.charAt(i));
+            }
+            piecesBoard = fenToMultidimensionalArray(sb.toString());
+        }
+
         initializeBoardFX();
         //System.out.println(toString());
     }
@@ -147,7 +158,6 @@ public class ItalianBoard implements Board{
                         if(player != PiecesColors.BLACK)
                             circle.setDisable(true);
                     }
-                    CheckerBoardController.method(i,j,circle);
                     int finalJ = j;
                     int finalI = i;
                     Circle finalCircle = circle;

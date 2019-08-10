@@ -21,8 +21,8 @@ public class HomeController implements Serializable {
 
 
     public void  singlePlayer() throws IOException {
-
-        Board board = new ItalianBoard("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
+        PiecesColors color = PiecesColors.BLACK;
+        Board board = new ItalianBoard("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM",color);
         //board.printBoardConsole();
 
         StackPane layout = new StackPane();
@@ -60,6 +60,27 @@ public class HomeController implements Serializable {
         Scene scene = new Scene(root);
 
         Main.getPrimaryStage().setTitle("Settings");
+        Main.getPrimaryStage().setScene(scene);
+        //we gonna drag the frame
+        root.setOnMousePressed(event -> {
+            x = event.getSceneX();
+            y = event.getSceneY();
+        });
+
+        root.setOnMouseDragged(event -> {
+            Main.getPrimaryStage().setX(event.getScreenX() - x);
+            Main.getPrimaryStage().setY(event.getScreenY() - y);
+        });
+    }
+
+    public void multiplayer() throws IOException {
+
+
+
+        Parent root = FXMLLoader.load(getClass().getResource("../graphics/Multiplayer.fxml"));
+        Scene scene = new Scene(root);
+
+        Main.getPrimaryStage().setTitle("Multiplayer");
         Main.getPrimaryStage().setScene(scene);
         //we gonna drag the frame
         root.setOnMousePressed(event -> {

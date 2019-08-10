@@ -37,9 +37,6 @@ public class CheckerBoardController implements Serializable {
 
     }
 
-    public static void method(int i, int j , Circle circle){
-
-    }
 
 
 }

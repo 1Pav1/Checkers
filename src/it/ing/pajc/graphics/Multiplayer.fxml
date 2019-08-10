@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="539.0" style="-fx-border-radius: 30;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ing.pajc.controller.HomeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="539.0" style="-fx-border-radius: 30;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ing.pajc.controller.SettingsController">
     <children>
       <Pane fx:id="windowPanel" prefHeight="111.0" prefWidth="539.0" stylesheets="@style.css">
          <children>
-            <Label alignment="CENTER" layoutX="5.0" layoutY="4.0" onMouseClicked="#close" prefHeight="40.0" prefWidth="36.0" text="🡄" textFill="#ddd9d9">
+            <Label alignment="CENTER" layoutX="5.0" layoutY="4.0" onMouseClicked="#back" prefHeight="40.0" prefWidth="36.0" text="🡄" textFill="#ddd9d9">
                <font>
                   <Font name="Franklin Gothic Heavy" size="35.0" />
                </font>
@@ -25,7 +25,7 @@
             <children>
                 <Separator layoutX="56.0" layoutY="383.0" opacity="0.15" prefHeight="3.0" prefWidth="423.0" />
                 <Separator layoutX="54.0" layoutY="36.0" opacity="0.15" prefHeight="3.0" prefWidth="423.0" />
-            <Button fx:id="singlePlayer" layoutX="120.0" layoutY="72.0" mnemonicParsing="false" onAction="#singlePlayer" prefHeight="35.0" prefWidth="300.0" text="Create match" textFill="WHITE">
+            <Button fx:id="singlePlayer" layoutX="120.0" layoutY="72.0" mnemonicParsing="false" onAction="#server" prefHeight="35.0" prefWidth="300.0" text="Create match" textFill="WHITE">
                <font>
                   <Font name="Franklin Gothic Heavy" size="32.0" />
                </font>

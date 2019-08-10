@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Server Client added">
-      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/multiplayer/Client.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/multiplayer/Server.java" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Added creation of match and connection to game">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/CheckerBoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/CheckerBoardController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/HomeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/SettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/SettingsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/Board.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/GenericTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/GenericTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/GenericTreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/GenericTreeNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/GenericTreeTraversalOrderEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/GenericTreeTraversalOrderEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/Position.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Pieces.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Pieces.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/PiecesColors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/PiecesColors.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Home.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Home.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Multiplayer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Multiplayer.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/multiplayer/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/multiplayer/Client.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -149,7 +143,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Client">
+  <component name="RunManager" selected="Application.Main">
     <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -305,6 +299,7 @@
       <workItem from="1565022740640" duration="10677000" />
       <workItem from="1565200831682" duration="987000" />
       <workItem from="1565355228590" duration="400000" />
+      <workItem from="1565374823328" duration="2384000" />
     </task>
     <task id="LOCAL-00001" summary="added:&#10;Settings&#10;Possible Moves">
       <created>1564397017327</created>
@@ -401,6 +396,7 @@
     <MESSAGE value="Added WhiteKing and BlackKing" />
     <MESSAGE value="Fix BlackMan" />
     <MESSAGE value="Server Client added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Server Client added" />
+    <MESSAGE value="Added creation of match and connection to game" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added creation of match and connection to game" />
   </component>
 </project>

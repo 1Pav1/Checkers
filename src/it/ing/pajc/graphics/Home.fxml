@@ -32,7 +32,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button layoutX="120.0" layoutY="175.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="300.0" text="Multiplayer" textFill="WHITE">
+            <Button layoutX="120.0" layoutY="175.0" mnemonicParsing="false" onMouseClicked="#multiplayer" prefHeight="35.0" prefWidth="300.0" text="Multiplayer" textFill="WHITE">
                <font>
                   <Font name="Franklin Gothic Heavy" size="32.0" />
                </font>
