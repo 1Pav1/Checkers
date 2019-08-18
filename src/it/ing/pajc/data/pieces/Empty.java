@@ -2,8 +2,15 @@ package it.ing.pajc.data.pieces;
 
 import it.ing.pajc.data.movements.Position;
 
+/**
+ * Empty class used to define null positions
+ */
 public class Empty extends Pieces {
-    public Empty( Position pos){
+    /**
+     * Empty's constructor giving position.
+     * @param pos Empty position
+     */
+    public Empty(Position pos) {
         super(pos);
         setPlayer(PiecesColors.EMPTY);
     }

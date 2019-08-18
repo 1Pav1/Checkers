@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Added creation of board for specific player(FEN)">
-      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/MultiplayerController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/graphics/woodStyle.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/multiplayer/Multiplayer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/multiplayer/MultiplayerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/cssdialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cssdialects.xml" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Added WhiteKing and BlackKing">
+      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/engine/Engine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Empty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Empty.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/King.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Man.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Man.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Pieces.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Pieces.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/PiecesType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/PiecesType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/black/BlackKing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/black/BlackKing.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/black/BlackMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/black/BlackMan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/white/WhiteKing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/white/WhiteKing.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/white/WhiteMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/white/WhiteMan.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/HomeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/SettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/SettingsController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" afterDir="false" />
@@ -122,6 +127,8 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dynamic.classpath" value="false" />
     <property name="extract.method.default.visibility" value="private" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/it/ing/pajc/engine" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../SP" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
@@ -133,6 +140,11 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Pav\Documents\GitHub\Checkers\src\it\ing\pajc\data\movements" />
       <recent name="C:\Users\Pav\Documents\GitHub\Checkers\src\it\ing\pajc" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Andrea\IdeaProjects\Checkers\src\it\ing\pajc\engine" />
+      <recent name="C:\Users\Pav\IdeaProjects\Checker\src\sample" />
+      <recent name="C:\Users\Pav\IdeaProjects\Checker\src" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="it.ing.pajc.multiplayer" />
@@ -335,6 +347,9 @@
       <workItem from="1566031555094" duration="2311000" />
       <workItem from="1566034333879" duration="1748000" />
       <workItem from="1566132068393" duration="2575000" />
+      <workItem from="1565374823328" duration="2384000" />
+      <workItem from="1566029068287" duration="3532000" />
+      <workItem from="1566141714034" duration="7681000" />
     </task>
     <task id="LOCAL-00001" summary="added:&#10;Settings&#10;Possible Moves">
       <created>1564397017327</created>
