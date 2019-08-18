@@ -108,7 +108,10 @@ public class WhiteMan extends Man {
         try {
             if (board.getBoard()[posRow - 1][posColumn - 1].getPlayer() == PiecesColors.EMPTY)//up left
                 possibleMovementList.add(new Position(posRow - 1, posColumn - 1));
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
 
+        try {
             if (board.getBoard()[posRow - 1][posColumn + 1].getPlayer() == PiecesColors.EMPTY)//up right
                 possibleMovementList.add(new Position(posRow - 1, posColumn + 1));
         } catch (ArrayIndexOutOfBoundsException ignored) {

@@ -1,6 +1,5 @@
 package it.ing.pajc.data.board;
 
-import it.ing.pajc.controller.CheckerBoardController;
 import it.ing.pajc.data.movements.GenericTree;
 import it.ing.pajc.data.movements.GenericTreeNode;
 import it.ing.pajc.data.movements.GenericTreeTraversalOrderEnum;
@@ -24,9 +23,9 @@ import java.util.List;
  * Creates and manage ItalianBoard
  */
 public class ItalianBoard implements Board{
-
+    private PiecesColors player;
     private Pieces[][] piecesBoard;
-    
+
     private StackPane[][] stackPaneBoard;
 
     private int clickedPieceR;
@@ -53,25 +52,25 @@ public class ItalianBoard implements Board{
             for (int posC = 0; posC < DIMENSION_ITALIAN_BOARD; posC++)
                 if(piecesBoard[posR][posC]==null)
                     piecesBoard[posR][posC]=new Empty(new Position(posR,posC));
-        //System.out.println(toString());
         initializeBoardFX();
     }
 
     public ItalianBoard(String fen,PiecesColors color) {
-        if(color==PiecesColors.WHITE)
+        player = color;
+        if(player==PiecesColors.WHITE)
             piecesBoard = fenToMultidimensionalArray(fen);
         else{
-            StringBuilder sb = new StringBuilder();
+            StringBuilder reverseFen = new StringBuilder();
 
             for(int i = fen.length() - 1; i >= 0; i--)
             {
-                sb.append(fen.charAt(i));
+                reverseFen.append(fen.charAt(i));
             }
-            piecesBoard = fenToMultidimensionalArray(sb.toString());
+            piecesBoard = fenToMultidimensionalArray(reverseFen.toString());
         }
 
+
         initializeBoardFX();
-        //System.out.println(toString());
     }
 
     /**
@@ -84,13 +83,10 @@ public class ItalianBoard implements Board{
                 stackPaneBoard[x][y] = new StackPane();
                 stackPaneBoard[x][y].setPrefWidth(60);
                 stackPaneBoard[x][y].setPrefHeight(60);
-
-                int finalY = y;
-                int finalX = x;
                 int finalY1 = y;
                 int finalX1 = x;
                 stackPaneBoard[x][y].setOnMousePressed(new EventHandler<MouseEvent>() {
-                    public int a;
+                    private int a;
                     @Override
                     public void handle(MouseEvent event) {
                         System.out.println(piecesBoard[finalY1][finalX1].isDisable());
@@ -100,7 +96,7 @@ public class ItalianBoard implements Board{
                             move(new Position(clickedPieceR,clickedPieceC),new Position(finalY1,finalX1));
                             printBoardConsole();
                             resetBoardFXColors();
-                            placeboard(gridPane,PiecesColors.WHITE);
+                            placeboard(gridPane,player);
 
                         }
                     }
@@ -139,14 +135,15 @@ public class ItalianBoard implements Board{
         grid.getChildren().clear();
         for(int i=0;i<DIMENSION_ITALIAN_BOARD;i++){
             for (int j=0;j<DIMENSION_ITALIAN_BOARD;j++){
-                grid.add(stackPaneBoard[i][j], i,j );
+                grid.add(stackPaneBoard[i][j], i,j);
+
                 if(piecesBoard[j][i].getPlayer()!=PiecesColors.EMPTY){
                     if(piecesBoard[j][i].getPlayer()== PiecesColors.WHITE) {
                         circle = piecesBoard[j][i];
                         circle.setFill(Color.WHITE);
                         circle.setRadius(29);
                         grid.add(circle, i, j);
-                        if(player != PiecesColors.WHITE)
+                        if(this.player != piecesBoard[j][i].getPlayer())
                             circle.setDisable(true);
                     }
 
@@ -155,7 +152,7 @@ public class ItalianBoard implements Board{
                         circle.setFill(Color.BLACK);
                         circle.setRadius(30);
                         grid.add(circle, i, j);
-                        if(player != PiecesColors.BLACK)
+                        if(this.player != piecesBoard[j][i].getPlayer())
                             circle.setDisable(true);
                     }
                     int finalJ = j;
@@ -215,10 +212,13 @@ public class ItalianBoard implements Board{
      */
     @Override
     public void move(Position init, Position fin) {
+
         if(piecesBoard[init.getPosR()][init.getPosC()].getPlayer()==PiecesColors.WHITE)
         piecesBoard[fin.getPosR()][fin.getPosC()] = new WhiteMan(fin);
-        else if(piecesBoard[init.getPosR()][init.getPosC()].getPlayer()==PiecesColors.WHITE)
+
+        else if(piecesBoard[init.getPosR()][init.getPosC()].getPlayer()==PiecesColors.BLACK)
             piecesBoard[fin.getPosR()][fin.getPosC()] = new BlackMan(fin);
+
         System.out.println(fin.getPosR());
         System.out.println(fin.getPosC());
         System.out.println(piecesBoard[fin.getPosR()][fin.getPosC()].getPlayer());
