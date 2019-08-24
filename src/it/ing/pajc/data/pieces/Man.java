@@ -1,6 +1,5 @@
 package it.ing.pajc.data.pieces;
 
-import it.ing.pajc.data.board.InternationalBoard;
 import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.data.movements.*;
 
@@ -27,21 +26,6 @@ public abstract class Man extends Pieces {
      * @return the tree of all possible moves
      */
     public abstract GenericTree possibleMoves(ItalianBoard board);
-
-    /**
-     * Gives all possible moves of a piece without taking care about legal moves.
-     *
-     * @param board The using board, must be a 10x10 board.
-     */
-    public abstract void possibleMoves(InternationalBoard board);
-
-    /**
-     * Gives only the legal moves of a piece.
-     *
-     * @param board The using board, must be an 8x8 board.
-     * @return the tree of legal moves
-     */
-    public abstract GenericTree<Position> bestCaptures(ItalianBoard board);
 
     /**
      * Calculates all possible captures of a piece, included multiple captures.
@@ -90,6 +74,15 @@ public abstract class Man extends Pieces {
      * @return a boolean true if can capture, false otherwise
      */
     public abstract boolean canCapture(ItalianBoard board, Position piece);
+
+    /**
+     * Check if the piece can move without captures.
+     *
+     * @param board The using board, must be an 8x8 board.
+     * @param piece Position of the piece in question
+     * @return a boolean true if can move, false otherwise
+     */
+    public abstract boolean canMove(ItalianBoard board, Position piece);
 
     /**
      * Gives all possible moves when the piece can't capture.

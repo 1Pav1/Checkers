@@ -11,7 +11,6 @@ public interface Board extends java.io.Serializable {
     public static final long serialversionUID = 1L;
 
     int DIMENSION_ITALIAN_BOARD = 8;
-    int DIMENSION_INTERNATIONAL_BOARD = 10;
 
     /**
      * Move a piece from a position to another

@@ -1,22 +1,23 @@
 package it.ing.pajc.engine;
 
 import it.ing.pajc.data.board.ItalianBoard;
+import it.ing.pajc.data.movements.*;
 import it.ing.pajc.data.pieces.PiecesColors;
 import it.ing.pajc.data.pieces.PiecesType;
 
 import java.util.*;
 
+//BOARD: black on the bottom side
+public class Engine {
 
-class Engine {
+    private final static int INFINITY = Integer.MAX_VALUE;
+    private final static int CHECKER = 100; //one checker worth 100
+    private final static int POS = 1;  //one position along the -j worth 1
+    private final static int KING = 200; //a king's worth
+    private final static int EDGE = 10; // effect of king being on the edge
+    private final static int RANDOM_WEIGHT = 10; // weight factor
 
-    final static int INFINITY = Integer.MAX_VALUE;
-    final static int CHECKER = 100; //one checker worth 100
-    final static int POS = 1;  //one position along the -j worth 1
-    final static int KING = 200; //a king's worth
-    final static int EDGE = 10; // effect of king being on the edge
-    final static int RANDOM_WEIGHT = 10; // weight factor
-
-    private static final int tableWeight[] = {
+    private static final int[] tableWeight = {
             4, 4, 4, 4,
             4, 3, 3, 3,
             3, 2, 2, 4,
@@ -26,130 +27,125 @@ class Engine {
             3, 3, 3, 4,
             4, 4, 4, 4};
 
-
-    public static int EvalSpettacolo(ItalianBoard board, PiecesColors player) { //Valuto dal punto di vista del NERO
-
+    //DONE
+    private static int EvalSpettacolo(ItalianBoard board, PiecesColors player) { //BOARD: black on the bottom side and valuation for black
         int score = 0;
-        int numeroPedine = 0;
-        boolean damaTrovata = false;
-        boolean pedinaTrovata = false;
-        final int LIMITE_PEDINE = 18;
-        final int PESO_PEDINA = 100;
-        final int PESO_DAMA = 200;
-        final int PESO_AVERE_MOSSA = 20;
-        final int PESO_RANDOM = 10;
+        int numberOfPieces = 0;
+        boolean kingFound = false;
+        boolean manFound = false;
+        final int LIMIT_PIECES = 18;
+        final int WEIGHT_MAN = 100;
+        final int WEIGHT_KING = 200;
+        final int WEIGHT_INITIATIVE = 20;
+        final int WEIGHT_RANDOM = 10;
 
         //controllo in che fase di gioco siamo
-        for (int posR = 0; posR < 8 && !damaTrovata; posR++)
-            for (int posC = 0; posC < 8 && !damaTrovata; posC++) {
+        for (int posR = 0; posR < 8 && !kingFound; posR++) {
+            for (int posC = 0; posC < 8 && !kingFound; posC++) {
                 if (board.getBoard()[posR][posC].getPlayer() != PiecesColors.EMPTY)
-                    numeroPedine++;
-                if ((board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK && board.getBoard()[posR][posC].getType() == PiecesType.KING) ||
-                        (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE && board.getBoard()[posR][posC].getType() == PiecesType.KING))
-                    damaTrovata = true;
+                    numberOfPieces++;
+                if (board.getBoard()[posR][posC].getType() == PiecesType.KING)
+                    kingFound = true;
             }
+        }
+        //INITIAL PHASE
+        if (!kingFound || numberOfPieces > LIMIT_PIECES) {
 
-        if (!damaTrovata || numeroPedine > LIMITE_PEDINE) { //fase iniziale
             for (int posR = 0; posR < 8; posR++)
                 for (int posC = 0; posC < 8; posC++) {
-                    if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK) {
-                        if ((7 - posR) <= 5) //parte del NERO
-                            score += PESO_PEDINA * (8 - posC) * (8 - posC) * (7 - posR) * (7 - posR);
+                    if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK && board.getBoard()[posR][posC].getType() == PiecesType.MAN) {
+                        if ((7 - posR) <= 5) //BLACK side
+                            score += WEIGHT_MAN * (8 - posC) * (8 - posC) * (7 - posR) * (7 - posR);
                         else
-                            score += PESO_PEDINA * posC * posC * (7 - posR) * (7 - posR);
+                            score += WEIGHT_MAN * posC * posC * (7 - posR) * (7 - posR);
                     }
-                    if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE) {
-                        if (posR <= 3) //parte del BIANCO
-                            score -= PESO_PEDINA * (8 - posC) * (8 - posC) * posR * posR;
+                    if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE && board.getBoard()[posR][posC].getType() == PiecesType.MAN) {
+                        if (posR <= 3) //WHITE side
+                            score -= WEIGHT_MAN * (8 - posC) * (8 - posC) * posR * posR;
                         else
-                            score -= PESO_PEDINA * posC * posC * posR * posR;
+                            score -= WEIGHT_MAN * posC * posC * posR * posR;
                     }
                 }
-        } else {//fase finale
+        }
+        //FINAL PHASE
+        else {
             int r = 0, c = 0;
             int numeroCoppiePari = 0;
 
             for (int posR = 0; posR < 8; posR++)
                 for (int posC = 0; posC < 8; posC++) {
                     if (board.getBoard()[posR][posC].getPlayer() != PiecesColors.EMPTY) {
-                        if (!pedinaTrovata) {
+                        if (!manFound) {
                             r = posR;
                             c = posC;
-                            pedinaTrovata = true;
+                            manFound = true;
                         } else {
-                            pedinaTrovata = false;
+                            manFound = false;
                             if (Math.max(Math.abs(r - posR), Math.abs(c - posC)) % 2 == 0) { //distanza coppia e' pari
                                 numeroCoppiePari++;
                             }
                         }
-                        if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK) {
-                            score += PESO_PEDINA * (7 - posR) * (7 - posR);
-                        } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE) {
-                            score -= PESO_PEDINA * posR * posR;
+                        if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK && board.getBoard()[posR][posC].getType() == PiecesType.MAN) {
+                            score += WEIGHT_MAN * (7 - posR) * (7 - posR);
+                        } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE && board.getBoard()[posR][posC].getType() == PiecesType.MAN) {
+                            score -= WEIGHT_MAN * posR * posR;
                         } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK && board.getBoard()[posR][posC].getType() == PiecesType.KING) {
-                            score += PESO_DAMA;
+                            score += WEIGHT_KING;
                         } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE && board.getBoard()[posR][posC].getType() == PiecesType.KING) {
-                            score -= PESO_DAMA;
+                            score -= WEIGHT_KING;
                         }
                     }
                 }
             if ((numeroCoppiePari % 2) == 1) //chi muove e' privilegiato
                 if (player == PiecesColors.BLACK)  //player DEVE essere WHITE o BLACK
-                    score += PESO_AVERE_MOSSA;
+                    score += WEIGHT_INITIATIVE;
                 else
-                    score -= PESO_AVERE_MOSSA;
-
+                    score -= WEIGHT_INITIATIVE;
         }
-        score += (int) (Math.random() * PESO_RANDOM);
+        score += (int) (Math.random() * WEIGHT_RANDOM);
         return score;
-
     }
 
-    public static int valutaPos(int posR, int posC, ItalianBoard board) {
-        int value;
-
-        if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE)
-            if (posR == 1)
-                value = 7;
-            else
-                value = 5;
-        else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK)
-            if (posR == 6)
-                value = 7;
-            else
-                value = 5;
-        else // dama
+    //DONE
+    private static int valutaPos(int posR, int posC, ItalianBoard board) {
+        int value = 0;
+        if (board.getBoard()[posR][posC].getType() == PiecesType.MAN) {
+            if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE)
+                if (posR == 1)
+                    value = 7;
+                else
+                    value = 5;
+            else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK)
+                if (posR == 6)
+                    value = 7;
+                else
+                    value = 5;
+        } else // dama
             value = 10;
 
         return value * tableWeight[(posR / 2) * 4 + posC / 2] * posR * posR;
     }
 
-    public static int Evaluation2Compl(ItalianBoard board) {
-        final int CHECKER = 150;
-        final int POS = 1;
-        final int KING = 300;
+    private static int Evaluation2Compl(ItalianBoard board) {
         int score = 0;
 
         for (int posR = 0; posR < 8; posR++)
             for (int posC = 0; posC < 8; posC++) {
-                if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE) {
+                if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE && board.getBoard()[posR][posC].getType() == PiecesType.MAN) {
                     score -= valutaPos(posR, posC, board);
-                } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK) {
+                } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK && board.getBoard()[posR][posC].getType() == PiecesType.MAN) {
                     score += valutaPos(posR, posC, board);
                 } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE && board.getBoard()[posR][posC].getType() == PiecesType.KING) {
                     score -= valutaPos(posR, posC, board);
                 } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK && board.getBoard()[posR][posC].getType() == PiecesType.KING) {
                     score += valutaPos(posR, posC, board);
                 }
-
             }//end for
         score += (int) (Math.random() * RANDOM_WEIGHT);
         return score;
-
-
     }
 
-    public static int Evaluation2(ItalianBoard board) { //Valuto dal punto di vista del NERO
+    private static int Evaluation2(ItalianBoard board) { //Valuto dal punto di vista del NERO
         final int CHECKER = 150;
         final int POS = 1;
         final int KING = 300;
@@ -157,20 +153,23 @@ class Engine {
 
         for (int posR = 0; posR < 8; posR++)
             for (int posC = 0; posC < 8; posC++) {
-                if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE) {
+                if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE && board.getBoard()[posR][posC].getType() == PiecesType.MAN) {
                     score -= CHECKER;
                     score -= POS * posR * posR;
                     score -= supportoWHITE(board, posR, posC);
-                } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK) {
+                } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK && board.getBoard()[posR][posC].getType() == PiecesType.MAN) {
                     score += CHECKER;
                     score += POS * (7 - posR) * (7 - posR);
                     score += supportoBLACK(board, posR, posC);
-                } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE && board.getBoard()[posR][posC].getType() == PiecesType.KING) {
-                    score -= KING;
-                    score -= (4 - Math.abs(3.5 - posR)) * (4 - Math.abs(3.5 - posR)) + (4 - Math.abs(3.5 - posC)) * (4 - Math.abs(3.5 - posC));
-                } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK && board.getBoard()[posR][posC].getType() == PiecesType.KING) {
-                    score += KING;
-                    score += (4 - Math.abs(3.5 - posR)) * (4 - Math.abs(3.5 - posR)) + (4 - Math.abs(3.5 - posC)) * (4 - Math.abs(3.5 - posC));
+                } else {
+                    double calculationScore = (4 - Math.abs(3.5 - posR)) * (4 - Math.abs(3.5 - posR)) + (4 - Math.abs(3.5 - posC)) * (4 - Math.abs(3.5 - posC));
+                    if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE && board.getBoard()[posR][posC].getType() == PiecesType.KING) {
+                        score -= KING;
+                        score -= calculationScore;
+                    } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK && board.getBoard()[posR][posC].getType() == PiecesType.KING) {
+                        score += KING;
+                        score += calculationScore;
+                    }
                 }
 
             }//end for
@@ -179,11 +178,12 @@ class Engine {
 
     }
 
-    public static int supportoBLACK(ItalianBoard board, int posR, int posC) {
+    private static int supportoBLACK(ItalianBoard board, int posR, int posC) {
         int score = 0;
-        int tmp = 0;
+        int tmp;
 
-        if (!Move.inRange(posR, posC) || ((Move.inRange(posR + 1, posC - 1) && position[posR + 1][posC - 1] != Checkers.BLACK) && (Move.inRange(posR + 1, posC + 1) && position[posR + 1][posC + 1] != Checkers.BLACK)))
+        if (!Move.inRange(posR, posC) || ((Move.inRange(posR + 1, posC - 1) && board.getBoard()[posR + 1][posC - 1].getPlayer() != PiecesColors.BLACK && board.getBoard()[posR + 1][posC - 1].getType() != PiecesType.MAN) &&
+                (Move.inRange(posR + 1, posC + 1) && board.getBoard()[posR + 1][posC + 1].getPlayer() != PiecesColors.BLACK && board.getBoard()[posR + 1][posC + 1].getType() != PiecesType.MAN)))
             if (posR == 8)
                 return 0;
             else
@@ -199,11 +199,12 @@ class Engine {
         return score;
     }
 
-    public static int supportoWHITE(ItalianBoard board, int posR, int posC) {
+    private static int supportoWHITE(ItalianBoard board, int posR, int posC) {
         int score = 0;
-        int tmp = 0;
+        int tmp;
 
-        if (!Move.inRange(posR, posC) || ((Move.inRange(posR - 1, posC - 1) && board.getBoard()[posR - 1][posC - 1].getPlayer() != PiecesColors.WHITE) && (Move.inRange(posR - 1, posC + 1) && board.getBoard()[posR - 1][posC + 1].getPlayer() != PiecesColors.WHITE)))
+        if (!Move.inRange(posR, posC) || ((Move.inRange(posR - 1, posC - 1) && board.getBoard()[posR - 1][posC - 1].getPlayer() != PiecesColors.WHITE && board.getBoard()[posR - 1][posC - 1].getType() != PiecesType.MAN)
+                && (Move.inRange(posR - 1, posC + 1) && board.getBoard()[posR - 1][posC + 1].getPlayer() != PiecesColors.WHITE && board.getBoard()[posR - 1][posC + 1].getType() != PiecesType.MAN)))
             if (posR == -1)
                 return 0;
             else
@@ -220,7 +221,7 @@ class Engine {
     }
 
 
-    public static int EvalPrima(ItalianBoard board, int player) {
+    private static int EvalPrima(ItalianBoard board, PiecesColors player) {
         final int CHECKER = 100;
         final int POS = 1;
         final int KING = 200;
@@ -231,15 +232,15 @@ class Engine {
 
         for (int posR = 0; posR < 8; posR++)
             for (int posC = 0; posC < 8; posC++) {
-                if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE) {
+                if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE && board.getBoard()[posR][posC].getType() == PiecesType.MAN) {
                     score -= CHECKER;
                     score -= POS * posR * posR;
                     score -= supportoWHITE(board, posR, posC);
-                } else if (position[posR][posC] == Checkers.BLACK) {
+                } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK && board.getBoard()[posR][posC].getType() == PiecesType.MAN) {
                     score += CHECKER;
                     score += POS * (7 - posR) * (7 - posR);
                     score += supportoBLACK(board, posR, posC);
-                } else if (position[posR][posC] == Checkers.WKING) {
+                } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE && board.getBoard()[posR][posC].getType() == PiecesType.KING) {
                     posKW[nKW][0] = posR;
                     posKW[nKW][1] = posC;
                     nKW++;
@@ -248,7 +249,7 @@ class Engine {
                         score += EDGE;
                     if (posC == 0 || posC == 7)
                         score += EDGE;
-                } else if (position[posR][posC] == Checkers.BKING) {
+                } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK && board.getBoard()[posR][posC].getType() == PiecesType.KING) {
                     posKB[nKB][0] = posR;
                     posKB[nKB][1] = posC;
                     nKB++;
@@ -260,46 +261,38 @@ class Engine {
                 }
 
             }//end for
-//	for(int i=0;i<nKB;i++)
-//		for(int j=0;j<nKW;j++)
-//			if(Math.abs(posKB[i][0]-posKW[j][0])!=1 || Math.abs(posKB[i][1]-posKW[j][1])!=1)
-//				if(player==Checkers.WHITE)
-//					score-=1280-(Math.abs(posKB[i][0]-posKW[j][0])^2+Math.abs(posKB[i][1]-posKW[j][1])^2);
-//				else
-//					score+=1280-(Math.abs(posKB[i][0]-posKW[j][0])^2+Math.abs(posKB[i][1]-posKW[j][1])^2);
         score += (int) (Math.random() * RANDOM_WEIGHT);
         return score;
 
     }
 
-    public static int EvalPrimaOK(int[][] position) {
+    public static int EvalPrimaOK(ItalianBoard board) {
         final int CHECKER = 100;
         final int POS = 1;
         final int KING = 4000;
-        final int SPALLE_COPERTE = 100;
         int score = 0;
-        for (int i = 0; i < 8; i++)
-            for (int j = 0; j < 8; j++) {
-                if (position[i][j] == Checkers.WHITE) {
+        for (int posR = 0; posR < 8; posR++)
+            for (int posC = 0; posC < 8; posC++) {
+                if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE && board.getBoard()[posR][posC].getType() == PiecesType.MAN) {
                     score -= CHECKER;
-                    score -= POS * i * i;
+                    score -= POS * posR * posR;
 
-                    score -= supportoWHITE(position, i, j);
-                } else if (position[i][j] == Checkers.BLACK) {
+                    score -= supportoWHITE(board, posR, posC);
+                } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK && board.getBoard()[posR][posC].getType() == PiecesType.MAN) {
                     score += CHECKER;
-                    score += POS * (7 - i) * (7 - i);
-                    score += supportoBLACK(position, i, j);
-                } else if (position[i][j] == Checkers.WKING) {
+                    score += POS * (7 - posR) * (7 - posR);
+                    score += supportoBLACK(board, posR, posC);
+                } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE && board.getBoard()[posR][posC].getType() == PiecesType.KING) {
                     score -= KING;
-                    if (i == 0 || i == 7)
+                    if (posR == 0 || posR == 7)
                         score += EDGE;
-                    if (j == 0 || j == 7)
+                    if (posC == 0 || posC == 7)
                         score += EDGE;
-                } else if (position[i][j] == Checkers.BKING) {
+                } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK && board.getBoard()[posR][posC].getType() == PiecesType.KING) {
                     score += KING;
-                    if (i == 0 || i == 7)
+                    if (posR == 0 || posR == 7)
                         score -= EDGE;
-                    if (j == 0 || j == 7)
+                    if (posC == 0 || posC == 7)
                         score -= EDGE;
                 }
 
@@ -310,28 +303,28 @@ class Engine {
     }
 
 
-    public static int EvalOriginale(int[][] position) //originale
+    private static int EvalOriginale(ItalianBoard board) //originale
     {
         int score = 0;
 
         for (int posR = 0; posR < 8; posR++)
             for (int posC = 0; posC < 8; posC++) {
-                if (position[posR][posC] == Checkers.WHITE) {
+                if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE && board.getBoard()[posR][posC].getType() == PiecesType.MAN) {
                     score -= CHECKER;
                     score -= POS * posR * posR;
-                } else if (position[posR][posC] == Checkers.WKING) {
+                } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE && board.getBoard()[posR][posC].getType() == PiecesType.KING) {
                     score -= KING;
                     if (posR == 0 || posR == 7)
                         score += EDGE;
                     if (posC == 0 || posC == 7)
                         score += EDGE;
-                } else if (position[posR][posC] == Checkers.BKING) {
+                } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK && board.getBoard()[posR][posC].getType() == PiecesType.KING) {
                     score += KING;
                     if (posR == 0 || posR == 7)
                         score -= EDGE;
                     if (posC == 0 || posC == 7)
                         score -= EDGE;
-                } else if (position[posR][posC] == Checkers.BLACK) {
+                } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK && board.getBoard()[posR][posC].getType() == PiecesType.MAN) {
                     score += CHECKER;
                     score += POS * (7 - posR) * (7 - posR);
                 }
@@ -340,20 +333,20 @@ class Engine {
         return score;
     }//end Evaluation
 
-    public static int EvalSoloPedine(int[][] position) //originale
+    private static int EvalSoloPedine(ItalianBoard board) //originale
     {
         int score = 0;
 
         for (int posR = 0; posR < 8; posR++)
             for (int posC = 0; posC < 8; posC++) {
-                if (position[posR][posC] == Checkers.WHITE) {
+                if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE && board.getBoard()[posR][posC].getType() == PiecesType.MAN) {
                     score -= CHECKER;
                     score -= POS * posR * posR;
-                } else if (position[posR][posC] == Checkers.WKING) {
+                } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.WHITE && board.getBoard()[posR][posC].getType() == PiecesType.KING) {
                     score -= KING;
-                } else if (position[posR][posC] == Checkers.BKING) {
+                } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK && board.getBoard()[posR][posC].getType() == PiecesType.KING) {
                     score += KING;
-                } else if (position[posR][posC] == Checkers.BLACK) {
+                } else if (board.getBoard()[posR][posC].getPlayer() == PiecesColors.BLACK && board.getBoard()[posR][posC].getType() == PiecesType.MAN) {
                     score += CHECKER;
                     score += POS * (7 - posR) * (7 - posR);
                 }
@@ -362,33 +355,25 @@ class Engine {
         return score;
     }//end Evaluation
 
-    static int opponent(int turn) {
-        return turn == Checkers.BLACK ? Checkers.WHITE : Checkers.BLACK;
+    public static PiecesColors opponent(PiecesColors turn) {
+        return turn == PiecesColors.BLACK ? PiecesColors.WHITE : PiecesColors.BLACK;
     }
 
-    static int which_turn(int turn) {
-        return Move.color(turn) == Checkers.BLACK ? -INFINITY : INFINITY;
-    }
-
-    public static int MiniMax(int[][] board, int depth, int maxDepth, Vector<int[]> theMove, int player, int[] counter, int BFunction, int WFunction, Board scacchiera) {
-        //  Move.trasponiBoard(board);
-        int firstTurn = player;
-
-        //System.out.println("GIOCA PLAYER:"+player);
-
-        int[][] newBoard = new int[8][8];
+    public static int MiniMax(ItalianBoard board, int depth, int maxDepth, Vector<int[]> theMove, PiecesColors player, int[] counter, int BFunction, int WFunction) {
+        PiecesColors firstTurn = player;
+        ItalianBoard newBoard;
         int score;
-        Vector<Vector<int[]>> moves = new Vector<Vector<int[]>>();
+        ArrayList<GenericTree<Position>> moves;
         int bestMax = -INFINITY;
         int pippo = bestMax;
         int bestMin = INFINITY;
 
-        moves = Move.generate_moves(board, player);
+        moves = Move.generateMoves(board, player);
         if (moves.size() > 1)       //non ho una sola mossa obbligata
             for (int ind = 0; ind < moves.size(); ind++) {
                 newBoard = copy_board(board);
-                Move.eseguiMossa(newBoard, moves.elementAt(ind), false, scacchiera);
-                score = minimize(firstTurn, newBoard, depth + 1, maxDepth, opponent(player), counter, bestMin, bestMax, BFunction, WFunction, scacchiera);
+                Move.eseguiMossa(newBoard, moves.elementAt(ind));
+                score = minimize(firstTurn, newBoard, depth + 1, maxDepth, opponent(player), counter, bestMin, bestMax, BFunction, WFunction);
                 counter[0]++;
                 if (score >= pippo) {
                     pippo = score;
@@ -413,9 +398,9 @@ class Engine {
         return pippo;
     }
 
-    static boolean quiescent(int[][] board, int player, Vector<Vector<int[]>> moves) {
+    public static boolean quiescent(ItalianBoard board, PiecesColors player, ArrayList<GenericTree<Position>> moves) {
         //Vector<Vector<int[]>> moves=new Vector<Vector<int[]>>();
-        moves = Move.generate_moves(board, player);
+        moves = Move.generateMoves(board, player);
         if (moves.size() == 0) { //non ci sono mosse possibili
             //System.out.println("QUIESCENTE. PLAYER: "+player);
             return true;
@@ -428,15 +413,15 @@ class Engine {
 //return true;
     }
 
-    static int maximize(int firstTurn, int[][] board, int depth, int maxDepth, int player, int[] counter, int bestMin, int bestMax, int BFunction, int WFunction, Board scacchiera) {
+    public static int maximize(PiecesColors firstTurn, ItalianBoard board, int depth, int maxDepth, PiecesColors player, int[] counter, int bestMin, int bestMax, int BFunction, int WFunction) {
         // System.out.println("maximize depth:"+depth);
-        int[][] newBoard = new int[8][8];
+        ItalianBoard newBoard = new ItalianBoard();
         int score;
-        Vector<Vector<int[]>> moves = new Vector<Vector<int[]>>();
+        ArrayList<GenericTree<Position>> moves;
         moves = null;
 
         if (depth >= maxDepth && quiescent(board, player, moves))
-            if (firstTurn == Checkers.WHITE)
+            if (firstTurn == PiecesColors.WHITE)
                 switch (WFunction) {
                     case 0:
                         return -EvalOriginale(board);
@@ -445,7 +430,7 @@ class Engine {
                     case 2:
                         return -Evaluation2(board);
                     case 3:
-                        return -EvalSpettacolo(board, Move.color(player));
+                        return -EvalSpettacolo(board, player);
                     case 4:
                         return -EvalSoloPedine(board);
                     case 5:
@@ -462,7 +447,7 @@ class Engine {
                     case 2:
                         return Evaluation2(board);
                     case 3:
-                        return EvalSpettacolo(board, Move.color(player));
+                        return EvalSpettacolo(board, player);
                     case 4:
                         return EvalSoloPedine(board);
                     case 5:
@@ -473,12 +458,12 @@ class Engine {
         else { //branch
             score = -INFINITY;
             if (moves == null)
-                moves = Move.generate_moves(board, player);
+                moves = Move.generateMoves(board, player);
             for (int ind = 0; ind < moves.size(); ind++) {
                 newBoard = copy_board(board);
-                Move.eseguiMossa(newBoard, moves.elementAt(ind), false, scacchiera);
+                Move.eseguiMossa(newBoard, moves.elementAt(ind));
 
-                score = Math.max(score, minimize(firstTurn, newBoard, depth + 1, maxDepth, opponent(player), counter, bestMin, bestMax, BFunction, WFunction, scacchiera));
+                score = Math.max(score, minimize(firstTurn, newBoard, depth + 1, maxDepth, opponent(player), counter, bestMin, bestMax, BFunction, WFunction));
                 counter[0]++;
                 if (score >= bestMin)
                     return score;
@@ -488,16 +473,16 @@ class Engine {
         }
     } //end maximize
 
-    static int minimize(int firstTurn, int[][] board, int depth, int maxDepth, int player, int[] counter, int bestMin, int bestMax, int BFunction, int WFunction, Board scacchiera) {
+    public static int minimize(PiecesColors firstTurn, ItalianBoard board, int depth, int maxDepth, PiecesColors player, int[] counter, int bestMin, int bestMax, int BFunction, int WFunction) {
         //  System.out.println("minimize depth:"+depth);
-        int[][] newBoard = new int[8][8];
+        ItalianBoard newBoard = new ItalianBoard();
         int score;
-        Vector<Vector<int[]>> moves = new Vector<Vector<int[]>>();
+        ArrayList<GenericTree<Position>> moves;
 
         moves = null;
 
         if (depth >= maxDepth && quiescent(board, player, moves))
-            if (firstTurn == Checkers.WHITE)
+            if (firstTurn == PiecesColors.WHITE)
                 switch (WFunction) {
                     case 0:
                         return -EvalOriginale(board);
@@ -506,7 +491,7 @@ class Engine {
                     case 2:
                         return -Evaluation2(board);
                     case 3:
-                        return -EvalSpettacolo(board, Move.color(player));
+                        return -EvalSpettacolo(board, player);
                     case 4:
                         return -EvalSoloPedine(board);
                     case 5:
@@ -523,7 +508,7 @@ class Engine {
                     case 2:
                         return Evaluation2(board);
                     case 3:
-                        return EvalSpettacolo(board, Move.color(player));
+                        return EvalSpettacolo(board, player);
                     case 4:
                         return EvalSoloPedine(board);
                     case 5:
@@ -534,11 +519,11 @@ class Engine {
         else { //branch
             score = INFINITY;
             if (moves == null)
-                moves = Move.generate_moves(board, player);
+                moves = Move.generateMoves(board, player);
             for (int ind = 0; ind < moves.size(); ind++) {
                 newBoard = copy_board(board);
-                Move.eseguiMossa(newBoard, moves.elementAt(ind), false, scacchiera);
-                score = Math.min(score, maximize(firstTurn, newBoard, depth + 1, maxDepth, opponent(player), counter, bestMin, bestMax, BFunction, WFunction, scacchiera));
+                Move.eseguiMossa(newBoard, moves.elementAt(ind));
+                score = Math.min(score, maximize(firstTurn, newBoard, depth + 1, maxDepth, opponent(player), counter, bestMin, bestMax, BFunction, WFunction));
                 counter[0]++;
                 if (score <= bestMax)
                     return score;
@@ -549,19 +534,14 @@ class Engine {
     } //end minimize
 
 
-    static int[][] copy_board(int[][] board) {
-        int[][] copy = new int[8][8];
+    public static ItalianBoard copy_board(ItalianBoard board) {
+        ItalianBoard copy = new ItalianBoard();
 
         for (int posR = 0; posR < 8; posR++)
             for (int posC = 0; posC < 8; posC++)
-                copy[posR][posC] = board[posR][posC];
+                copy.getBoard()[posR][posC] = board.getBoard()[posR][posC];
         return copy;
     }//end copy_board
 
-    static boolean better(int the_score, int best, int turn) {
-        if (turn == Checkers.BLACK)
-            return the_score > best;
-        return the_score < best;
-    }//end better
 }//end class engine
 
