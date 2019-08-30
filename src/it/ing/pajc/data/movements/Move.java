@@ -10,6 +10,12 @@ import java.util.*;
 
 public class Move {
 
+/*
+    public static Position [] getEatablePieces(){
+
+    }
+
+ */
     /**
      * Generates moves of all pieces.
      *
@@ -140,6 +146,7 @@ public class Move {
         }
         board.getBoard()[endR][endC] = board.getBoard()[startR][startC]; //sposto la pedina nella nuova posizione
         board.getBoard()[startR][startC].setPlayer(PiecesColors.EMPTY);  //libero la posizione di partenza
+
         // check for new king
         if (board.getBoard()[endR][endC].getPlayer() == PiecesColors.WHITE && endR == 7)
             board.getBoard()[endR][endC] = new ItalianKing(new Position(endR, endC), PiecesColors.WHITE);
@@ -163,6 +170,7 @@ public class Move {
         }
 
     }//RIFACCIO QUELLO SOPRA
+    /*
     public static void eseguiMossa(ItalianBoard board, GenericTree<Position> m) {
         List<GenericTreeNode<Position>> list = m.build(GenericTreeTraversalOrderEnum.PRE_ORDER);
         for (int i = 1; i < list.size(); i++) {
@@ -179,6 +187,8 @@ public class Move {
         }
 
     }
+
+     */
 
 
     public static boolean isKing(PiecesType pezzo) {

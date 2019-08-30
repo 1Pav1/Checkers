@@ -22,8 +22,6 @@ public class ItalianBoard implements Board {
 
     private StackPane[][] stackPaneBoard;
 
-    private int clickedPieceR;
-    private int clickedPieceC;
     private GridPane gridPane;
 
     /**
@@ -77,25 +75,7 @@ public class ItalianBoard implements Board {
                 stackPaneBoard[x][y] = new StackPane();
                 stackPaneBoard[x][y].setPrefWidth(60);
                 stackPaneBoard[x][y].setPrefHeight(60);
-                int finalY1 = y;
-                int finalX1 = x;
-                stackPaneBoard[x][y].setOnMousePressed(new EventHandler<MouseEvent>() {
-                    private int a;
 
-                    @Override
-                    public void handle(MouseEvent event) {
-                        System.out.println(piecesBoard[finalY1][finalX1].isDisable());
-                        if (piecesBoard[finalY1][finalX1].isDisable() == false) {
-                            System.out.println("final x:" + finalY1 + " final y:" + finalX1);
-                            System.out.println("ini x:" + clickedPieceR + " ini y:" + clickedPieceC);
-                            move(new Position(clickedPieceR, clickedPieceC), new Position(finalY1, finalX1));
-                            printBoardConsole();
-                            resetBoardFXColors();
-                            placeboard(gridPane, player);
-
-                        }
-                    }
-                });
             }
         }
         resetBoardFXColors();
@@ -150,10 +130,12 @@ public class ItalianBoard implements Board {
                     }
                     int finalJ = j;
                     int finalI = i;
+
+                    //Piece click handling event
                     Circle finalCircle = circle;
                     circle.setOnMousePressed(event -> {
                         resetBoardFXColors();
-                        /*
+                        /* animations
                         TranslateTransition transition = new TranslateTransition();
                         transition.setToX(50);
                         transition.setToY(-50);
@@ -161,31 +143,51 @@ public class ItalianBoard implements Board {
                         transition.setNode(finalCircle);
                         transition.play();
                          */
-                        clickedPieceR = finalJ;
-                        clickedPieceC = finalI;
                         int x = finalJ;
                         int y = finalI;
+                        //Getting the possible moves of specific man or king
                         GenericTree genericTree = ((Man) (piecesBoard[x][y])).possibleMoves(ItalianBoard.this);
-                        System.out.println(genericTree.getNumberOfNodes());
                         List<GenericTreeNode> list = genericTree.build(GenericTreeTraversalOrderEnum.PRE_ORDER);
+                        //Printing all the possible moves
                         for (int p = 1; p < list.size(); p++) {
                             Position position = (Position) list.get(p).getData();
-                            System.out.println(position.getPosR() + " " + position.getPosC());
+                            //System.out.println(position.getPosR() + " " + position.getPosC());
                             stackPaneBoard[position.getPosC()][position.getPosR()].setDisable(false);
-                            System.out.println(stackPaneBoard[position.getPosC()][position.getPosR()].isDisable());
-                            stackPaneBoard[position.getPosC()][position.getPosR()].setId("captureHighlight");
+                            //System.out.println(stackPaneBoard[position.getPosC()][position.getPosR()].isDisable());
+                            stackPaneBoard[position.getPosC()][position.getPosR()].setId("movementHighlight");
+
+
+                            //Generating event for the movement positions with deletion of the eaten pieces
+                            stackPaneBoard[position.getPosC()][position.getPosR()].setOnMousePressed(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+                                        GenericTree genericTreePossibleCaptures = ((Man) (piecesBoard[x][y])).possibleCaptures(ItalianBoard.this);
+                                        List<GenericTreeNode> listPossibleCaptures = genericTreePossibleCaptures.build(GenericTreeTraversalOrderEnum.PRE_ORDER);
+                                        move(new Position(x, y), new Position(position.getPosR(), position.getPosC()));
+
+                                        for (int p = 1; p < listPossibleCaptures.size(); p++) {
+                                            Position positionPossibleCaptures = (Position) listPossibleCaptures.get(p).getData();
+                                            System.out.println("Captured "+positionPossibleCaptures.getPosR()+ " "+ positionPossibleCaptures.getPosC());
+                                            delete(new Position(positionPossibleCaptures.getPosR(), positionPossibleCaptures.getPosC()));
+                                        }
+                                        //printBoardConsole();
+                                        resetBoardFXColors();
+                                        placeboard(gridPane, player);
+                                }
+                            });
                         }
 
+                        /*
                         genericTree = ((Man) (piecesBoard[x][y])).possibleMoves(ItalianBoard.this);
                         list = genericTree.build(GenericTreeTraversalOrderEnum.PRE_ORDER);
                         for (int p = 1; p < list.size(); p++) {
                             Position position = (Position) list.get(p).getData();
-                            System.out.println(position.getPosR() + " " + position.getPosC());
+                            //System.out.println(position.getPosR() + " " + position.getPosC());
                             stackPaneBoard[position.getPosC()][position.getPosR()].setDisable(false);
                             stackPaneBoard[position.getPosC()][position.getPosR()].setId("movementHighlight");
                         }
                         //MovementList list = ((Man) (piecesBoard[x][y])).possibleMoves(ItalianBoard.this);
-                        /*for (Position position : list.getPossibleMoves()) {
+                        for (Position position : list.getPossibleMoves()) {
                             stackPaneBoard[position.getPosC()][position.getPosR()].setDisable(false);
                             stackPaneBoard[position.getPosC()][position.getPosR()].setId("highlighted");
 
@@ -195,6 +197,15 @@ public class ItalianBoard implements Board {
 
             }
         }
+    }
+
+    /**
+     * Deletes the piece in the given position and replaces it with an empty object.
+     *
+     * @param position of the piece wanted to be deleted
+     */
+    public void delete(Position position){
+        piecesBoard[position.getPosR()][position.getPosC()] = new Empty(position);
     }
 
 
@@ -213,10 +224,7 @@ public class ItalianBoard implements Board {
         else if (piecesBoard[init.getPosR()][init.getPosC()].getPlayer() == PiecesColors.BLACK)
             piecesBoard[fin.getPosR()][fin.getPosC()] = new ItalianMan(fin, PiecesColors.BLACK);
 
-        System.out.println(fin.getPosR());
-        System.out.println(fin.getPosC());
-        System.out.println(piecesBoard[fin.getPosR()][fin.getPosC()].getPlayer());
-        piecesBoard[init.getPosR()][init.getPosC()].setPlayer(PiecesColors.EMPTY);
+        piecesBoard[init.getPosR()][init.getPosC()] = new Empty(init);
     }
 
     /**

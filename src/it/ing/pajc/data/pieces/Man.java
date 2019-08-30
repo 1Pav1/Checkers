@@ -103,4 +103,5 @@ public abstract class Man extends Pieces {
      * @return an ArrayList of all possible moves.
      */
     public abstract ArrayList<Position> possibleMovesInEmptySpaces(ItalianBoard board);
+
 }
