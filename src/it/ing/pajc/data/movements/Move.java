@@ -1,9 +1,12 @@
 package it.ing.pajc.data.movements;
 
 import it.ing.pajc.data.board.ItalianBoard;
+import it.ing.pajc.data.pieces.Empty;
+import it.ing.pajc.data.pieces.Pieces;
 import it.ing.pajc.data.pieces.PiecesColors;
 import it.ing.pajc.data.pieces.PiecesType;
 import it.ing.pajc.data.pieces.italian.ItalianKing;
+import it.ing.pajc.data.pieces.italian.ItalianMan;
 import it.ing.pajc.engine.Engine;
 
 import java.util.*;
@@ -134,27 +137,52 @@ public class Move {
     /**
      * Esegue la mossa in input ed eventualmente "mangia"
      *
-     * @param board
-     * @param startR
-     * @param startC
-     * @param endR
-     * @param endC
      */
-    public static void eseguiMossa(ItalianBoard board, int startR, int startC, int endR, int endC) {
-        if (Math.abs(startR - endR) == 2) { //sto mangiando?
-            board.getBoard()[startR + (endR - startR) / 2][startC + (endC - startC) / 2].setPlayer(PiecesColors.EMPTY); //mangio In realtà mi sono accorto che cambio solo il colore
+    public static void executeMove(Pieces piecesBoard[][], Position init, Position fin,List<GenericTreeNode> listPossibleCaptures) {
+        for (int p = 1; p < listPossibleCaptures.size(); p++) {
+            Position positionPossibleCaptures = (Position) listPossibleCaptures.get(p).getData();
+            System.out.println("Captured "+positionPossibleCaptures.getPosR()+ " "+ positionPossibleCaptures.getPosC());
+            delete(new Position(positionPossibleCaptures.getPosR(), positionPossibleCaptures.getPosC()),piecesBoard);
         }
-        board.getBoard()[endR][endC] = board.getBoard()[startR][startC]; //sposto la pedina nella nuova posizione
-        board.getBoard()[startR][startC].setPlayer(PiecesColors.EMPTY);  //libero la posizione di partenza
+        if (piecesBoard[init.getPosR()][init.getPosC()].getPlayer() == PiecesColors.WHITE)
+            if(piecesBoard[init.getPosR()][init.getPosC()].getType() == PiecesType.MAN)
+                piecesBoard[fin.getPosR()][fin.getPosC()] = new ItalianMan(fin, PiecesColors.WHITE);
+            else
+                piecesBoard[fin.getPosR()][fin.getPosC()] = new ItalianKing(fin, PiecesColors.WHITE);
+
+        else if (piecesBoard[init.getPosR()][init.getPosC()].getPlayer() == PiecesColors.BLACK)
+            if(piecesBoard[init.getPosR()][init.getPosC()].getType() == PiecesType.MAN)
+                piecesBoard[fin.getPosR()][fin.getPosC()] = new ItalianMan(fin, PiecesColors.BLACK);
+            else
+                piecesBoard[fin.getPosR()][fin.getPosC()] = new ItalianKing(fin, PiecesColors.BLACK);
+
+        piecesBoard[init.getPosR()][init.getPosC()] = new Empty(init);
 
         // check for new king
-        if (board.getBoard()[endR][endC].getPlayer() == PiecesColors.WHITE && endR == 7)
-            board.getBoard()[endR][endC] = new ItalianKing(new Position(endR, endC), PiecesColors.WHITE);
-        else if (board.getBoard()[endR][endC].getPlayer() == PiecesColors.BLACK && endR == 0)
-            board.getBoard()[endR][endC] = new ItalianKing(new Position(endR, endC), PiecesColors.BLACK);
+        if (piecesBoard[fin.getPosR()][fin.getPosC()].getPlayer() == PiecesColors.WHITE && fin.getPosR() == 7)
+            piecesBoard[fin.getPosR()][fin.getPosC()] = new ItalianKing(new Position(fin.getPosR(), fin.getPosC()), PiecesColors.WHITE);
+        else if (piecesBoard[fin.getPosR()][fin.getPosC()].getPlayer() == PiecesColors.BLACK && fin.getPosR() == 0)
+            piecesBoard[fin.getPosR()][fin.getPosC()] = new ItalianKing(new Position(fin.getPosR(), fin.getPosC()), PiecesColors.BLACK);
+
+        /*if (Math.abs(startR - endR) == 2) { //sto mangiando?
+            piecesBoard.getBoard()[startR + (endR - startR) / 2][startC + (endC - startC) / 2].setPlayer(PiecesColors.EMPTY); //mangio In realtà mi sono accorto che cambio solo il colore
+        }
+        piecesBoard.getBoard()[endR][endC] = piecesBoard.getBoard()[startR][startC]; //sposto la pedina nella nuova posizione
+        piecesBoard.getBoard()[startR][startC].setPlayer(PiecesColors.EMPTY);  //libero la posizione di partenza
+        */
+
     }
 
-    public static void eseguiMossa(ItalianBoard board, Vector<int[]> m) {
+    /**
+     * Deletes the piece in the given position and replaces it with an empty object.
+     *
+     * @param position of the piece wanted to be deleted
+     */
+    public static void  delete(Position position,Pieces piecesBoard[][]){
+        piecesBoard[position.getPosR()][position.getPosC()] = new Empty(position);
+    }
+
+   /*    public static void eseguiMossa(ItalianBoard board, Vector<int[]> m) {
 
         for (int i = 1; i < m.size(); i++) {
             if (Math.abs(m.get(i - 1)[1] - m.get(i)[1]) == 2) { //sto mangiando?
@@ -170,7 +198,7 @@ public class Move {
         }
 
     }//RIFACCIO QUELLO SOPRA
-    /*
+
     public static void eseguiMossa(ItalianBoard board, GenericTree<Position> m) {
         List<GenericTreeNode<Position>> list = m.build(GenericTreeTraversalOrderEnum.PRE_ORDER);
         for (int i = 1; i < list.size(); i++) {

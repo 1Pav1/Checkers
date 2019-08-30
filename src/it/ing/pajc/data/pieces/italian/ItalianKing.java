@@ -4,6 +4,7 @@ import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.data.movements.*;
 import it.ing.pajc.data.pieces.King;
 import it.ing.pajc.data.pieces.PiecesColors;
+import it.ing.pajc.data.pieces.PiecesType;
 
 import java.util.ArrayList;
 
@@ -45,6 +46,8 @@ public class ItalianKing extends King {
         } else {
             allPossibleCaptures(board);
         }
+
+
         return possibleMovementsList;
     }
 
@@ -57,9 +60,11 @@ public class ItalianKing extends King {
     @Override
     public GenericTree<Position> possibleCaptures(ItalianBoard board) {
         rootCaptures.removeChildren();
-        if (canCapture(board, this.getPosition())) {
-            allPossibleCaptures(board);
-        }
+        try {
+            if (canCapture(board, this.getPosition())) {
+                allPossibleCaptures(board);
+            }
+        }catch (Exception ex){};
         return possibleCapturesList;
     }
 
@@ -115,9 +120,10 @@ public class ItalianKing extends King {
     @Override
     public void possibleCaptureUpLeft(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures) {
         try {
-            if ((board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() - 1].getPlayer() !=
-                    board.getBoard()[parentPositions.getData().getPosR()][parentPositions.getData().getPosC()].getPlayer()) &&
-                    (board.getBoard()[parentPositions.getData().getPosR() - 2][parentPositions.getData().getPosC() - 2].getPlayer() == PiecesColors.EMPTY)) {
+            if ((board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() - 1].getPlayer() != board.getBoard()[parentPositions.getData().getPosR()][parentPositions.getData().getPosC()].getPlayer()) &&
+               (board.getBoard()[parentPositions.getData().getPosR()- 1][parentPositions.getData().getPosC() - 1].getType() == PiecesType.MAN ||
+                board.getBoard()[parentPositions.getData().getPosR()- 1][parentPositions.getData().getPosC() - 1].getType() == PiecesType.KING) &&
+                (board.getBoard()[parentPositions.getData().getPosR() - 2][parentPositions.getData().getPosC() - 2].getPlayer() == PiecesColors.EMPTY)) {
                 parentPositions.addChild(new GenericTreeNode<>(new Position(parentPositions.getData().getPosR() - 2, parentPositions.getData().getPosC() - 2)));
                 parentCaptures.addChild(new GenericTreeNode<>(new Position(parentPositions.getData().getPosR() - 1, parentPositions.getData().getPosC() - 1)));
             }
@@ -135,9 +141,10 @@ public class ItalianKing extends King {
     @Override
     public void possibleCaptureUpRight(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures) {
         try {
-            if ((board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() + 1].getPlayer() !=
-                    board.getBoard()[parentPositions.getData().getPosR()][parentPositions.getData().getPosC()].getPlayer()) &&
-                    (board.getBoard()[parentPositions.getData().getPosR() - 2][parentPositions.getData().getPosC() + 2].getPlayer() == PiecesColors.EMPTY)) {
+            if ((board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() + 1].getPlayer() != board.getBoard()[parentPositions.getData().getPosR()][parentPositions.getData().getPosC()].getPlayer()) &&
+                (board.getBoard()[parentPositions.getData().getPosR()- 1][parentPositions.getData().getPosC() + 1].getType() == PiecesType.MAN ||
+                 board.getBoard()[parentPositions.getData().getPosR()- 1][parentPositions.getData().getPosC() + 1].getType() == PiecesType.KING) &&
+                (board.getBoard()[parentPositions.getData().getPosR() - 2][parentPositions.getData().getPosC() + 2].getPlayer() == PiecesColors.EMPTY)) {
                 parentPositions.addChild(new GenericTreeNode<>(new Position(parentPositions.getData().getPosR() - 2, parentPositions.getData().getPosC() + 2)));
                 parentCaptures.addChild(new GenericTreeNode<>(new Position(parentPositions.getData().getPosR() - 1, parentPositions.getData().getPosC() + 1)));
             }
@@ -155,9 +162,10 @@ public class ItalianKing extends King {
     @Override
     public void possibleCaptureDownLeft(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures) {
         try {
-            if ((board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() - 1].getPlayer() !=
-                    board.getBoard()[parentPositions.getData().getPosR()][parentPositions.getData().getPosC()].getPlayer()) &&
-                    (board.getBoard()[parentPositions.getData().getPosR() + 2][parentPositions.getData().getPosC() - 2].getPlayer() == PiecesColors.EMPTY)) {
+            if ((board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() - 1].getPlayer() != board.getBoard()[parentPositions.getData().getPosR()][parentPositions.getData().getPosC()].getPlayer()) &&
+                (board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() - 1].getType() == PiecesType.MAN ||
+                 board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() - 1].getType() == PiecesType.KING) &&
+                 (board.getBoard()[parentPositions.getData().getPosR() + 2][parentPositions.getData().getPosC() - 2].getPlayer() == PiecesColors.EMPTY)) {
                 parentPositions.addChild(new GenericTreeNode<>(new Position(parentPositions.getData().getPosR() + 2, parentPositions.getData().getPosC() - 2)));
                 parentCaptures.addChild(new GenericTreeNode<>(new Position(parentPositions.getData().getPosR() + 1, parentPositions.getData().getPosC() - 1)));
             }
@@ -175,9 +183,10 @@ public class ItalianKing extends King {
     @Override
     public void possibleCaptureDownRight(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures) {
         try {
-            if ((board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() + 1].getPlayer() !=
-                    board.getBoard()[parentPositions.getData().getPosR()][parentPositions.getData().getPosC()].getPlayer()) &&
-                    (board.getBoard()[parentPositions.getData().getPosR() + 2][parentPositions.getData().getPosC() + 2].getPlayer() == PiecesColors.EMPTY)) {
+            if ((board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() + 1].getPlayer() != board.getBoard()[parentPositions.getData().getPosR()][parentPositions.getData().getPosC()].getPlayer()) &&
+                (board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() + 1].getType() == PiecesType.MAN ||
+                board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() + 1].getType() == PiecesType.KING) &&
+                (board.getBoard()[parentPositions.getData().getPosR() + 2][parentPositions.getData().getPosC() + 2].getPlayer() == PiecesColors.EMPTY)) {
                 parentPositions.addChild(new GenericTreeNode<>(new Position(parentPositions.getData().getPosR() + 2, parentPositions.getData().getPosC() + 2)));
                 parentCaptures.addChild(new GenericTreeNode<>(new Position(parentPositions.getData().getPosR() + 1, parentPositions.getData().getPosC() + 1)));
             }
@@ -195,18 +204,25 @@ public class ItalianKing extends King {
     @Override
     public boolean canCapture(ItalianBoard board, Position piece) {
         try {
-            return ((board.getBoard()[piece.getPosR() - 1][piece.getPosC() - 1].getPlayer() !=
-                    board.getBoard()[piece.getPosR()][piece.getPosC()].getPlayer()) &&
+            return ((board.getBoard()[piece.getPosR() - 1][piece.getPosC() - 1].getPlayer() != board.getBoard()[piece.getPosR()][piece.getPosC()].getPlayer()) &&
+                    ((board.getBoard()[piece.getPosR() - 1][piece.getPosC() - 1].getType() == PiecesType.MAN) ||
+                    (board.getBoard()[piece.getPosR() - 1][piece.getPosC() - 1].getType() == PiecesType.KING)) &&
                     (board.getBoard()[piece.getPosR() - 2][piece.getPosC() - 2].getPlayer() == PiecesColors.EMPTY)) ||
-                    ((board.getBoard()[piece.getPosR() - 1][piece.getPosC() + 1].getPlayer() !=
-                            board.getBoard()[piece.getPosR()][piece.getPosC()].getPlayer()) &&
-                            (board.getBoard()[piece.getPosR() - 2][piece.getPosC() + 2].getPlayer() == PiecesColors.EMPTY)) ||
-                    ((board.getBoard()[piece.getPosR() + 1][piece.getPosC() - 1].getPlayer() !=
-                            board.getBoard()[piece.getPosR()][piece.getPosC()].getPlayer()) &&
-                            (board.getBoard()[piece.getPosR() + 2][piece.getPosC() - 2].getPlayer() == PiecesColors.EMPTY)) ||
-                    ((board.getBoard()[piece.getPosR() + 1][piece.getPosC() + 1].getPlayer() !=
-                            board.getBoard()[piece.getPosR()][piece.getPosC()].getPlayer()) &&
-                            (board.getBoard()[piece.getPosR() + 2][piece.getPosC() + 2].getPlayer() == PiecesColors.EMPTY));
+
+                    ((board.getBoard()[piece.getPosR() - 1][piece.getPosC() + 1].getPlayer() != board.getBoard()[piece.getPosR()][piece.getPosC()].getPlayer()) &&
+                    ((board.getBoard()[piece.getPosR() - 1][piece.getPosC() + 1].getType() == PiecesType.MAN) ||
+                    (board.getBoard()[piece.getPosR() - 1][piece.getPosC() + 1].getType() == PiecesType.KING)) &&
+                    (board.getBoard()[piece.getPosR() - 2][piece.getPosC() + 2].getPlayer() == PiecesColors.EMPTY)) ||
+
+                    ((board.getBoard()[piece.getPosR() + 1][piece.getPosC() - 1].getPlayer() != board.getBoard()[piece.getPosR()][piece.getPosC()].getPlayer()) &&
+                    ((board.getBoard()[piece.getPosR() + 1][piece.getPosC() - 1].getType() == PiecesType.MAN) ||
+                    (board.getBoard()[piece.getPosR() + 1][piece.getPosC() - 1].getType() == PiecesType.KING)) &&
+                    (board.getBoard()[piece.getPosR() + 2][piece.getPosC() - 2].getPlayer() == PiecesColors.EMPTY)) ||
+
+                    ((board.getBoard()[piece.getPosR() + 1][piece.getPosC() + 1].getPlayer() != board.getBoard()[piece.getPosR()][piece.getPosC()].getPlayer()) &&
+                    ((board.getBoard()[piece.getPosR() + 1][piece.getPosC() + 1].getType() == PiecesType.MAN) ||
+                    (board.getBoard()[piece.getPosR() + 1][piece.getPosC() + 1].getType() == PiecesType.KING)) &&
+                    (board.getBoard()[piece.getPosR() + 2][piece.getPosC() + 2].getPlayer() == PiecesColors.EMPTY));
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
         return false;
@@ -245,16 +261,25 @@ public class ItalianKing extends King {
         try {
             if (board.getBoard()[posRow - 1][posColumn - 1].getPlayer() == PiecesColors.EMPTY)//up left
                 possibleMovementList.add(new Position(posRow - 1, posColumn - 1));
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
 
+        try {
             if (board.getBoard()[posRow - 1][posColumn + 1].getPlayer() == PiecesColors.EMPTY)//up right
                 possibleMovementList.add(new Position(posRow - 1, posColumn + 1));
+        }catch (ArrayIndexOutOfBoundsException ignored){
+        }
 
+        try {
             if (board.getBoard()[posRow + 1][posColumn - 1].getPlayer() == PiecesColors.EMPTY)//down left
                 possibleMovementList.add(new Position(posRow + 1, posColumn - 1));
+        }catch (ArrayIndexOutOfBoundsException ignored){
+        }
 
+        try {
             if (board.getBoard()[posRow + 1][posColumn + 1].getPlayer() == PiecesColors.EMPTY)//down right
                 possibleMovementList.add(new Position(posRow + 1, posColumn + 1));
-        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }catch (ArrayIndexOutOfBoundsException ignored){
         }
         return possibleMovementList;
     }

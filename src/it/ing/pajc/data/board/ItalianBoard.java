@@ -4,10 +4,12 @@ import it.ing.pajc.data.movements.*;
 import it.ing.pajc.data.pieces.*;
 import it.ing.pajc.data.pieces.italian.*;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 import java.util.List;
@@ -115,14 +117,25 @@ public class ItalianBoard implements Board {
                 if (piecesBoard[j][i].getPlayer() != PiecesColors.EMPTY) {
                     if (piecesBoard[j][i].getPlayer() == PiecesColors.WHITE) {
                         circle = piecesBoard[j][i];
-                        circle.setFill(Color.WHITE);
+                        if(piecesBoard[j][i].getType() == PiecesType.MAN)
+                            circle.setFill(Color.WHITE);
+                        else {
+                            Image image = new Image("/it/ing/pajc/graphics/Images/WoodenStyle/Kings/whiteKing.JPG",false);
+                            circle.setFill(new ImagePattern(image));
+                        }
                         circle.setRadius(29);
+                        circle.setStyle("");
                         grid.add(circle, i, j);
                         if (this.player != piecesBoard[j][i].getPlayer())
                             circle.setDisable(true);
                     } else {
                         circle = piecesBoard[j][i];
-                        circle.setFill(Color.BLACK);
+                        if(piecesBoard[j][i].getType() == PiecesType.MAN)
+                            circle.setFill(Color.BLACK);
+                        else {
+                            Image image = new Image("/it/ing/pajc/graphics/Images/WoodenStyle/Kings/blackKing.JPG",false);
+                            circle.setFill(new ImagePattern(image));
+                        }
                         circle.setRadius(30);
                         grid.add(circle, i, j);
                         if (this.player != piecesBoard[j][i].getPlayer())
@@ -146,7 +159,12 @@ public class ItalianBoard implements Board {
                         int x = finalJ;
                         int y = finalI;
                         //Getting the possible moves of specific man or king
-                        GenericTree genericTree = ((Man) (piecesBoard[x][y])).possibleMoves(ItalianBoard.this);
+                        GenericTree genericTree;
+                        if(piecesBoard[x][y].getType()==PiecesType.MAN)
+                            genericTree = ((Man) (piecesBoard[x][y])).possibleMoves(ItalianBoard.this);
+                        else
+                            genericTree = ((King) (piecesBoard[x][y])).possibleMoves(ItalianBoard.this);
+
                         List<GenericTreeNode> list = genericTree.build(GenericTreeTraversalOrderEnum.PRE_ORDER);
                         //Printing all the possible moves
                         for (int p = 1; p < list.size(); p++) {
@@ -161,16 +179,15 @@ public class ItalianBoard implements Board {
                             stackPaneBoard[position.getPosC()][position.getPosR()].setOnMousePressed(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                        GenericTree genericTreePossibleCaptures = ((Man) (piecesBoard[x][y])).possibleCaptures(ItalianBoard.this);
-                                        List<GenericTreeNode> listPossibleCaptures = genericTreePossibleCaptures.build(GenericTreeTraversalOrderEnum.PRE_ORDER);
-                                        move(new Position(x, y), new Position(position.getPosR(), position.getPosC()));
+                                    GenericTree genericTreePossibleCaptures;
+                                        if(piecesBoard[x][y].getType()==PiecesType.MAN)
+                                            genericTreePossibleCaptures = ((Man) (piecesBoard[x][y])).possibleCaptures(ItalianBoard.this);
+                                        else
+                                            genericTreePossibleCaptures = ((King) (piecesBoard[x][y])).possibleCaptures(ItalianBoard.this);
 
-                                        for (int p = 1; p < listPossibleCaptures.size(); p++) {
-                                            Position positionPossibleCaptures = (Position) listPossibleCaptures.get(p).getData();
-                                            System.out.println("Captured "+positionPossibleCaptures.getPosR()+ " "+ positionPossibleCaptures.getPosC());
-                                            delete(new Position(positionPossibleCaptures.getPosR(), positionPossibleCaptures.getPosC()));
-                                        }
-                                        //printBoardConsole();
+                                        //GenericTree genericTreePossibleCaptures = ((Man) (piecesBoard[x][y])).possibleCaptures(ItalianBoard.this);
+                                        List<GenericTreeNode> listPossibleCaptures = genericTreePossibleCaptures.build(GenericTreeTraversalOrderEnum.PRE_ORDER);
+                                        Move.executeMove(piecesBoard,new Position(x, y),position,listPossibleCaptures);
                                         resetBoardFXColors();
                                         placeboard(gridPane, player);
                                 }
