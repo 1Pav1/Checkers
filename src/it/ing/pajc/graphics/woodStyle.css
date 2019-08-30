@@ -59,8 +59,3 @@
      -fx-translate-x: 60;
     -fx-translate-y: 60;
 }
-
-.Circle
-{
-    -fx-background-color:rgb(255,0,0)!important;
-}

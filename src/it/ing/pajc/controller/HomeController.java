@@ -22,7 +22,7 @@ public class HomeController implements Serializable {
 
     public void  singlePlayer() throws IOException {
         PiecesColors color = PiecesColors.BLACK;
-        ItalianBoard board = new ItalianBoard("memememe/emekemem/mekemeke/eMeeeeee/eeeeeeee/eMeMeMeM/MeKeKeMe/eMeMeMeM",color);
+        ItalianBoard board = new ItalianBoard("memememe/emekemem/mekememe/eeeeeeee/eeeeeeee/eeeeeeee/eeeeeeee/eeeeeeee",color);
         //board.printBoardConsole();
 
         StackPane layout = new StackPane();
