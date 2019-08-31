@@ -187,7 +187,7 @@ public class ItalianBoard implements Board {
 
                                         //GenericTree genericTreePossibleCaptures = ((Man) (piecesBoard[x][y])).possibleCaptures(ItalianBoard.this);
                                         List<GenericTreeNode> listPossibleCaptures = genericTreePossibleCaptures.build(GenericTreeTraversalOrderEnum.PRE_ORDER);
-                                        Move.executeMove(piecesBoard,new Position(x, y),position,listPossibleCaptures);
+                                        Move.executeMove(ItalianBoard.this,new Position(x, y),position,listPossibleCaptures);
                                         resetBoardFXColors();
                                         placeboard(gridPane, player);
                                 }

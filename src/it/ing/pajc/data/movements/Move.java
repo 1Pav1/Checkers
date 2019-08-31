@@ -7,7 +7,7 @@ import it.ing.pajc.data.pieces.PiecesColors;
 import it.ing.pajc.data.pieces.PiecesType;
 import it.ing.pajc.data.pieces.italian.ItalianKing;
 import it.ing.pajc.data.pieces.italian.ItalianMan;
-import it.ing.pajc.engine.Engine;
+import javafx.geometry.Pos;
 
 import java.util.*;
 
@@ -19,6 +19,7 @@ public class Move {
     }
 
  */
+
     /**
      * Generates moves of all pieces.
      *
@@ -43,7 +44,22 @@ public class Move {
         return allPossibleMoves;
     }
     //USIAMO NO MOVES LEFT PER CONTROLLARE SE NESSUN PEZZO SI PUO MUOVERE
+    public static ArrayList<GenericTree<Position>> generateCaptures(ItalianBoard board, PiecesColors player) {
+        int posR;
+        int posC;
+        ArrayList<Position> piecesWhoCanMove = piecesWhoCanMove(board, player);
+        ArrayList<GenericTree<Position>> allPossibleCaptures = new ArrayList<>();
+        for (Position position : piecesWhoCanMove) {
+            posR = position.getPosR();
+            posC = position.getPosC();
 
+            if (isKing(board.getBoard()[posR][posC].getType()))
+                allPossibleCaptures.add(board.getKing(posR, posC).possibleCaptures(board));
+            else
+                allPossibleCaptures.add(board.getMan(posR, posC).possibleCaptures(board));
+        }
+        return allPossibleCaptures;
+    }
     /**
      * First check if pieces can captures and adds them in arrayList, if none can captures do the same for movements else return an empty arrayList
      *
@@ -136,41 +152,68 @@ public class Move {
 
     /**
      * Esegue la mossa in input ed eventualmente "mangia"
-     *
      */
-    public static void executeMove(Pieces piecesBoard[][], Position init, Position fin,List<GenericTreeNode> listPossibleCaptures) {
+    public static void executeMove(ItalianBoard board, Position init, Position fin, List<GenericTreeNode> listPossibleCaptures) {
         for (int p = 1; p < listPossibleCaptures.size(); p++) {
             Position positionPossibleCaptures = (Position) listPossibleCaptures.get(p).getData();
-            System.out.println("Captured "+positionPossibleCaptures.getPosR()+ " "+ positionPossibleCaptures.getPosC());
-            delete(new Position(positionPossibleCaptures.getPosR(), positionPossibleCaptures.getPosC()),piecesBoard);
+            System.out.println("Captured " + positionPossibleCaptures.getPosR() + " " + positionPossibleCaptures.getPosC());
+            delete(new Position(positionPossibleCaptures.getPosR(), positionPossibleCaptures.getPosC()), board);
         }
-        if (piecesBoard[init.getPosR()][init.getPosC()].getPlayer() == PiecesColors.WHITE)
-            if(piecesBoard[init.getPosR()][init.getPosC()].getType() == PiecesType.MAN)
-                piecesBoard[fin.getPosR()][fin.getPosC()] = new ItalianMan(fin, PiecesColors.WHITE);
+        if (board.getBoard()[init.getPosR()][init.getPosC()].getPlayer() == PiecesColors.WHITE)
+            if (board.getBoard()[init.getPosR()][init.getPosC()].getType() == PiecesType.MAN)
+                board.getBoard()[fin.getPosR()][fin.getPosC()] = new ItalianMan(fin, PiecesColors.WHITE);
             else
-                piecesBoard[fin.getPosR()][fin.getPosC()] = new ItalianKing(fin, PiecesColors.WHITE);
+                board.getBoard()[fin.getPosR()][fin.getPosC()] = new ItalianKing(fin, PiecesColors.WHITE);
 
-        else if (piecesBoard[init.getPosR()][init.getPosC()].getPlayer() == PiecesColors.BLACK)
-            if(piecesBoard[init.getPosR()][init.getPosC()].getType() == PiecesType.MAN)
-                piecesBoard[fin.getPosR()][fin.getPosC()] = new ItalianMan(fin, PiecesColors.BLACK);
+        else if (board.getBoard()[init.getPosR()][init.getPosC()].getPlayer() == PiecesColors.BLACK)
+            if (board.getBoard()[init.getPosR()][init.getPosC()].getType() == PiecesType.MAN)
+                board.getBoard()[fin.getPosR()][fin.getPosC()] = new ItalianMan(fin, PiecesColors.BLACK);
             else
-                piecesBoard[fin.getPosR()][fin.getPosC()] = new ItalianKing(fin, PiecesColors.BLACK);
+                board.getBoard()[fin.getPosR()][fin.getPosC()] = new ItalianKing(fin, PiecesColors.BLACK);
 
-        piecesBoard[init.getPosR()][init.getPosC()] = new Empty(init);
+        board.getBoard()[init.getPosR()][init.getPosC()] = new Empty(init);
 
         // check for new king
-        if (piecesBoard[fin.getPosR()][fin.getPosC()].getPlayer() == PiecesColors.WHITE && fin.getPosR() == 7)
-            piecesBoard[fin.getPosR()][fin.getPosC()] = new ItalianKing(new Position(fin.getPosR(), fin.getPosC()), PiecesColors.WHITE);
-        else if (piecesBoard[fin.getPosR()][fin.getPosC()].getPlayer() == PiecesColors.BLACK && fin.getPosR() == 0)
-            piecesBoard[fin.getPosR()][fin.getPosC()] = new ItalianKing(new Position(fin.getPosR(), fin.getPosC()), PiecesColors.BLACK);
+        if (board.getBoard()[fin.getPosR()][fin.getPosC()].getPlayer() == PiecesColors.WHITE && fin.getPosR() == 7)
+            board.getBoard()[fin.getPosR()][fin.getPosC()] = new ItalianKing(new Position(fin.getPosR(), fin.getPosC()), PiecesColors.WHITE);
+        else if (board.getBoard()[fin.getPosR()][fin.getPosC()].getPlayer() == PiecesColors.BLACK && fin.getPosR() == 0)
+            board.getBoard()[fin.getPosR()][fin.getPosC()] = new ItalianKing(new Position(fin.getPosR(), fin.getPosC()), PiecesColors.BLACK);
 
-        /*if (Math.abs(startR - endR) == 2) { //sto mangiando?
-            piecesBoard.getBoard()[startR + (endR - startR) / 2][startC + (endC - startC) / 2].setPlayer(PiecesColors.EMPTY); //mangio In realtà mi sono accorto che cambio solo il colore
+    }
+
+    public static void executeMove(ItalianBoard board, GenericTreeNode<Position> listPossibleMoves, GenericTreeNode<Position> listPossibleCaptures) {
+        if (!canCapture(board, listPossibleMoves.getData().getPosR(), listPossibleMoves.getData().getPosC())) {
+            if (!isKing(board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getType())) {
+                board.getBoard()[listPossibleMoves.getChildAt(0).getData().getPosR()][listPossibleMoves.getChildAt(0).getData().getPosC()] = new ItalianMan(new Position(listPossibleMoves.getChildAt(0).getData().getPosR(), listPossibleMoves.getChildAt(0).getData().getPosC()), board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getPlayer());
+                delete(board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getPosition(), board);
+            } else {
+                board.getBoard()[listPossibleMoves.getChildAt(0).getData().getPosR()][listPossibleMoves.getChildAt(0).getData().getPosC()] = new ItalianKing(new Position(listPossibleMoves.getChildAt(0).getData().getPosR(), listPossibleMoves.getChildAt(0).getData().getPosC()), board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getPlayer());
+                delete(board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getPosition(), board);
+            }
+        } else {
+            executeCapture(board, listPossibleMoves, listPossibleCaptures);
         }
-        piecesBoard.getBoard()[endR][endC] = piecesBoard.getBoard()[startR][startC]; //sposto la pedina nella nuova posizione
-        piecesBoard.getBoard()[startR][startC].setPlayer(PiecesColors.EMPTY);  //libero la posizione di partenza
-        */
+    }
 
+    public static void executeCapture(ItalianBoard board, GenericTreeNode<Position> listPossibleMoves, GenericTreeNode<Position> listPossibleCaptures) {
+        if (listPossibleMoves.hasChildren()) {
+            if (!isKing(board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getType())) {
+                board.getBoard()[listPossibleMoves.getChildAt(0).getData().getPosR()][listPossibleMoves.getChildAt(0).getData().getPosC()] = new ItalianMan(new Position(listPossibleMoves.getChildAt(0).getData().getPosR(), listPossibleMoves.getChildAt(0).getData().getPosC()), board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getPlayer());
+                delete(board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getPosition(), board);
+                delete(listPossibleCaptures.getChildAt(0).getData(), board);
+            } else {
+                board.getBoard()[listPossibleMoves.getChildAt(0).getData().getPosR()][listPossibleMoves.getChildAt(0).getData().getPosC()] = new ItalianKing(new Position(listPossibleMoves.getChildAt(0).getData().getPosR(), listPossibleMoves.getChildAt(0).getData().getPosC()), board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getPlayer());
+                delete(board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getPosition(), board);
+                delete(listPossibleCaptures.getChildAt(0).getData(), board);
+            }
+            executeCapture(board, listPossibleMoves.getChildAt(0), listPossibleCaptures.getChildAt(0));
+        }
+    }
+    public static ArrayList<Position> sequentialMoves (ItalianBoard board, GenericTreeNode < Position > listPossibleMoves,ArrayList<Position> moves){
+        moves.add(listPossibleMoves.getChildAt(0).getData());
+        if(listPossibleMoves.getChildAt(0).hasChildren())
+            sequentialMoves(board,listPossibleMoves.getChildAt(0),moves);
+        return moves;
     }
 
     /**
@@ -178,45 +221,9 @@ public class Move {
      *
      * @param position of the piece wanted to be deleted
      */
-    public static void  delete(Position position,Pieces piecesBoard[][]){
-        piecesBoard[position.getPosR()][position.getPosC()] = new Empty(position);
+    public static void delete(Position position, ItalianBoard board) {
+        board.getBoard()[position.getPosR()][position.getPosC()] = new Empty(position);
     }
-
-   /*    public static void eseguiMossa(ItalianBoard board, Vector<int[]> m) {
-
-        for (int i = 1; i < m.size(); i++) {
-            if (Math.abs(m.get(i - 1)[1] - m.get(i)[1]) == 2) { //sto mangiando?
-                board.getBoard()[m.get(i - 1)[0] + (m.get(i)[0] - m.get(i - 1)[0]) / 2][m.get(i - 1)[1] + (m.get(i)[1] - m.get(i - 1)[1]) / 2].setPlayer(PiecesColors.EMPTY); //mangio
-            }
-            board.getBoard()[m.get(i)[0]][m.get(i)[1]] = board.getBoard()[m.get(i - 1)[0]][m.get(i - 1)[1]];
-            board.getBoard()[m.get(i - 1)[0]][m.get(i - 1)[1]].setPlayer(PiecesColors.EMPTY);
-            //controllo se diventa dama
-            if (board.getBoard()[m.get(i)[0]][m.get(i)[1]].getPlayer() == PiecesColors.WHITE && m.get(i)[0] == 7)
-                board.getBoard()[m.get(i)[0]][m.get(i)[1]] = new ItalianKing(new Position(m.get(i)[0], m.get(i)[1]), PiecesColors.WHITE);
-            else if (board.getBoard()[m.get(i)[0]][m.get(i)[1]].getPlayer() == PiecesColors.BLACK && m.get(i)[0] == 0)
-                board.getBoard()[m.get(i)[0]][m.get(i)[1]] = new ItalianKing(new Position(m.get(i)[0], m.get(i)[1]), PiecesColors.BLACK);
-        }
-
-    }//RIFACCIO QUELLO SOPRA
-
-    public static void eseguiMossa(ItalianBoard board, GenericTree<Position> m) {
-        List<GenericTreeNode<Position>> list = m.build(GenericTreeTraversalOrderEnum.PRE_ORDER);
-        for (int i = 1; i < list.size(); i++) {
-            if (Math.abs(list.get(i-1).getData().getPosR() - list.get(i).getData().getPosR()) == 2) { //sto mangiando?
-                board.getBoard()[list.get(i - 1).getData().getPosR() + (m.get(i)[0] - m.get(i - 1)[0]) / 2][m.get(i - 1)[1] + (m.get(i)[1] - m.get(i - 1)[1]) / 2].setPlayer(PiecesColors.EMPTY); //mangio
-            }
-            board.getBoard()[m.get(i)[0]][m.get(i)[1]] = board.getBoard()[m.get(i - 1)[0]][m.get(i - 1)[1]];
-            board.getBoard()[m.get(i - 1)[0]][m.get(i - 1)[1]].setPlayer(PiecesColors.EMPTY);
-            //controllo se diventa dama
-            if (board.getBoard()[m.get(i)[0]][m.get(i)[1]].getPlayer() == PiecesColors.WHITE && m.get(i)[0] == 7)
-                board.getBoard()[m.get(i)[0]][m.get(i)[1]] = new ItalianKing(new Position(m.get(i)[0], m.get(i)[1]), PiecesColors.WHITE);
-            else if (board.getBoard()[m.get(i)[0]][m.get(i)[1]].getPlayer() == PiecesColors.BLACK && m.get(i)[0] == 0)
-                board.getBoard()[m.get(i)[0]][m.get(i)[1]] = new ItalianKing(new Position(m.get(i)[0], m.get(i)[1]), PiecesColors.BLACK);
-        }
-
-    }
-
-     */
 
 
     public static boolean isKing(PiecesType pezzo) {
