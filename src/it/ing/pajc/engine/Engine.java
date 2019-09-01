@@ -9,7 +9,7 @@ import java.util.*;
 
 //BOARD: black on the bottom side
 public class Engine {
-/*
+
     private final static int INFINITY = Integer.MAX_VALUE;
     private final static int CHECKER = 100; //one checker worth 100
     private final static int POS = 1;  //one position along the -j worth 1
@@ -126,6 +126,7 @@ public class Engine {
         return value * tableWeight[(posR / 2) * 4 + posC / 2] * posR * posR;
     }
 
+    //DONE
     private static int Evaluation2Compl(ItalianBoard board) {
         int score = 0;
 
@@ -145,6 +146,7 @@ public class Engine {
         return score;
     }
 
+    //DONE
     private static int Evaluation2(ItalianBoard board) { //Valuto dal punto di vista del NERO
         final int CHECKER = 150;
         final int POS = 1;
@@ -175,9 +177,9 @@ public class Engine {
             }//end for
         score += (int) (Math.random() * RANDOM_WEIGHT);
         return score;
-
     }
 
+    //DONE
     private static int supportoBLACK(ItalianBoard board, int posR, int posC) {
         int score = 0;
         int tmp;
@@ -199,6 +201,7 @@ public class Engine {
         return score;
     }
 
+    //DONE
     private static int supportoWHITE(ItalianBoard board, int posR, int posC) {
         int score = 0;
         int tmp;
@@ -220,7 +223,7 @@ public class Engine {
         return score;
     }
 
-
+    //DONE
     private static int EvalPrima(ItalianBoard board, PiecesColors player) {
         final int CHECKER = 100;
         final int POS = 1;
@@ -266,6 +269,7 @@ public class Engine {
 
     }
 
+    //DONE
     public static int EvalPrimaOK(ItalianBoard board) {
         final int CHECKER = 100;
         final int POS = 1;
@@ -302,7 +306,7 @@ public class Engine {
 
     }
 
-
+    //DONE
     private static int EvalOriginale(ItalianBoard board) //originale
     {
         int score = 0;
@@ -333,6 +337,7 @@ public class Engine {
         return score;
     }//end Evaluation
 
+    //DONE
     private static int EvalSoloPedine(ItalianBoard board) //originale
     {
         int score = 0;
@@ -355,58 +360,63 @@ public class Engine {
         return score;
     }//end Evaluation
 
+    //DONE
     public static PiecesColors opponent(PiecesColors turn) {
         return turn == PiecesColors.BLACK ? PiecesColors.WHITE : PiecesColors.BLACK;
     }
 
-    public static int MiniMax(ItalianBoard board, int depth, int maxDepth, Vector<int[]> theMove, PiecesColors player, int[] counter, int BFunction, int WFunction) {
+    public static int MiniMax(ItalianBoard board, int depth, int maxDepth, ArrayList<Position> theMove, PiecesColors player, int[] counter, int BFunction, int WFunction) {
         PiecesColors firstTurn = player;
         ItalianBoard newBoard;
         int score;
         ArrayList<GenericTree<Position>> moves;
+        ArrayList<GenericTree<Position>> captures;
         int bestMax = -INFINITY;
         int pippo = bestMax;
         int bestMin = INFINITY;
-
         moves = Move.generateMoves(board, player);
+        captures = Move.generateCaptures(board, player);
+
         if (moves.size() > 1)       //non ho una sola mossa obbligata
             for (int ind = 0; ind < moves.size(); ind++) {
+                List<GenericTreeNode<Position>> listPossibleCaptures = captures.get(ind).build(GenericTreeTraversalOrderEnum.PRE_ORDER);
+                List<GenericTreeNode<Position>> listPossibleMoves = moves.get(ind).build(GenericTreeTraversalOrderEnum.PRE_ORDER);
                 newBoard = copy_board(board);
-                Move.eseguiMossa(newBoard, moves.elementAt(ind));
+                Move.executeMove(newBoard, listPossibleMoves.get(ind), listPossibleCaptures.get(ind));
                 score = minimize(firstTurn, newBoard, depth + 1, maxDepth, opponent(player), counter, bestMin, bestMax, BFunction, WFunction);
                 counter[0]++;
                 if (score >= pippo) {
                     pippo = score;
                     theMove.clear();
-                    for (int h = 0; h < moves.elementAt(ind).size(); h++)
-                        theMove.add(h, moves.elementAt(ind).get(h));
+                    Move.sequentialMoves(board, listPossibleMoves.get(ind), theMove);
                 }
                 if (pippo >= bestMin)
                     return pippo;
                 bestMax = Math.max(bestMax, pippo);
             }
         else if (moves.size() == 1) {
+            List<GenericTreeNode<Position>> listPossibleMoves = moves.get(0).build(GenericTreeTraversalOrderEnum.PRE_ORDER);
             theMove.clear();
-            for (int h = 0; h < moves.elementAt(0).size(); h++)
-                theMove.add(h, moves.elementAt(0).get(h));
+            Move.sequentialMoves(board, listPossibleMoves.get(0), theMove);
         }
-
-//	  if(moves.size() >= 1)
-//		  System.out.println("MOSSA MINIMAX: ("+theMove.elementAt(0)[0]+","+theMove.elementAt(0)[1]+")->("+theMove.elementAt(1)[0]+","+theMove.elementAt(1)[1]+")");
-//	  else
-//		  System.out.println("MOSSA MINIMAX: NESSUNA MOSSA");	
         return pippo;
     }
+
 
     public static boolean quiescent(ItalianBoard board, PiecesColors player, ArrayList<GenericTree<Position>> moves) {
         //Vector<Vector<int[]>> moves=new Vector<Vector<int[]>>();
         moves = Move.generateMoves(board, player);
+        List<GenericTreeNode<Position>> listPossibleMoves = moves.get(0).build(GenericTreeTraversalOrderEnum.PRE_ORDER);
         if (moves.size() == 0) { //non ci sono mosse possibili
             //System.out.println("QUIESCENTE. PLAYER: "+player);
             return true;
-        } else if (Math.abs(moves.elementAt(0).elementAt(0)[0] - moves.elementAt(0).elementAt(1)[0]) == 1) { //non ci sono catture
-            //System.out.println("QUIESCENTE. PLAYER: "+player);
-            return true;
+        } else if (board.getBoard()[listPossibleMoves.get(0).getData().getPosR()][listPossibleMoves.get(0).getData().getPosC()].getType() == PiecesType.MAN) {
+            if (!board.getMan(listPossibleMoves.get(0).getData().getPosR(), listPossibleMoves.get(0).getData().getPosC()).canCapture(board, board.getBoard()[listPossibleMoves.get(0).getData().getPosR()][listPossibleMoves.get(0).getData().getPosC()].getPosition())) { //non ci sono catture
+                //System.out.println("QUIESCENTE. PLAYER: "+player);
+                return true;
+            } else if (!board.getKing(listPossibleMoves.get(0).getData().getPosR(), listPossibleMoves.get(0).getData().getPosC()).canCapture(board, board.getBoard()[listPossibleMoves.get(0).getData().getPosR()][listPossibleMoves.get(0).getData().getPosC()].getPosition())) {
+                return true;
+            }
         }
         //System.out.println("NON QUIESCENTE. PLAYER: "+player);
         return false;
@@ -418,7 +428,9 @@ public class Engine {
         ItalianBoard newBoard = new ItalianBoard();
         int score;
         ArrayList<GenericTree<Position>> moves;
+        ArrayList<GenericTree<Position>> captures;
         moves = null;
+        captures = null;
 
         if (depth >= maxDepth && quiescent(board, player, moves))
             if (firstTurn == PiecesColors.WHITE)
@@ -457,11 +469,15 @@ public class Engine {
                 }
         else { //branch
             score = -INFINITY;
-            if (moves == null)
+            if (moves == null) {
+                captures = Move.generateCaptures(board, player);
                 moves = Move.generateMoves(board, player);
+            }
             for (int ind = 0; ind < moves.size(); ind++) {
+                List<GenericTreeNode<Position>> listPossibleCaptures = captures.get(ind).build(GenericTreeTraversalOrderEnum.PRE_ORDER);
+                List<GenericTreeNode<Position>> listPossibleMoves = moves.get(ind).build(GenericTreeTraversalOrderEnum.PRE_ORDER);
                 newBoard = copy_board(board);
-                Move.eseguiMossa(newBoard, moves.elementAt(ind));
+                Move.executeMove(newBoard, listPossibleMoves.get(ind), listPossibleCaptures.get(ind));
 
                 score = Math.max(score, minimize(firstTurn, newBoard, depth + 1, maxDepth, opponent(player), counter, bestMin, bestMax, BFunction, WFunction));
                 counter[0]++;
@@ -478,8 +494,9 @@ public class Engine {
         ItalianBoard newBoard = new ItalianBoard();
         int score;
         ArrayList<GenericTree<Position>> moves;
-
+        ArrayList<GenericTree<Position>> captures;
         moves = null;
+        captures = null;
 
         if (depth >= maxDepth && quiescent(board, player, moves))
             if (firstTurn == PiecesColors.WHITE)
@@ -518,11 +535,15 @@ public class Engine {
                 }
         else { //branch
             score = INFINITY;
-            if (moves == null)
+            if (moves == null) {
+                captures = Move.generateCaptures(board, player);
                 moves = Move.generateMoves(board, player);
+            }
             for (int ind = 0; ind < moves.size(); ind++) {
+                List<GenericTreeNode<Position>> listPossibleCaptures = captures.get(ind).build(GenericTreeTraversalOrderEnum.PRE_ORDER);
+                List<GenericTreeNode<Position>> listPossibleMoves = moves.get(ind).build(GenericTreeTraversalOrderEnum.PRE_ORDER);
                 newBoard = copy_board(board);
-                Move.eseguiMossa(newBoard, moves.elementAt(ind));
+                Move.executeMove(newBoard, listPossibleMoves.get(ind), listPossibleCaptures.get(ind));
                 score = Math.min(score, maximize(firstTurn, newBoard, depth + 1, maxDepth, opponent(player), counter, bestMin, bestMax, BFunction, WFunction));
                 counter[0]++;
                 if (score <= bestMax)
@@ -542,6 +563,6 @@ public class Engine {
                 copy.getBoard()[posR][posC] = board.getBoard()[posR][posC];
         return copy;
     }//end copy_board
-*/
+
 }//end class engine
 
