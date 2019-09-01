@@ -1,72 +1,75 @@
 package it.ing.pajc.multiplayer;
 
+import it.ing.pajc.Main;
+import it.ing.pajc.controller.CheckerBoardController;
 import it.ing.pajc.data.board.Board;
 import it.ing.pajc.data.board.ItalianBoard;
+import it.ing.pajc.data.board.MultiplayerItalianBoard;
 import it.ing.pajc.data.pieces.PiecesColors;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class MultiplayerManager {
     private int port;
     private Socket socket;
-    private ItalianBoard board;
+    private MultiplayerItalianBoard board;
+    private Multiplayer type;
+    private PiecesColors color;
+    private OutputStream outputStream;
+    private InputStream inputStream;
+    private OutputStreamWriter outputStreamWriter;
+    private InputStreamReader inputStreamReader;
+    private BufferedReader in;
+    private BufferedWriter bufferedWriter;
+    private PrintWriter out;
 
     public MultiplayerManager(PiecesColors color,int port) {
         this.port = port;
-        board = new ItalianBoard("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM",color);
+        this.color = color;
+
     }
 
 
-    public ItalianBoard getBoard() {
+    public MultiplayerItalianBoard getBoard() {
         return board;
     }
 
     public void serverStartup() throws IOException {
-        System.out.println("S: Server is started.");
-        ServerSocket ss = new ServerSocket(port);
-
-        System.out.println("S: Server is waiting for client request...");
-
-        Socket s = ss.accept();
-        System.out.println("S: Client connected.");
-
-        String brd = board.toString();
-        System.out.println("FEN code sent to client is: " + brd);
-        OutputStream outputStream = s.getOutputStream();
-        ObjectOutputStream os = new ObjectOutputStream(outputStream);
-        os.writeObject(brd);
-        outputStream.close();
-        os.close();
+        board = new MultiplayerItalianBoard("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM",color,this);
+        ServerSocket serverSocket = new ServerSocket(port);
+        socket = serverSocket.accept();
+        out = new PrintWriter(socket.getOutputStream(), true);
+        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        out.println(board.toString());
 
     }
 
     public void clientStartup() throws IOException, ClassNotFoundException {
-        Socket s = new Socket("localhost", port);
-        System.out.println("Receiving data from server.....");
-        InputStream is = s.getInputStream();
-        ObjectInputStream ois = new ObjectInputStream(is);
-
-        System.out.println("Reading data.....");
-        String str = (String) ois.readObject();
-        System.out.println("Data received is: " + str);
-        board = new ItalianBoard(str, PiecesColors.BLACK);
-        System.out.println("Converting FEN to actual representation.....");
-        s.close();
+        socket = new Socket("localhost", port);
+        out = new PrintWriter(socket.getOutputStream(), true);
+        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        board = new MultiplayerItalianBoard(in.readLine(),color,this);
+        waitForMove();
     }
 
-    private void sendFen() throws IOException {
+    public void waitForMove() throws IOException {
+        board.changeFen(in.readLine());
+    }
+
+    public void sendFen() throws IOException {
         PiecesColors color = PiecesColors.BLACK;
-        String brd = this.toString();
+        String brd = board.toString();
         System.out.println("FEN code sent to client is: " + brd);
-
-        OutputStream outputStream = socket.getOutputStream();
-        ObjectOutputStream os = new ObjectOutputStream(outputStream);
-
-        os.writeObject(brd);
-        outputStream.close();
-        os.close();
+        out.println(brd);
+        board.changeFen(in.readLine());
     }
 }
 

@@ -20,12 +20,29 @@ import java.util.List;
  */
 public class ItalianBoard implements Board {
     private PiecesColors player;
+
     private Pieces[][] piecesBoard;
 
     private StackPane[][] stackPaneBoard;
 
     private GridPane gridPane;
 
+
+    public PiecesColors getPlayer() {
+        return player;
+    }
+
+    public Pieces[][] getPiecesBoard() {
+        return piecesBoard;
+    }
+
+    public StackPane[][] getStackPaneBoard() {
+        return stackPaneBoard;
+    }
+
+    public GridPane getGridPane() {
+        return gridPane;
+    }
     /**
      * ItalianBoard constructor.
      */
@@ -70,7 +87,7 @@ public class ItalianBoard implements Board {
     /**
      * Board initializer using JavaFX.
      */
-    private void initializeBoardFX() {
+    public void initializeBoardFX() {
         stackPaneBoard = new StackPane[DIMENSION_ITALIAN_BOARD][DIMENSION_ITALIAN_BOARD];
         for (int x = 0; x < DIMENSION_ITALIAN_BOARD; x++) {
             for (int y = 0; y < DIMENSION_ITALIAN_BOARD; y++) {
@@ -86,7 +103,7 @@ public class ItalianBoard implements Board {
     /**
      * Reset colors of the pieces on the board
      */
-    private void resetBoardFXColors() {
+    public void resetBoardFXColors() {
         for (int x = 0; x < DIMENSION_ITALIAN_BOARD; x++) {
             for (int y = 0; y < DIMENSION_ITALIAN_BOARD; y++) {
                 stackPaneBoard[x][y].setDisable(true);
@@ -123,7 +140,7 @@ public class ItalianBoard implements Board {
                             Image image = new Image("/it/ing/pajc/graphics/Images/WoodenStyle/Kings/whiteKing.JPG",false);
                             circle.setFill(new ImagePattern(image));
                         }
-                        circle.setRadius(29);
+                        circle.setRadius(30);
                         circle.setStyle("");
                         grid.add(circle, i, j);
                         if (this.player != piecesBoard[j][i].getPlayer())
@@ -180,16 +197,16 @@ public class ItalianBoard implements Board {
                                 @Override
                                 public void handle(MouseEvent event) {
                                     GenericTree genericTreePossibleCaptures;
-                                        if(piecesBoard[x][y].getType()==PiecesType.MAN)
-                                            genericTreePossibleCaptures = ((Man) (piecesBoard[x][y])).possibleCaptures(ItalianBoard.this);
-                                        else
-                                            genericTreePossibleCaptures = ((King) (piecesBoard[x][y])).possibleCaptures(ItalianBoard.this);
+                                    if(piecesBoard[x][y].getType()==PiecesType.MAN)
+                                        genericTreePossibleCaptures = ((Man) (piecesBoard[x][y])).possibleCaptures(ItalianBoard.this);
+                                    else
+                                        genericTreePossibleCaptures = ((King) (piecesBoard[x][y])).possibleCaptures(ItalianBoard.this);
 
-                                        //GenericTree genericTreePossibleCaptures = ((Man) (piecesBoard[x][y])).possibleCaptures(ItalianBoard.this);
-                                        List<GenericTreeNode> listPossibleCaptures = genericTreePossibleCaptures.build(GenericTreeTraversalOrderEnum.PRE_ORDER);
-                                        Move.executeMove(piecesBoard,new Position(x, y),position,listPossibleCaptures);
-                                        resetBoardFXColors();
-                                        placeboard(gridPane, player);
+                                    //GenericTree genericTreePossibleCaptures = ((Man) (piecesBoard[x][y])).possibleCaptures(ItalianBoard.this);
+                                    List<GenericTreeNode> listPossibleCaptures = genericTreePossibleCaptures.build(GenericTreeTraversalOrderEnum.PRE_ORDER);
+                                    Move.executeMove(piecesBoard,new Position(x, y),position,listPossibleCaptures);
+                                    resetBoardFXColors();
+                                    placeboard(gridPane, player);
                                 }
                             });
                         }
@@ -295,12 +312,12 @@ public class ItalianBoard implements Board {
         for (int x = 0; x < DIMENSION_ITALIAN_BOARD; x++) {
             for (int y = 0; y < DIMENSION_ITALIAN_BOARD; y++) {
                 //fen+=piecesBoard[x][y].getClass().getName();
-                if (piecesBoard[x][y].getClass().getName() == "it.ing.pajc.data.pieces.black.BlackMan" || piecesBoard[x][y].getClass().getName() == "it.ing.pajc.data.pieces.white.WhiteMan")
+                if (piecesBoard[x][y].getClass().getName() == "it.ing.pajc.data.pieces.italian.ItalianMan" )
                     if (piecesBoard[x][y].getPlayer() == PiecesColors.BLACK)
                         fen += "m";
                     else
                         fen += "M";
-                else if (piecesBoard[x][y].getClass().getName() == "it.ing.pajc.data.pieces.black.BlackKing" || piecesBoard[x][y].getClass().getName() == "it.ing.pajc.data.pieces.white.WhiteKing")
+                else if (piecesBoard[x][y].getClass().getName() == "it.ing.pajc.data.pieces.italian.ItalianKing" )
                     if (piecesBoard[x][y].getPlayer() == PiecesColors.BLACK)
                         fen += "k";
                     else
@@ -311,6 +328,18 @@ public class ItalianBoard implements Board {
             }
             fen += "/";
         }
+
+
+        if (player == PiecesColors.BLACK){
+            StringBuilder reverseFen = new StringBuilder();
+
+            for (int j = fen.length() - 1; j >= 0; j--) {
+                reverseFen.append(fen.charAt(j));
+            }
+            return reverseFen.toString();
+        }
+
+
         return fen;
     }
 

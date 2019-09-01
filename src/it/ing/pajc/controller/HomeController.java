@@ -56,7 +56,7 @@ public class HomeController implements Serializable {
 
 
 
-        Parent root = FXMLLoader.load(getClass().getResource("../graphics/Settings.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../graphics/YouWon.fxml"));
         Scene scene = new Scene(root);
 
         Main.getPrimaryStage().setTitle("Settings");

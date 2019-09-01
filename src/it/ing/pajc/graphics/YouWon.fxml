@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" style="-fx-border-radius: 30;" stylesheets="@woodStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ing.pajc.controller.CheckerBoardController">
+    <children>
+      <Pane fx:id="windowPanel" prefHeight="60.0" prefWidth="900.0">
+         <children>
+              <Label alignment="CENTER" layoutX="863.0" layoutY="2.0" onMouseClicked="#close" prefHeight="20.0" prefWidth="21.0" text="X" textFill="#ddd9d9">
+                  <font>
+                      <Font name="Franklin Gothic Heavy" size="35.0" />
+                  </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+              </Label>
+              <Label layoutX="362.0" layoutY="-1.0" text="Checkers" textFill="#ddd9d9">
+                  <font>
+                      <Font name="Franklin Gothic Heavy" size="40.0" />
+                  </font>
+              </Label>
+            <Label alignment="CENTER" layoutX="9.0" layoutY="2.0" onMouseClicked="#back" prefHeight="40.0" prefWidth="41.0" text="🡄" textFill="#ddd9d9">
+               <font>
+                  <Font name="Franklin Gothic Heavy" size="35.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+         </children>
+      </Pane>
+      <ImageView fitHeight="568.0" fitWidth="557.0" layoutX="177.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/WoodenStyle/Win/winAnimation.gif" />
+         </image>
+      </ImageView>
+    </children>
+</AnchorPane>
