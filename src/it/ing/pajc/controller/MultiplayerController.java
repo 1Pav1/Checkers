@@ -3,6 +3,7 @@ package it.ing.pajc.controller;
 import it.ing.pajc.Main;
 import it.ing.pajc.data.board.Board;
 import it.ing.pajc.data.board.ItalianBoard;
+import it.ing.pajc.data.board.MultiplayerItalianBoard;
 import it.ing.pajc.data.pieces.PiecesColors;
 import it.ing.pajc.multiplayer.MultiplayerManager;
 import it.ing.pajc.multiplayer.Server;
@@ -19,7 +20,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class MultiplayerController {
-    private double x,y;
+    private static double x,y;
     public static Stage primaryStage;
     public static final int PORT = 5555;
     private Thread thread;
@@ -54,35 +55,12 @@ public class MultiplayerController {
             public void run(){*/
         try {
             server.serverStartup();
-            ItalianBoard board = server.getBoard();
+            MultiplayerItalianBoard board = server.getBoard();
             StackPane layout = new StackPane();
-
+            drawBoard(board,PiecesColors.BLACK);
 
             //board.printBoardConsole();
 
-
-
-            FXMLLoader loader = new FXMLLoader();
-            Parent root = (Parent) loader.load(getClass().getResource("../graphics/CheckerBoard.fxml"));
-            //Parent root = FXMLLoader.load(getClass().getResource(""));
-            CheckerBoardController cbc = loader.getController();
-
-            Scene scene = new Scene(root);
-            GridPane checkerBoard = (GridPane) scene.lookup("#grid");
-            ((ItalianBoard)board).placeboard(checkerBoard, PiecesColors.BLACK);
-
-            Main.getPrimaryStage().setTitle("CheckerBoard");
-            Main.getPrimaryStage().setScene(scene);
-            //we gonna drag the frame
-            root.setOnMousePressed(event -> {
-                x = event.getSceneX();
-                y = event.getSceneY();
-            });
-
-            root.setOnMouseDragged(event -> {
-                Main.getPrimaryStage().setX(event.getScreenX() - x);
-                Main.getPrimaryStage().setY(event.getScreenY() - y);
-            });
         } catch (IOException e) {
         }/*
             }
@@ -101,36 +79,38 @@ public class MultiplayerController {
 */
         try {
             client.clientStartup();
-            ItalianBoard board = client.getBoard();
+            MultiplayerItalianBoard board = client.getBoard();
             StackPane layout = new StackPane();
-
-
-            FXMLLoader loader = new FXMLLoader();
-            Parent root = (Parent) loader.load(getClass().getResource("../graphics/CheckerBoard.fxml"));
-            //Parent root = FXMLLoader.load(getClass().getResource(""));
-            CheckerBoardController cbc = loader.getController();
-
-            Scene scene = new Scene(root);
-            GridPane checkerBoard = (GridPane) scene.lookup("#grid");
-            board.placeboard(checkerBoard, PiecesColors.WHITE);
-
-            Main.getPrimaryStage().setTitle("CheckerBoard");
-            Main.getPrimaryStage().setScene(scene);
-            //we gonna drag the frame
-            root.setOnMousePressed(event -> {
-                x = event.getSceneX();
-                y = event.getSceneY();
-            });
-
-            root.setOnMouseDragged(event -> {
-                Main.getPrimaryStage().setX(event.getScreenX() - x);
-                Main.getPrimaryStage().setY(event.getScreenY() - y);
-            });
+            drawBoard(board,PiecesColors.WHITE);
         } catch (Exception e) {
         }/*
             }
         };
         thread.setName("Checkers client");
         thread.start();*/
+    }
+
+    public static void drawBoard(MultiplayerItalianBoard board,PiecesColors color) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        Parent root = (Parent) loader.load(MultiplayerController.class.getResource("../graphics/CheckerBoard.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource(""));
+        CheckerBoardController cbc = loader.getController();
+
+        Scene scene = new Scene(root);
+        GridPane checkerBoard = (GridPane) scene.lookup("#grid");
+        board.placeboard(checkerBoard, color);
+
+        Main.getPrimaryStage().setTitle("CheckerBoard");
+        Main.getPrimaryStage().setScene(scene);
+        //we gonna drag the frame
+        root.setOnMousePressed(event -> {
+            x = event.getSceneX();
+            y = event.getSceneY();
+        });
+
+        root.setOnMouseDragged(event -> {
+            Main.getPrimaryStage().setX(event.getScreenX() - x);
+            Main.getPrimaryStage().setY(event.getScreenY() - y);
+        });
     }
 }

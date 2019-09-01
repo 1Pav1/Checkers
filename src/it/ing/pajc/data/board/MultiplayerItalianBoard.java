@@ -50,6 +50,7 @@ public class MultiplayerItalianBoard extends ItalianBoard{
 
 
         super.initializeBoardFX();
+        this.placeboard(gridPane,player);
     }
     @Override
     public void placeboard(GridPane grid, PiecesColors player) {
@@ -129,6 +130,7 @@ public class MultiplayerItalianBoard extends ItalianBoard{
                                     resetBoardFXColors();
                                     placeboard(gridPane, player);
                                     try {
+                                        resetBoardFXColors();
                                         sendAndWait();
                                     } catch (IOException e) {
                                         e.printStackTrace();
@@ -160,12 +162,12 @@ public class MultiplayerItalianBoard extends ItalianBoard{
     }
 
     private void sendAndWait() throws IOException {
-        multiplayerManager.sendFen();
         for (int x = 0; x < DIMENSION_ITALIAN_BOARD; x++) {
             for (int y = 0; y < DIMENSION_ITALIAN_BOARD; y++) {
                 piecesBoard[x][y].setDisable(true);
             }
         }
+        multiplayerManager.sendFen();
     }
 
 }

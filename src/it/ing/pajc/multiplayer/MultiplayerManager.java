@@ -2,6 +2,7 @@ package it.ing.pajc.multiplayer;
 
 import it.ing.pajc.Main;
 import it.ing.pajc.controller.CheckerBoardController;
+import it.ing.pajc.controller.MultiplayerController;
 import it.ing.pajc.data.board.Board;
 import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.data.board.MultiplayerItalianBoard;
@@ -61,15 +62,27 @@ public class MultiplayerManager {
     }
 
     public void waitForMove() throws IOException {
-        board.changeFen(in.readLine());
+        String fen = readFen();
+        board = new MultiplayerItalianBoard(fen,color,this);
+        MultiplayerController.drawBoard(board,color);
     }
 
     public void sendFen() throws IOException {
-        PiecesColors color = PiecesColors.BLACK;
         String brd = board.toString();
         System.out.println("FEN code sent to client is: " + brd);
         out.println(brd);
-        board.changeFen(in.readLine());
+        String fen = readFen();
+        board = new MultiplayerItalianBoard(fen,color,this);
+        MultiplayerController.drawBoard(board,color);
+    }
+
+    private String readFen(){
+        String fen = null;
+        try {
+            fen = in.readLine();
+            return fen;
+        }catch (Exception e){readFen();};
+        return fen;
     }
 }
 
