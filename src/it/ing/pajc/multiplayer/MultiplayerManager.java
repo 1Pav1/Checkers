@@ -46,7 +46,7 @@ public class MultiplayerManager {
     }
 
     public void clientStartup() throws IOException {
-        socket = new Socket("localhost", port);
+        socket = new Socket("10.243.23.208", port);
         out = new PrintWriter(socket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         board = new MultiplayerItalianBoard(in.readLine(),color,this);

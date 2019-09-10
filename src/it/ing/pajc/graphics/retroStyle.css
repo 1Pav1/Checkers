@@ -25,6 +25,14 @@
     -fx-background-color: #98829e;
 }
 
+.button:hover
+{
+    -fx-background-color: #d9bddf;
+}
+
+.label:hover{
+    -fx-text-fill: #d05ce3;
+}
 #darkSquare
 {
     -fx-background-color:#6a0080;

@@ -25,6 +25,15 @@
     -fx-background-color: #7b5e57;
 }
 
+.button:hover
+{
+    -fx-background-color: #cfa694;
+}
+
+.label:hover{
+    -fx-text-fill: #7b3b08;
+}
+
 #darkSquare
 {
     -fx-background-image: url("Images/WoodenStyle/Board/darkWood.png");
