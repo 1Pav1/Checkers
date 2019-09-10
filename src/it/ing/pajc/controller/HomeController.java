@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -56,7 +57,7 @@ public class HomeController implements Serializable {
 
 
 
-        Parent root = FXMLLoader.load(getClass().getResource("../graphics/YouWon.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../graphics/Settings.fxml"));
         Scene scene = new Scene(root);
 
         Main.getPrimaryStage().setTitle("Settings");
@@ -67,7 +68,8 @@ public class HomeController implements Serializable {
             y = event.getSceneY();
         });
 
-        root.setOnMouseDragged(event -> {
+        Pane pane = (Pane) scene.lookup("#pane");
+        pane.setOnMouseDragged(event -> {
             Main.getPrimaryStage().setX(event.getScreenX() - x);
             Main.getPrimaryStage().setY(event.getScreenY() - y);
         });

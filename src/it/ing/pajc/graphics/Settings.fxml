@@ -2,17 +2,15 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="539.0" stylesheets="@woodStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ing.pajc.controller.SettingsController">
     <children>
-      <Pane id="windowPanel" prefHeight="111.0" prefWidth="539.0">
+      <Pane id="windowPanel" prefHeight="92.0" prefWidth="539.0" styleClass="pane">
          <children>
               <Label layoutX="191.0" layoutY="32.0" text="Settings" textFill="#ddd9d9">
                   <font>
@@ -32,7 +30,7 @@
             <children>
                 <Separator layoutX="56.0" layoutY="383.0" opacity="0.15" prefHeight="3.0" prefWidth="423.0" />
                 <Separator layoutX="54.0" layoutY="36.0" opacity="0.15" prefHeight="3.0" prefWidth="423.0" />
-            <Button layoutX="116.0" layoutY="285.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="300.0" text="Button" textFill="WHITE">
+            <Button layoutX="120.0" layoutY="82.0" mnemonicParsing="false" onMouseClicked="#retroStyle" prefHeight="35.0" prefWidth="300.0" text="Retro" textFill="WHITE">
                <font>
                   <Font name="Franklin Gothic Heavy" size="32.0" />
                </font>
@@ -40,12 +38,19 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <ComboBox layoutX="270.0" layoutY="64.0" prefHeight="35.0" prefWidth="150.0" />
-            <Text fill="WHITE" layoutX="88.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Board type">
+            <Label layoutX="207.0" layoutY="14.0" text="Styles" textFill="#ddd9d9">
+               <font>
+                  <Font name="Franklin Gothic Heavy" size="40.0" />
+               </font>
+            </Label>
+            <Button layoutX="120.0" layoutY="181.0" mnemonicParsing="false" onMouseClicked="#woodStyle" prefHeight="35.0" prefWidth="300.0" text="Wood" textFill="WHITE">
                <font>
                   <Font name="Franklin Gothic Heavy" size="32.0" />
                </font>
-            </Text>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
             </children>
         </Pane>
         <Label alignment="CENTER" layoutX="509.0" layoutY="3.0" onMouseClicked="#close" prefHeight="20.0" prefWidth="21.0" text="X" textFill="#ddd9d9">

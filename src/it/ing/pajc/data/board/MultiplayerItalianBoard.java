@@ -14,6 +14,7 @@ import javafx.scene.shape.Circle;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class MultiplayerItalianBoard extends ItalianBoard{
     private PiecesColors player;
@@ -25,6 +26,14 @@ public class MultiplayerItalianBoard extends ItalianBoard{
     private GridPane gridPane;
     private PiecesColors color;
     private MultiplayerManager multiplayerManager;
+
+    public void lock(){
+        for (int x = 0; x < DIMENSION_ITALIAN_BOARD; x++) {
+            for (int y = 0; y < DIMENSION_ITALIAN_BOARD; y++) {
+                piecesBoard[x][y].setDisable(true);
+            }
+        }
+    }
 
     public MultiplayerItalianBoard(String fen, PiecesColors color,MultiplayerManager multiplayerManager) {
         super(fen, color);
@@ -126,13 +135,13 @@ public class MultiplayerItalianBoard extends ItalianBoard{
 
                                     //GenericTree genericTreePossibleCaptures = ((Man) (piecesBoard[x][y])).possibleCaptures(ItalianBoard.this);
                                     List<GenericTreeNode> listPossibleCaptures = genericTreePossibleCaptures.build(GenericTreeTraversalOrderEnum.PRE_ORDER);
-                                    Move.executeMove(piecesBoard,new Position(x, y),position,listPossibleCaptures);
+                                    Move.executeMove(MultiplayerItalianBoard.this,new Position(x, y),position,listPossibleCaptures);
                                     resetBoardFXColors();
                                     placeboard(gridPane, player);
                                     try {
                                         resetBoardFXColors();
                                         sendAndWait();
-                                    } catch (IOException e) {
+                                    } catch (Exception e) {
                                         e.printStackTrace();
                                     }
                                 }
@@ -161,7 +170,7 @@ public class MultiplayerItalianBoard extends ItalianBoard{
         }
     }
 
-    private void sendAndWait() throws IOException {
+    private void sendAndWait() throws IOException, ExecutionException, InterruptedException {
         for (int x = 0; x < DIMENSION_ITALIAN_BOARD; x++) {
             for (int y = 0; y < DIMENSION_ITALIAN_BOARD; y++) {
                 piecesBoard[x][y].setDisable(true);
@@ -169,5 +178,9 @@ public class MultiplayerItalianBoard extends ItalianBoard{
         }
         multiplayerManager.sendFen();
     }
+
+
+
+
 
 }

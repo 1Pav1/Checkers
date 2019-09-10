@@ -10,38 +10,35 @@
 
 #windowPanel
 {
-    -fx-background-color: #5e35b1;
+    -fx-background-color: #5c007a;
 }
 
 #centerWindow
 {
-    -fx-background-image: url("Images/WoodenStyle/background.jpg");
+    -fx-background-image: url("Images/RetroStyle/background.gif");
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
 }
 
 .button
 {
-    -fx-background-color: #7b5e57;
+    -fx-background-color: #98829e;
 }
 
 #darkSquare
 {
-    -fx-background-image: url("Images/WoodenStyle/Board/darkWood.png");
+    -fx-background-color:#6a0080;
     -fx-opacity:90%;
 }
 #lightSquare
 {
-    -fx-background-image: url("Images/WoodenStyle/Board/lightWood.png");
-    -fx-background-repeat: no-repeat;
-    -fx-background-size: cover;
+    -fx-background-color:#d05ce3;
     -fx-opacity:90%;
 }
 
 #movementHighlight
 {
-    -fx-background-color:rgb(0,255,0);
-    -fx-opacity:75%;
+    -fx-background-color: #ff8cee;
 }
 
 #captureHighlight
@@ -56,6 +53,6 @@
     -fx-vgap: 0;
     -fx-pref-height: 480;
     -fx-pref-width: 480;
-     -fx-translate-x: 60;
+    -fx-translate-x: 60;
     -fx-translate-y: 60;
 }

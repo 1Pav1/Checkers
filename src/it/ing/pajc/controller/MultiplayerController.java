@@ -1,12 +1,10 @@
 package it.ing.pajc.controller;
 
 import it.ing.pajc.Main;
-import it.ing.pajc.data.board.Board;
-import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.data.board.MultiplayerItalianBoard;
 import it.ing.pajc.data.pieces.PiecesColors;
 import it.ing.pajc.multiplayer.MultiplayerManager;
-import it.ing.pajc.multiplayer.Server;
+import javafx.animation.RotateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,27 +12,31 @@ import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 public class MultiplayerController {
     private static double x,y;
     public static Stage primaryStage;
     public static final int PORT = 5555;
+    private static Scene scene;
     private Thread thread;
+
     public void back() {
         try {
-            thread.stop();
             Parent root = FXMLLoader.load(getClass().getResource("../graphics/Home.fxml"));
-            Scene scene = new Scene(root);
+            scene = new Scene(root);
             Main.getPrimaryStage().setScene(scene);
             Main.getPrimaryStage().setTitle("Checker main menu");
             //we gonna drag the frame
             root.setOnMousePressed(event -> {
                 x = event.getSceneX();
                 y = event.getSceneY();
+            });
+            root.setOnMouseDragged(event -> {
+                Main.getPrimaryStage().setX(event.getScreenX() - x);
+                Main.getPrimaryStage().setY(event.getScreenY() - y);
             });
         }catch (Exception e) {
             e.printStackTrace();
@@ -96,9 +98,15 @@ public class MultiplayerController {
         //Parent root = FXMLLoader.load(getClass().getResource(""));
         CheckerBoardController cbc = loader.getController();
 
-        Scene scene = new Scene(root);
+        scene = new Scene(root);
         GridPane checkerBoard = (GridPane) scene.lookup("#grid");
         board.placeboard(checkerBoard, color);
+        RotateTransition shake = new RotateTransition(Duration.millis(200), checkerBoard);
+        shake.setByAngle(20);
+        shake.setCycleCount(2);
+        shake.setAutoReverse(true);
+        shake.play();
+
 
         Main.getPrimaryStage().setTitle("CheckerBoard");
         Main.getPrimaryStage().setScene(scene);

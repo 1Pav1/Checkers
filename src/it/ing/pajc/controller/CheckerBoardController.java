@@ -30,7 +30,6 @@ public class CheckerBoardController implements Serializable {
                 y = event.getSceneY();
             });
         }catch (Exception e) {
-            System.out.println("ciao");
             e.printStackTrace();
         }
 
