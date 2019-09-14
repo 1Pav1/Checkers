@@ -16,7 +16,7 @@
          <children>
             <ImageView fitHeight="111.0" fitWidth="284.0" layoutX="128.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Images/Checkers.png" />
+                  <Image url="@Images/WoodenStyle/Checkers.png" />
                </image>
             </ImageView>
          </children></Pane>

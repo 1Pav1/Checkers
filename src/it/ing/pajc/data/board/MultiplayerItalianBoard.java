@@ -35,7 +35,7 @@ public class MultiplayerItalianBoard extends ItalianBoard{
         }
     }
 
-    public MultiplayerItalianBoard(String fen, PiecesColors color,MultiplayerManager multiplayerManager) {
+    public MultiplayerItalianBoard(Fen fen, PiecesColors color,MultiplayerManager multiplayerManager) {
         super(fen, color);
         this.multiplayerManager = multiplayerManager;
         player = super.getPlayer();
@@ -45,16 +45,17 @@ public class MultiplayerItalianBoard extends ItalianBoard{
         this.color = color;
     }
 
-    public void changeFen(String fen){
+    public void changeFen(Fen fen){
         if (player == PiecesColors.WHITE)
-            piecesBoard = fenToMultidimensionalArray(fen);
+            piecesBoard = fen.fenToMultidimensionalArray();
         else {
             StringBuilder reverseFen = new StringBuilder();
 
-            for (int i = fen.length() - 1; i >= 0; i--) {
-                reverseFen.append(fen.charAt(i));
+            for (int i = fen.getFen().length() - 1; i >= 0; i--) {
+                reverseFen.append(fen.getFen().charAt(i));
             }
-            piecesBoard = fenToMultidimensionalArray(reverseFen.toString());
+            fen.reverseFen();
+            piecesBoard = fen.fenToMultidimensionalArray();
         }
 
 

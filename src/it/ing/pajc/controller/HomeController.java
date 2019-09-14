@@ -1,6 +1,7 @@
 package it.ing.pajc.controller;
 
 import it.ing.pajc.Main;
+import it.ing.pajc.data.board.Fen;
 import it.ing.pajc.data.pieces.Man;
 import it.ing.pajc.data.board.Board;
 import it.ing.pajc.data.board.ItalianBoard;
@@ -23,7 +24,8 @@ public class HomeController implements Serializable {
 
     public void  singlePlayer() throws IOException {
         PiecesColors color = PiecesColors.BLACK;
-        ItalianBoard board = new ItalianBoard("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM",color);
+        Fen fen=new Fen("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
+        ItalianBoard board = new ItalianBoard(fen,color);
         //board.printBoardConsole();
 
         StackPane layout = new StackPane();

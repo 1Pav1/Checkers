@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Server and client lag reduced&#10;Retro graphics added&#10;Animation added">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Created Fen class &#10;Minor fix">
+      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/Fen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/singleplayer/SingleplayerManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Settings.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Settings.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/retroStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/graphics/retroStyle.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/woodStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/graphics/woodStyle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/MultiplayerItalianBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/MultiplayerItalianBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/engine/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/singleplayer/Engine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Home.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Home.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/multiplayer/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/multiplayer/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/multiplayer/MultiplayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/multiplayer/MultiplayerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/multiplayer/WaitingThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/multiplayer/WaitingThread.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -118,6 +125,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
   </component>
   <component name="RecentsManager">
@@ -357,6 +365,9 @@
       <workItem from="1567959484455" duration="1641000" />
       <workItem from="1568061175819" duration="1795000" />
       <workItem from="1568102996404" duration="3998000" />
+      <workItem from="1568293937917" duration="1956000" />
+      <workItem from="1568361632546" duration="1799000" />
+      <workItem from="1568446876799" duration="9699000" />
     </task>
     <task id="LOCAL-00001" summary="added:&#10;Settings&#10;Possible Moves">
       <created>1564397017327</created>
@@ -526,6 +537,7 @@
     <MESSAGE value="Server and client improvements" />
     <MESSAGE value="Server and client working" />
     <MESSAGE value="Server and client lag reduced&#10;Retro graphics added&#10;Animation added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Server and client lag reduced&#10;Retro graphics added&#10;Animation added" />
+    <MESSAGE value="Created Fen class &#10;Minor fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created Fen class &#10;Minor fix" />
   </component>
 </project>

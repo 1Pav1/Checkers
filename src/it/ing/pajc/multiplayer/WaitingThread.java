@@ -2,6 +2,7 @@ package it.ing.pajc.multiplayer;
 
 import it.ing.pajc.controller.MultiplayerController;
 import it.ing.pajc.data.board.Board;
+import it.ing.pajc.data.board.Fen;
 import it.ing.pajc.data.board.MultiplayerItalianBoard;
 import it.ing.pajc.data.pieces.PiecesColors;
 
@@ -32,7 +33,8 @@ public class WaitingThread implements Runnable {
 
     @Override
     public void run() {
-        String fen = readFen();
+        String tmpfen = readFen();
+        Fen fen=new Fen(tmpfen);
         board = new MultiplayerItalianBoard(fen,color,multiplayerManager);
         try {
             MultiplayerController.drawBoard(board,color);

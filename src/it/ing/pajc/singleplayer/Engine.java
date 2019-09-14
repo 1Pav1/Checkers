@@ -1,4 +1,4 @@
-package it.ing.pajc.engine;
+package it.ing.pajc.singleplayer;
 
 import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.data.movements.*;
@@ -565,4 +565,3 @@ public class Engine {
     }//end copy_board
 
 }//end class engine
-
