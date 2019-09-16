@@ -1,10 +1,19 @@
 package it.ing.pajc.multiplayer;
 
+import it.ing.pajc.controller.CheckerBoardController;
 import it.ing.pajc.controller.MultiplayerController;
+import it.ing.pajc.data.board.Fen;
 import it.ing.pajc.data.board.MultiplayerItalianBoard;
 import it.ing.pajc.data.movements.Move;
 import it.ing.pajc.data.pieces.PiecesColors;
+import javafx.animation.RotateTransition;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
+import javafx.util.Duration;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -17,7 +26,7 @@ public class MultiplayerManager {
     private BufferedReader in;
     private PrintWriter out;
 
-    public MultiplayerManager(PiecesColors color,int port) {
+    public MultiplayerManager(PiecesColors color, int port) {
         this.port = port;
         this.color = color;
     }
@@ -28,7 +37,8 @@ public class MultiplayerManager {
     }
 
     public void serverStartup() throws IOException {
-        board = new MultiplayerItalianBoard("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM",color,this);
+        Fen fen = new Fen("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
+        board = new MultiplayerItalianBoard(fen, color, this);
         ServerSocket serverSocket = new ServerSocket(port);
         socket = serverSocket.accept();
         out = new PrintWriter(socket.getOutputStream(), true);
@@ -38,10 +48,11 @@ public class MultiplayerManager {
     }
 
     public void clientStartup() throws IOException {
-        socket = new Socket("localhost", port);
+        socket = new Socket("192.168.43.240", port);
         out = new PrintWriter(socket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        board = new MultiplayerItalianBoard(in.readLine(),color,this);
+        Fen fen = new Fen(in.readLine());
+        board = new MultiplayerItalianBoard(fen, color, this);
         waitForMove();
     }
 
@@ -49,7 +60,7 @@ public class MultiplayerManager {
         //String fen = readFen();
         MultiplayerManager mm = this;
         Platform.runLater(new Runnable() {
-            private String readFen(){
+            private String readFen() {
                 String fen = null;
                 try {
                     fen = in.readLine();
@@ -58,12 +69,13 @@ public class MultiplayerManager {
                 }
                 return fen;
             }
+
             @Override
             public void run() {
-                String fen = readFen();
-                board = new MultiplayerItalianBoard(fen,color,mm);
+                Fen fen = new Fen(readFen());
+                board = new MultiplayerItalianBoard(fen, color, mm);
                 try {
-                    MultiplayerController.drawBoard(board,color);
+                    MultiplayerController.drawBoard(board, color);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -75,17 +87,16 @@ public class MultiplayerManager {
     }
 
     public void sendFen() throws IOException {
-        String brd = board.toString();
-        board = new MultiplayerItalianBoard(brd,color,this);
+        Fen fen = new Fen(board.toString());
+        board = new MultiplayerItalianBoard(fen, color, this);
         board.lock();
-        if(Move.noMovesLeft(board,color)){
+        if (Move.noMovesLeft(board, color)) {
             System.out.println("You won");
         }
-        MultiplayerController.drawBoard(board,color);
-        System.out.println("FEN code sent to client is: " + brd);
-        out.println(brd);
+        MultiplayerController.drawBoard(board, color);
+        System.out.println("FEN code sent to client is: " + board.toString());
+        out.println(board.toString());
         waitForMove();
     }
 
 }
-
