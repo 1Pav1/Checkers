@@ -171,7 +171,7 @@ public class MultiplayerItalianBoard extends ItalianBoard{
         }
     }
 
-    private void sendAndWait() throws IOException, ExecutionException, InterruptedException {
+    private void sendAndWait() throws IOException{
         for (int x = 0; x < DIMENSION_ITALIAN_BOARD; x++) {
             for (int y = 0; y < DIMENSION_ITALIAN_BOARD; y++) {
                 piecesBoard[x][y].setDisable(true);
