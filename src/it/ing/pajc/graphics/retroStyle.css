@@ -64,3 +64,9 @@
     -fx-translate-x: 60;
     -fx-translate-y: 60;
 }
+
+.text-field
+{
+    -fx-text-fill: white;
+    -fx-background-color: black;
+}

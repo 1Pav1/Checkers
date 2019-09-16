@@ -4,22 +4,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="539.0" style="-fx-border-radius: 30;" stylesheets="@retroStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ing.pajc.controller.HomeController">
     <children>
-      <Pane fx:id="windowPanel" prefHeight="111.0" prefWidth="539.0" stylesheets="@woodStyle.css">
-         <children>
-            <ImageView fitHeight="111.0" fitWidth="284.0" layoutX="128.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@Images/WoodenStyle/Checkers.png" />
-               </image>
-            </ImageView>
-         </children></Pane>
+      <Pane fx:id="windowPanel" prefHeight="111.0" prefWidth="539.0" />
         <Pane fx:id="centerWindow" layoutY="92.0" prefHeight="403.0" prefWidth="539.0">
             <children>
                 <Separator layoutX="56.0" layoutY="383.0" opacity="0.15" prefHeight="3.0" prefWidth="423.0" />

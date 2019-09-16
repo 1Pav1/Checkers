@@ -1,20 +1,14 @@
 package it.ing.pajc.controller;
 
 import it.ing.pajc.Main;
-import it.ing.pajc.data.board.ItalianBoard;
-import it.ing.pajc.data.pieces.PiecesColors;
-import it.ing.pajc.multiplayer.Server;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 public class SettingsController implements Serializable {
     private double x,y;
@@ -46,6 +40,7 @@ public class SettingsController implements Serializable {
     public void woodStyle() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../graphics/Home.fxml"));
         Scene scene = new Scene(root);
+        AnchorPane anchorPane = (AnchorPane) scene.lookup("");
         scene.setUserAgentStylesheet("../graphics/woodStyle.css");
 
         root = FXMLLoader.load(getClass().getResource("../graphics/Multiplayer.fxml"));

@@ -70,8 +70,7 @@ public class HomeController implements Serializable {
             y = event.getSceneY();
         });
 
-        Pane pane = (Pane) scene.lookup("#pane");
-        pane.setOnMouseDragged(event -> {
+        root.setOnMouseDragged(event -> {
             Main.getPrimaryStage().setX(event.getScreenX() - x);
             Main.getPrimaryStage().setY(event.getScreenY() - y);
         });

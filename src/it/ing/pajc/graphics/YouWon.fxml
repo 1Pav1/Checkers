@@ -2,13 +2,11 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" style="-fx-border-radius: 30;" stylesheets="@woodStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ing.pajc.controller.CheckerBoardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" style="-fx-border-radius: 30;" stylesheets="@retroStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ing.pajc.controller.CheckerBoardController">
     <children>
       <Pane fx:id="windowPanel" prefHeight="60.0" prefWidth="900.0">
          <children>
@@ -35,10 +33,14 @@
             </Label>
          </children>
       </Pane>
-      <ImageView fitHeight="568.0" fitWidth="557.0" layoutX="177.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Images/WoodenStyle/Win/winAnimation.gif" />
-         </image>
-      </ImageView>
+      <Pane id="centerWindow" fx:id="windowPanel1" layoutY="60.0" prefHeight="590.0" prefWidth="900.0">
+         <children>
+            <Label layoutX="258.0" layoutY="27.0" text="YOU WIN" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="77.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
     </children>
 </AnchorPane>
