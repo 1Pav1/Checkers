@@ -59,7 +59,7 @@ public class MultiplayerController {
             server.serverStartup();
             MultiplayerItalianBoard board = server.getBoard();
             StackPane layout = new StackPane();
-            drawBoard(board,PiecesColors.BLACK);
+            //drawBoard(board,PiecesColors.BLACK);
 
             //board.printBoardConsole();
 

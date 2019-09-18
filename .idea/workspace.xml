@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Created Fen class &#10;Minor fix">
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/MultiplayerItalianBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/MultiplayerItalianBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/italian/ItalianKing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/italian/ItalianKing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/italian/ItalianMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/italian/ItalianMan.java" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Added ip address form">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/MultiplayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/MultiplayerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/multiplayer/Client.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/multiplayer/MultiplayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/multiplayer/MultiplayerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/multiplayer/Server.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/multiplayer/WaitingThread.java" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -110,7 +113,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dynamic.classpath" value="false" />
     <property name="extract.method.default.visibility" value="private" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/it/ing/pajc/graphics" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../SSSP" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
@@ -360,7 +363,9 @@
       <workItem from="1568296944349" duration="1526000" />
       <workItem from="1568455996520" duration="226000" />
       <workItem from="1568483024905" duration="216000" />
-      <workItem from="1568641897894" duration="961000" />
+      <workItem from="1568641897894" duration="3160000" />
+      <workItem from="1568722747497" duration="6735000" />
+      <workItem from="1568812119000" duration="298000" />
     </task>
     <task id="LOCAL-00001" summary="added:&#10;Settings&#10;Possible Moves">
       <created>1564397017327</created>
@@ -502,7 +507,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568107286371</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Added ip address form">
+      <created>1568642956585</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1568642956585</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -546,6 +558,7 @@
     <MESSAGE value="Server and client lag reduced&#10;Retro graphics added&#10;Animation added" />
     <MESSAGE value="Server and client lag reduced&#10;Retro graphics added&#10;Basic graphics changes&#10;Animation added" />
     <MESSAGE value="Added images&#10;Server and client lag reduced&#10;Retro graphics added&#10;Basic graphics changes&#10;Animation added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added images&#10;Server and client lag reduced&#10;Retro graphics added&#10;Basic graphics changes&#10;Animation added" />
+    <MESSAGE value="Added ip address form" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added ip address form" />
   </component>
 </project>
