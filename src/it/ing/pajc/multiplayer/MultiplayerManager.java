@@ -30,28 +30,73 @@ public class MultiplayerManager {
     }
 
     public void serverStartup() throws IOException {
+
         Fen fen = new Fen("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
         board = new MultiplayerItalianBoard(fen, color, this);
-        ServerSocket serverSocket = new ServerSocket(port);
-        socket = serverSocket.accept();
-        out = new PrintWriter(socket.getOutputStream(), true);
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        out.println(board.toString());
+        Thread Server = new Thread(new Runnable() {
+
+            private void tryToConnect() {
+                try {
+                    System.out.println("Trying to connect");
+                    ServerSocket serverSocket = new ServerSocket(port);
+                    socket = serverSocket.accept();
+                } catch (IOException e) {
+                }
+            }
+            @Override
+            public void run() {
+
+                try {
+                    tryToConnect();
+                    out = new PrintWriter(socket.getOutputStream(), true);
+                    in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    out.println(board.toString());
+                } catch (IOException e) {
+                    System.err.println("Error sending board");
+                }
+            }
+        });
+
+        Server.setName("Server");
+        Server.start();
 
     }
 
     public void clientStartup() throws IOException {
-        socket = new Socket("192.168.43.240", port);
-        out = new PrintWriter(socket.getOutputStream(), true);
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        Fen fen = new Fen(in.readLine());
+        Fen fen = new Fen("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
         board = new MultiplayerItalianBoard(fen, color, this);
+        MultiplayerManager mm = this;
+        Thread Client = new Thread(new Runnable() {
+            private void tryToConnect(){
+                try {
+                    System.out.println("Trying to connect");
+                    socket = new Socket("localhost", port);
+                } catch (Exception e) {
+                }
+            }
+            @Override
+            public void run() {
+                try {
+                    tryToConnect();
+                    out = new PrintWriter(socket.getOutputStream(), true);
+                    in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    Fen fen = new Fen(in.readLine());
+                    board = new MultiplayerItalianBoard(fen, color, mm);
+                } catch (IOException e) {
+                    System.err.println("Error receiving board");
+                }
+            }
+        });
+        Client.setName("Client");
+        Client.start();
         waitForMove();
     }
 
     private void waitForMove() {
         //String fen = readFen();
         MultiplayerManager mm = this;
+
+
         Platform.runLater(new Runnable() {
             private String readFen() {
                 String fen = null;
