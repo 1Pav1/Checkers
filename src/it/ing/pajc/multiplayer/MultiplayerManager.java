@@ -1,18 +1,11 @@
 package it.ing.pajc.multiplayer;
 
-import it.ing.pajc.controller.CheckerBoardController;
 import it.ing.pajc.controller.MultiplayerController;
 import it.ing.pajc.data.board.Fen;
 import it.ing.pajc.data.board.MultiplayerItalianBoard;
 import it.ing.pajc.data.movements.Move;
 import it.ing.pajc.data.pieces.PiecesColors;
-import javafx.animation.RotateTransition;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
-import javafx.util.Duration;
 
 import java.io.*;
 import java.net.ServerSocket;

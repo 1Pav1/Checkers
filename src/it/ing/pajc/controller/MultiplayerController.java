@@ -100,7 +100,7 @@ public class MultiplayerController {
 
         scene = new Scene(root);
         GridPane checkerBoard = (GridPane) scene.lookup("#grid");
-        board.placeboard(checkerBoard, color);
+        board.placeBoard(checkerBoard, color);
         RotateTransition shake = new RotateTransition(Duration.millis(200), checkerBoard);
         shake.setByAngle(20);
         shake.setCycleCount(2);

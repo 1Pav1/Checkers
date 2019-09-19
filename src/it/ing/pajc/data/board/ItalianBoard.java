@@ -14,7 +14,6 @@ import javafx.scene.shape.Circle;
 
 import java.util.List;
 
-
 /**
  * Creates and manage ItalianBoard
  */
@@ -25,40 +24,18 @@ public class ItalianBoard implements Board {
     private GridPane gridPane;
 
     /**
-     * ItalianBoard constructor.
+     * Uses Fen notation to create a board based on the player color.
+     *
+     * @param fen   A string that describes a unique set of positions
+     * @param color Rotates the board according to the player color.
      */
-    public ItalianBoard() {
-        piecesBoard = new Pieces[DIMENSION_ITALIAN_BOARD][DIMENSION_ITALIAN_BOARD];
-        for (int posR = 0; posR < 3; posR++)
-            for (int posC = 0; posC < DIMENSION_ITALIAN_BOARD; posC++)
-                if ((posC + posR) % 2 == 0)
-                    piecesBoard[posR][posC] = new ItalianMan(new Position(posR, posC), PiecesColors.BLACK);
-
-
-        for (int posR = 5; posR < DIMENSION_ITALIAN_BOARD; posR++)
-            for (int posC = 0; posC < DIMENSION_ITALIAN_BOARD; posC++)
-                if ((posC + posR) % 2 == 0) {
-                    piecesBoard[posR][posC] = new ItalianMan(new Position(posR, posC), PiecesColors.WHITE);
-                }
-        //putting object of type Empty in the empty spaces
-        for (int posR = 0; posR < DIMENSION_ITALIAN_BOARD; posR++)
-            for (int posC = 0; posC < DIMENSION_ITALIAN_BOARD; posC++)
-                if (piecesBoard[posR][posC] == null)
-                    piecesBoard[posR][posC] = new Empty(new Position(posR, posC));
-        initializeBoardFX();
-    }
-
     public ItalianBoard(Fen fen, PiecesColors color) {
         player = color;
         if (player == PiecesColors.WHITE)
             piecesBoard = fen.fenToMultidimensionalArray();
         else {
-            StringBuilder reverseFen = new StringBuilder();
-            for (int i = fen.getFen().length() - 1; i >= 0; i--) {
-                reverseFen.append(fen.getFen().charAt(i));
-            }
             fen.reverseFen();
-            piecesBoard=fen.fenToMultidimensionalArray();
+            piecesBoard = fen.fenToMultidimensionalArray();
         }
         initializeBoardFX();
     }
@@ -66,7 +43,7 @@ public class ItalianBoard implements Board {
     /**
      * Board initializer using JavaFX.
      */
-    public void initializeBoardFX() {
+    private void initializeBoardFX() {
         stackPaneBoard = new StackPane[DIMENSION_ITALIAN_BOARD][DIMENSION_ITALIAN_BOARD];
         for (int x = 0; x < DIMENSION_ITALIAN_BOARD; x++)
             for (int y = 0; y < DIMENSION_ITALIAN_BOARD; y++) {
@@ -80,7 +57,7 @@ public class ItalianBoard implements Board {
     /**
      * Reset colors of the pieces on the board
      */
-    public void resetBoardFXColors() {
+    void resetBoardFXColors() {
         for (int x = 0; x < DIMENSION_ITALIAN_BOARD; x++)
             for (int y = 0; y < DIMENSION_ITALIAN_BOARD; y++) {
                 stackPaneBoard[x][y].setDisable(true);
@@ -92,12 +69,12 @@ public class ItalianBoard implements Board {
     }
 
     /**
-     * Creation of pieces on the board graphically
+     * Creation of pieces on the board graphically.
      *
-     * @param grid   Defines the positions on whom the pieces can move
-     * @param player Defines the color of the pieces of a specific player
+     * @param grid   Defines the positions where the pieces can move.
+     * @param player Defines the color of the pieces of a specific player.
      */
-    public void placeboard(GridPane grid, PiecesColors player) {
+    public void placeBoard(GridPane grid, PiecesColors player) {
         gridPane = grid;
         Circle circle;
         grid.getChildren().clear();
@@ -133,7 +110,6 @@ public class ItalianBoard implements Board {
                     }
                     int finalJ = j;
                     int finalI = i;
-
                     //Piece click handling event
                     circle.setOnMousePressed(event -> {
                         resetBoardFXColors();
@@ -145,15 +121,12 @@ public class ItalianBoard implements Board {
                         transition.setNode(finalCircle);
                         transition.play();
                          */
-                        int x = finalJ;
-                        int y = finalI;
                         //Getting the possible moves of specific man or king
                         GenericTree genericTree;
-                        if (piecesBoard[x][y].getType() == PiecesType.MAN)
-                            genericTree = ((Man) (piecesBoard[x][y])).possibleMoves(ItalianBoard.this);
+                        if (piecesBoard[finalJ][finalI].getType() == PiecesType.MAN)
+                            genericTree = ((Man) (piecesBoard[finalJ][finalI])).possibleMoves(ItalianBoard.this);
                         else
-                            genericTree = ((King) (piecesBoard[x][y])).possibleMoves(ItalianBoard.this);
-
+                            genericTree = ((King) (piecesBoard[finalJ][finalI])).possibleMoves(ItalianBoard.this);
                         List<GenericTreeNode> list = genericTree.build(GenericTreeTraversalOrderEnum.PRE_ORDER);
                         //Printing all the possible moves
                         for (int p = 1; p < list.size(); p++) {
@@ -162,22 +135,21 @@ public class ItalianBoard implements Board {
                             stackPaneBoard[position.getPosC()][position.getPosR()].setDisable(false);
                             //System.out.println(stackPaneBoard[position.getPosC()][position.getPosR()].isDisable());
                             stackPaneBoard[position.getPosC()][position.getPosR()].setId("movementHighlight");
-
                             //Generating event for the movement positions with deletion of the eaten pieces
                             stackPaneBoard[position.getPosC()][position.getPosR()].setOnMousePressed(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
                                     GenericTree genericTreePossibleCaptures;
-                                    if (piecesBoard[x][y].getType() == PiecesType.MAN)
-                                        genericTreePossibleCaptures = ((Man) (piecesBoard[x][y])).possibleCaptures(ItalianBoard.this);
+                                    if (piecesBoard[finalJ][finalI].getType() == PiecesType.MAN)
+                                        genericTreePossibleCaptures = ((Man) (piecesBoard[finalJ][finalI])).possibleCaptures(ItalianBoard.this);
                                     else
-                                        genericTreePossibleCaptures = ((King) (piecesBoard[x][y])).possibleCaptures(ItalianBoard.this);
+                                        genericTreePossibleCaptures = ((King) (piecesBoard[finalJ][finalI])).possibleCaptures(ItalianBoard.this);
 
                                     //GenericTree genericTreePossibleCaptures = ((Man) (piecesBoard[x][y])).possibleCaptures(ItalianBoard.this);
                                     List<GenericTreeNode> listPossibleCaptures = genericTreePossibleCaptures.build(GenericTreeTraversalOrderEnum.PRE_ORDER);
-                                    Move.executeMove(ItalianBoard.this, new Position(x, y), position, listPossibleCaptures);
+                                    Move.executeMove(ItalianBoard.this, new Position(finalJ, finalI), position, listPossibleCaptures);
                                     resetBoardFXColors();
-                                    placeboard(gridPane, player);
+                                    placeBoard(gridPane, player);
                                 }
                             });
                         }
@@ -200,16 +172,6 @@ public class ItalianBoard implements Board {
             }
         }
     }
-
-    /**
-     * Deletes the piece in the given position and replaces it with an empty object.
-     *
-     * @param position of the piece wanted to be deleted
-     */
-    public void delete(Position position) {
-        piecesBoard[position.getPosR()][position.getPosC()] = new Empty(position);
-    }
-
 
     /**
      * Print the board, only console.
@@ -247,49 +209,71 @@ public class ItalianBoard implements Board {
     }
 
     /**
-     * Set a new board of pieces.
+     * Creates a string where the whole board and the pieces postions are saved.
      *
-     * @param board Of pieces
-     */
-    @Override
-    public void setBoard(Pieces[][] board) {
-        this.piecesBoard = board;
-    }
-
-    /**
-     * Creates a string where the whole board and the pieces postions are saved
-     *
-     * @return The string generated or AKA FEN notion
+     * @return the string generated or FEN notion
      */
     @Override
     public String toString() {
-        Fen fen=new Fen(this);
-        if (player == PiecesColors.BLACK)
-            return fen.getFen().reverse().toString();
+        Fen fen = new Fen(this);
         return fen.toString();
     }
 
+    /**
+     * Man's getter throws an exception, pay attention.
+     *
+     * @param posR Row position.
+     * @param posC Column position.
+     * @return man object.
+     */
     public ItalianMan getMan(int posR, int posC) {
         return (ItalianMan) piecesBoard[posR][posC];
     }
 
+    /**
+     * King's getter throws an exception, pay attention.
+     *
+     * @param posR Row position.
+     * @param posC Column position.
+     * @return king object.
+     */
     public ItalianKing getKing(int posR, int posC) {
         return (ItalianKing) piecesBoard[posR][posC];
     }
 
-    public PiecesColors getPlayer() {
+    /**
+     * Player's getter.
+     *
+     * @return the color of the player.
+     */
+    PiecesColors getPlayer() {
         return player;
     }
 
-    public Pieces[][] getPiecesBoard() {
+    /**
+     * Getter of pieces board.
+     *
+     * @return matrix of positions.
+     */
+    Pieces[][] getPiecesBoard() {
         return piecesBoard;
     }
 
-    public StackPane[][] getStackPaneBoard() {
+    /**
+     * Getter of stack pane board.
+     *
+     * @return matrix of graphical board.
+     */
+    StackPane[][] getStackPaneBoard() {
         return stackPaneBoard;
     }
 
-    public GridPane getGridPane() {
+    /**
+     * Getter of grid pane.
+     *
+     * @return box that contains the pieces.
+     */
+    GridPane getGridPane() {
         return gridPane;
     }
 }

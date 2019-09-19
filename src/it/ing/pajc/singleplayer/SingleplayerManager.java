@@ -7,7 +7,7 @@ public class SingleplayerManager {
     PiecesColors player;
     public SingleplayerManager(PiecesColors player){
         this.player=player;
-        ItalianBoard board=new ItalianBoard();
+
     }
 
 

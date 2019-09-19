@@ -218,5 +218,4 @@ public class ItalianMan extends Man {
         }
         return possibleMovementList;
     }
-
 }

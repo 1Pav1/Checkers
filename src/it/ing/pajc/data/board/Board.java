@@ -2,23 +2,17 @@ package it.ing.pajc.data.board;
 
 import it.ing.pajc.data.pieces.Pieces;
 
-public interface Board extends java.io.Serializable {
-
-    long serialversionUID = 1L;
-
+public interface Board {
     int DIMENSION_ITALIAN_BOARD = 8;
 
+    /**
+     * Print the board on the console to be overridden.
+     */
     void printBoardConsole();
 
     /**
-     * To be ovverridden.
+     * Getter to be overridden.
      * @return Pieces[][]
      */
     Pieces[][] getBoard();
-
-    /**
-     * To be ovverridden.
-     * @param board Of pieces
-     */
-    void setBoard(Pieces[][] board);
 }

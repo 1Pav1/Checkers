@@ -23,6 +23,8 @@ public abstract class Pieces extends Circle implements Serializable {
     }
 
     /**
+     * Getter of the player.
+     *
      * @return the color of the player
      */
     public PiecesColors getPlayer() {
@@ -34,11 +36,13 @@ public abstract class Pieces extends Circle implements Serializable {
      *
      * @param player Set a new color.
      */
-    public void setPlayer(PiecesColors player) {
+    protected void setPlayer(PiecesColors player) {
         this.player = player;
     }
 
     /**
+     * Getter of position.
+     *
      * @return the position
      */
     public Position getPosition() {
@@ -66,7 +70,7 @@ public abstract class Pieces extends Circle implements Serializable {
      *
      * @param type New type
      */
-    public void setType(PiecesType type) {
+    void setType(PiecesType type) {
         this.type = type;
     }
 }

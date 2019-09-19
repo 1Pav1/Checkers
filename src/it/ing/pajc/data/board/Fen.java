@@ -9,14 +9,25 @@ import it.ing.pajc.data.pieces.italian.ItalianKing;
 import it.ing.pajc.data.pieces.italian.ItalianMan;
 
 public class Fen {
-    StringBuilder fen=new StringBuilder();
-    ItalianBoard board;
-    public Fen(String fen){
+    private StringBuilder fen = new StringBuilder();
+    private ItalianBoard board;
+
+    /**
+     * Assigns a given fen to a class property.
+     *
+     * @param fen Notation that describes a given set of positions.
+     */
+    public Fen(String fen) {
         this.fen.append(fen);
     }
 
-    public Fen(ItalianBoard board) {
-        this.board=board;
+    /**
+     * Given an Italianboard, creates the specific fen.
+     *
+     * @param board The Italianboard.
+     */
+    Fen(ItalianBoard board) {
+        this.board = board;
         fen = new StringBuilder();
         for (int x = 0; x < board.DIMENSION_ITALIAN_BOARD; x++) {
             for (int y = 0; y < board.DIMENSION_ITALIAN_BOARD; y++) {
@@ -33,13 +44,20 @@ public class Fen {
                 else if (board.getBoard()[x][y].getPlayer() == PiecesColors.EMPTY)
                     fen.append("e");
             }
-            fen.append("/");
+            if (x != board.DIMENSION_ITALIAN_BOARD - 1)
+                fen.append("/");
         }
     }
-    public Pieces[][] fenToMultidimensionalArray(){
+
+    /**
+     * Given a fen, creates an Italian board.
+     *
+     * @return a MultidimensionalArray of position.
+     */
+    Pieces[][] fenToMultidimensionalArray() {
         int i = 0;
         Pieces[][] pieces = new Pieces[board.DIMENSION_ITALIAN_BOARD][board.DIMENSION_ITALIAN_BOARD];
-        int boardPosition=0;
+        int boardPosition = 0;
         do {
             if (fen.charAt(i) != '/') {
                 switch (fen.charAt(i)) {
@@ -71,15 +89,20 @@ public class Fen {
         } while (i < fen.length());
         return pieces;
     }
-    public StringBuilder reverseFen(){
-        return fen.reverse();
+
+    /**
+     * Rotates the board by reversing the fen.
+     */
+    void reverseFen() {
+        fen.reverse();
     }
 
-    public StringBuilder getFen() {
+    /**
+     * Getter of Fen.
+     *
+     * @return the fen.
+     */
+    StringBuilder getFen() {
         return fen;
-    }
-
-    public void setFen(StringBuilder fen) {
-        this.fen = fen;
     }
 }

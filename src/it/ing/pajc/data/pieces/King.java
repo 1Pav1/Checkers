@@ -6,13 +6,13 @@ import it.ing.pajc.data.movements.*;
 import java.util.ArrayList;
 
 /**
- * King abstract class defines some methods that has to be use from inherited classes.
+ * King abstract class defines some methods that have to be use from inherited classes.
  */
 public abstract class King extends Pieces {
     /**
      * King's constructor giving position.
      *
-     * @param pos King's position
+     * @param pos King's position.
      */
     public King(Position pos) {
         super(pos);
@@ -23,7 +23,7 @@ public abstract class King extends Pieces {
      * Gives all possible moves of a piece.
      *
      * @param board The using board, must be an 8x8 board.
-     * @return the tree of all possible moves
+     * @return the tree of all possible moves.
      */
     public abstract GenericTree possibleMoves(ItalianBoard board);
 
@@ -31,7 +31,7 @@ public abstract class King extends Pieces {
      * Gives all possible captures of a piece.
      *
      * @param board The using board, must be an 8x8 board.
-     * @return the tree of all possible captures
+     * @return the tree of all possible captures.
      */
     public abstract GenericTree possibleCaptures(ItalianBoard board);
 
@@ -46,8 +46,8 @@ public abstract class King extends Pieces {
      * Calculates possible captures after having captured already a piece.
      *
      * @param board  The using board, must be an 8x8 board.
-     * @param parentPositions starting position of the creating tree
-     * @param parentCaptures  starting position of the creating tree
+     * @param parentPositions starting position of the creating tree.
+     * @param parentCaptures  starting position of the creating tree.
      */
     public abstract void childrenPossibleCaptures(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures);
 
@@ -55,8 +55,8 @@ public abstract class King extends Pieces {
      * Calculates all possible captures in all directions where the piece can move.
      *
      * @param board           The using board, must be an 8x8 board.
-     * @param parentPositions starting position of the creating tree
-     * @param parentCaptures  starting position of the creating tree
+     * @param parentPositions starting position of the creating tree.
+     * @param parentCaptures  starting position of the creating tree.
      */
     public abstract void possibleCapturesAllDirections(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures);
 
@@ -64,8 +64,8 @@ public abstract class King extends Pieces {
      * Calculates possible captures on the up left.
      *
      * @param board           The using board, must be an 8x8 board.
-     * @param parentPositions starting position of the creating tree
-     * @param parentCaptures  starting position of the creating tree
+     * @param parentPositions starting position of the creating tree.
+     * @param parentCaptures  starting position of the creating tree.
      */
     public abstract void possibleCaptureUpLeft(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures);
 
@@ -73,8 +73,8 @@ public abstract class King extends Pieces {
      * Calculates possible captures on the up right.
      *
      * @param board           The using board, must be an 8x8 board.
-     * @param parentPositions starting position of the creating tree
-     * @param parentCaptures  starting position of the creating tree
+     * @param parentPositions starting position of the creating tree.
+     * @param parentCaptures  starting position of the creating tree.
      */
     public abstract void possibleCaptureUpRight(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures);
 
@@ -82,8 +82,8 @@ public abstract class King extends Pieces {
      * Calculates possible captures on the down left.
      *
      * @param board           The using board, must be an 8x8 board.
-     * @param parentPositions starting position of the creating tree
-     * @param parentCaptures  starting position of the creating tree
+     * @param parentPositions starting position of the creating tree.
+     * @param parentCaptures  starting position of the creating tree.
      */
     public abstract void possibleCaptureDownLeft(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures);
 
@@ -91,8 +91,8 @@ public abstract class King extends Pieces {
      * Calculates possible captures on the down right.
      *
      * @param board           The using board, must be an 8x8 board.
-     * @param parentPositions starting position of the creating tree
-     * @param parentCaptures  starting position of the creating tree
+     * @param parentPositions starting position of the creating tree.
+     * @param parentCaptures  starting position of the creating tree.
      */
     public abstract void possibleCaptureDownRight(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures);
 
@@ -100,8 +100,8 @@ public abstract class King extends Pieces {
      * Check if the piece can capture at least a piece.
      *
      * @param board The using board, must be an 8x8 board.
-     * @param piece Position of the piece in question
-     * @return a boolean true if can capture, false otherwise
+     * @param piece Position of the piece in question.
+     * @return a boolean true if can capture, false otherwise.
      */
     public abstract boolean canCapture(ItalianBoard board, Position piece);
 
@@ -109,8 +109,8 @@ public abstract class King extends Pieces {
      * Check if the piece can move without captures.
      *
      * @param board The using board, must be an 8x8 board.
-     * @param piece Position of the piece in question
-     * @return a boolean true if can move, false otherwise
+     * @param piece Position of the piece in question.
+     * @return a boolean true if can move, false otherwise.
      */
     public abstract boolean canMove(ItalianBoard board, Position piece);
 
