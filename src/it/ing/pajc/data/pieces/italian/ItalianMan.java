@@ -20,7 +20,7 @@ public class ItalianMan extends Man {
     /**
      * WhiteMan's constructor giving position.
      *
-     * @param pos WhiteMan's position
+     * @param pos WhiteMan's position.
      */
     public ItalianMan(Position pos, PiecesColors player) {
         super(pos);
@@ -33,27 +33,28 @@ public class ItalianMan extends Man {
      * Gives all possible moves of a piece.
      *
      * @param board The using board, must be an 8x8 board.
-     * @return the tree of all possible moves
+     * @return the tree of all possible moves.
      */
     @Override
-    public GenericTree possibleMoves(ItalianBoard board) {
+    public GenericTree<Position> possibleMoves(ItalianBoard board) {
+        GenericTree<Position> result;
         rootPositions.removeChildren();
         if (!canCapture(board, this.getPosition())) {
             ArrayList<Position> positions = possibleMovesInEmptySpaces(board);
-            for (int i = 0; i < positions.size(); i++)
-                rootPositions.addChild(new GenericTreeNode<>(positions.get(i)));
-            return possibleMovementsList;
+            for (Position position : positions) rootPositions.addChild(new GenericTreeNode<>(position));
+            result = possibleMovementsList;
         } else {
             allPossibleCaptures(board);
+            result = possibleMovementsList;
         }
-        return possibleMovementsList;
+        return result;
     }
 
     /**
      * Gives all possible captures of a piece.
      *
      * @param board The using board, must be an 8x8 board.
-     * @return the tree of all possible captures
+     * @return the tree of all possible captures.
      */
     @Override
     public GenericTree<Position> possibleCaptures(ItalianBoard board) {
@@ -62,7 +63,7 @@ public class ItalianMan extends Man {
             if (canCapture(board, this.getPosition())) {
                 allPossibleCaptures(board);
             }
-        }catch (Exception ignored) {
+        } catch (Exception ignored) {
         }
         return possibleCapturesList;
     }
@@ -98,8 +99,8 @@ public class ItalianMan extends Man {
      * Calculates all possible captures in all directions where the piece can move.
      *
      * @param board           The using board, must be an 8x8 board.
-     * @param parentPositions starting position of the creating tree
-     * @param parentCaptures  starting position of the creating tree
+     * @param parentPositions starting position of the creating tree.
+     * @param parentCaptures  starting position of the creating tree.
      */
     @Override
     public void possibleCapturesUpRightAndLeft(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures) {
@@ -111,19 +112,15 @@ public class ItalianMan extends Man {
      * Calculates possible captures on the left.
      *
      * @param board           The using board, must be an 8x8 board.
-     * @param parentPositions starting position of the creating tree
-     * @param parentCaptures  starting position of the creating tree
+     * @param parentPositions starting position of the creating tree.
+     * @param parentCaptures  starting position of the creating tree.
      */
     @Override
     public void possibleCaptureUpLeft(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures) {
         try {
-            if ((board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() - 1].getPlayer() !=
-                    board.getBoard()[parentPositions.getData().getPosR()][parentPositions.getData().getPosC()].getPlayer()) &&
-
-                    ((board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() - 1].getType() == PiecesType.MAN) ||
-                    (board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() - 1].getType() == PiecesType.KING)) &&
-                    (board.getBoard()[parentPositions.getData().getPosR() - 2][parentPositions.getData().getPosC() - 2].getPlayer() == PiecesColors.EMPTY))
-            {
+            if ((board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() - 1].getPlayer() != getPlayer()) &&
+                    (board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() - 1].getType() == PiecesType.MAN) &&
+                    (board.getBoard()[parentPositions.getData().getPosR() - 2][parentPositions.getData().getPosC() - 2].getPlayer() == PiecesColors.EMPTY)) {
                 parentPositions.addChild(new GenericTreeNode<>(new Position(parentPositions.getData().getPosR() - 2, parentPositions.getData().getPosC() - 2)));
                 parentCaptures.addChild(new GenericTreeNode<>(new Position(parentPositions.getData().getPosR() - 1, parentPositions.getData().getPosC() - 1)));
             }
@@ -135,19 +132,15 @@ public class ItalianMan extends Man {
      * Calculates possible captures on the right.
      *
      * @param board           The using board, must be an 8x8 board.
-     * @param parentPositions starting position of the creating tree
-     * @param parentCaptures  starting position of the creating tree
+     * @param parentPositions starting position of the creating tree.
+     * @param parentCaptures  starting position of the creating tree.
      */
     @Override
     public void possibleCaptureUpRight(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures) {
         try {
-            if ((board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() + 1].getPlayer()
-                    != board.getBoard()[parentPositions.getData().getPosR()][parentPositions.getData().getPosC()].getPlayer()) &&
-
-                    ((board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() + 1].getType() == PiecesType.MAN) ||
-                            (board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() + 1].getType() == PiecesType.KING)) &&
-                    (board.getBoard()[parentPositions.getData().getPosR() - 2][parentPositions.getData().getPosC() + 2].getPlayer() == PiecesColors.EMPTY))
-            {
+            if ((board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() + 1].getPlayer() != getPlayer()) &&
+                    (board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() + 1].getType() == PiecesType.MAN) &&
+                    (board.getBoard()[parentPositions.getData().getPosR() - 2][parentPositions.getData().getPosC() + 2].getPlayer() == PiecesColors.EMPTY)) {
                 parentPositions.addChild(new GenericTreeNode<>(new Position(parentPositions.getData().getPosR() - 2, parentPositions.getData().getPosC() + 2)));
                 parentCaptures.addChild(new GenericTreeNode<>(new Position(parentPositions.getData().getPosR() - 1, parentPositions.getData().getPosC() + 1)));
             }
@@ -159,17 +152,20 @@ public class ItalianMan extends Man {
      * Check if the piece can capture at least a piece.
      *
      * @param board The using board, must be an 8x8 board.
-     * @param piece Position of the piece in question
-     * @return a boolean true if can capture, false otherwise
+     * @param piece Position of the piece in question.
+     * @return a boolean true if can capture, false otherwise.
      */
     @Override
     public boolean canCapture(ItalianBoard board, Position piece) {
         try {
-            return ((board.getBoard()[piece.getPosR() - 1][piece.getPosC() - 1].getPlayer() != board.getBoard()[piece.getPosR()][piece.getPosC()].getPlayer()) &&
+            return ((board.getBoard()[piece.getPosR() - 1][piece.getPosC() - 1].getPlayer() != getPlayer()) &&
                     (board.getBoard()[piece.getPosR() - 1][piece.getPosC() - 1].getType() == PiecesType.MAN) &&
-                    (board.getBoard()[piece.getPosR() - 2][piece.getPosC() - 2].getPlayer() == PiecesColors.EMPTY)) ||
+                    (board.getBoard()[piece.getPosR() - 2][piece.getPosC() - 2].getPlayer() == PiecesColors.EMPTY));
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
 
-                    ((board.getBoard()[piece.getPosR() - 1][piece.getPosC() + 1].getPlayer() != board.getBoard()[piece.getPosR()][piece.getPosC()].getPlayer())&&
+        try {
+            return ((board.getBoard()[piece.getPosR() - 1][piece.getPosC() + 1].getPlayer() != getPlayer()) &&
                     (board.getBoard()[piece.getPosR() - 1][piece.getPosC() + 1].getType() == PiecesType.MAN) &&
                     (board.getBoard()[piece.getPosR() - 2][piece.getPosC() + 2].getPlayer() == PiecesColors.EMPTY));
         } catch (ArrayIndexOutOfBoundsException ignored) {
@@ -181,8 +177,8 @@ public class ItalianMan extends Man {
      * Check if the piece can move without captures.
      *
      * @param board The using board, must be an 8x8 board.
-     * @param piece Position of the piece in question
-     * @return a boolean true if can move, false otherwise
+     * @param piece Position of the piece in question.
+     * @return a boolean true if can move, false otherwise.
      */
     public boolean canMove(ItalianBoard board, Position piece) {
         try {
@@ -210,7 +206,6 @@ public class ItalianMan extends Man {
                 possibleMovementList.add(new Position(posRow - 1, posColumn - 1));
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
-
         try {
             if (board.getBoard()[posRow - 1][posColumn + 1].getPlayer() == PiecesColors.EMPTY)//up right
                 possibleMovementList.add(new Position(posRow - 1, posColumn + 1));

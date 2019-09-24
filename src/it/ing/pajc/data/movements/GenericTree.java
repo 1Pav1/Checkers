@@ -1,62 +1,66 @@
 package it.ing.pajc.data.movements;
 
-import java.io.Serializable;
 import java.util.*;
 
-public class GenericTree<T> implements Serializable {
+/**
+ * Tree of positions.
+ *
+ * @param <Position> Type of generic tree.
+ */
+public class GenericTree<Position> {
+    private GenericTreeNode<Position> root;
 
-    private GenericTreeNode<T> root;
-
-    public GenericTree() {
-        super();
-    }
-
-    public GenericTreeNode<T> getRoot() {
+    public GenericTreeNode<Position> getRoot() {
         return this.root;
     }
 
-    public void setRoot(GenericTreeNode<T> root) {
+    /**
+     * Set the new given root.
+     *
+     * @param root the given root.
+     */
+    public void setRoot(GenericTreeNode<Position> root) {
         this.root = root;
     }
 
     public int getNumberOfNodes() {
         int numberOfNodes = 0;
-
         if (root != null) {
             numberOfNodes = auxiliaryGetNumberOfNodes(root) + 1; //1 for the root!
         }
-
         return numberOfNodes;
     }
 
-    private int auxiliaryGetNumberOfNodes(GenericTreeNode<T> node) {
+    /**
+     * Returns the auxiliary number of nodes.
+     *
+     * @param node The given node.
+     * @return the number of nodes.
+     */
+    private int auxiliaryGetNumberOfNodes(GenericTreeNode<Position> node) {
         int numberOfNodes = node.getNumberOfChildren();
-
-        for (GenericTreeNode<T> child : node.getChildren()) {
+        for (GenericTreeNode<Position> child : node.getChildren()) {
             numberOfNodes += auxiliaryGetNumberOfNodes(child);
         }
-
         return numberOfNodes;
     }
 
-    public boolean exists(T dataToFind) {
+    public boolean exists(Position dataToFind) {
         return (find(dataToFind) != null);
     }
 
-    public GenericTreeNode<T> find(T dataToFind) {
-        GenericTreeNode<T> returnNode = null;
+    private GenericTreeNode<Position> find(Position dataToFind) {
+        GenericTreeNode<Position> returnNode = null;
 
         if (root != null) {
             returnNode = auxiliaryFind(root, dataToFind);
         }
-
         return returnNode;
     }
 
-    private GenericTreeNode<T> auxiliaryFind(GenericTreeNode<T> currentNode, T dataToFind) {
-        GenericTreeNode<T> returnNode = null;
-        int i = 0;
-
+    private GenericTreeNode<Position> auxiliaryFind(GenericTreeNode<Position> currentNode, Position dataToFind) {
+        GenericTreeNode<Position> returnNode = null;
+        int i;
         if (currentNode.getData().equals(dataToFind)) {
             returnNode = currentNode;
         } else if (currentNode.hasChildren()) {
@@ -66,7 +70,6 @@ public class GenericTree<T> implements Serializable {
                 i++;
             }
         }
-
         return returnNode;
     }
 
@@ -74,18 +77,29 @@ public class GenericTree<T> implements Serializable {
         return (root == null);
     }
 
-    public List<GenericTreeNode<T>> build(GenericTreeTraversalOrderEnum traversalOrder) {
-        List<GenericTreeNode<T>> returnList = null;
-
+    /**
+     * Build the tree list.
+     *
+     * @param traversalOrder order of the build.
+     * @return the builted tree node list.
+     */
+    public List<GenericTreeNode<Position>> build(GenericTreeTraversalOrderEnum traversalOrder) {
+        List<GenericTreeNode<Position>> returnList = null;
         if (root != null) {
             returnList = build(root, traversalOrder);
         }
-
         return returnList;
     }
 
-    public List<GenericTreeNode<T>> build(GenericTreeNode<T> node, GenericTreeTraversalOrderEnum traversalOrder) {
-        List<GenericTreeNode<T>> traversalResult = new ArrayList<>();
+    /**
+     * Given a node builds and returns the list of tree nodes of positions.
+     *
+     * @param node           Given node.
+     * @param traversalOrder Order used to build.
+     * @return list of generic tree node.
+     */
+    private List<GenericTreeNode<Position>> build(GenericTreeNode<Position> node, GenericTreeTraversalOrderEnum traversalOrder) {
+        List<GenericTreeNode<Position>> traversalResult = new ArrayList<>();
 
         if (traversalOrder == GenericTreeTraversalOrderEnum.PRE_ORDER) {
             buildPreOrder(node, traversalResult);
@@ -96,60 +110,35 @@ public class GenericTree<T> implements Serializable {
         return traversalResult;
     }
 
-    private void buildPreOrder(GenericTreeNode<T> node, List<GenericTreeNode<T>> traversalResult) {
+    /**
+     * Build with pre order.
+     *
+     * @param node            Given node.
+     * @param traversalResult Given list of generic tree node of position.
+     */
+    private void buildPreOrder(GenericTreeNode<Position> node, List<GenericTreeNode<Position>> traversalResult) {
         traversalResult.add(node);
 
-        for (GenericTreeNode<T> child : node.getChildren()) {
+        for (GenericTreeNode<Position> child : node.getChildren()) {
             buildPreOrder(child, traversalResult);
         }
     }
 
-    private void buildPostOrder(GenericTreeNode<T> node, List<GenericTreeNode<T>> traversalResult) {
-        for (GenericTreeNode<T> child : node.getChildren()) {
+    /**
+     * Build with post order.
+     *
+     * @param node            Given node.
+     * @param traversalResult Given list of generic tree node of position.
+     */
+    private void buildPostOrder(GenericTreeNode<Position> node, List<GenericTreeNode<Position>> traversalResult) {
+        for (GenericTreeNode<Position> child : node.getChildren()) {
             buildPostOrder(child, traversalResult);
         }
 
         traversalResult.add(node);
     }
 
-    public Map<GenericTreeNode<T>, Integer> buildWithDepth(GenericTreeTraversalOrderEnum traversalOrder) {
-        Map<GenericTreeNode<T>, Integer> returnMap = null;
-
-        if (root != null) {
-            returnMap = buildWithDepth(root, traversalOrder);
-        }
-
-        return returnMap;
-    }
-
-    public Map<GenericTreeNode<T>, Integer> buildWithDepth(GenericTreeNode<T> node, GenericTreeTraversalOrderEnum traversalOrder) {
-        Map<GenericTreeNode<T>, Integer> traversalResult = new LinkedHashMap<>();
-
-        if (traversalOrder == GenericTreeTraversalOrderEnum.PRE_ORDER) {
-            buildPreOrderWithDepth(node, traversalResult, 0);
-        } else if (traversalOrder == GenericTreeTraversalOrderEnum.POST_ORDER) {
-            buildPostOrderWithDepth(node, traversalResult, 0);
-        }
-
-        return traversalResult;
-    }
-
-    private void buildPreOrderWithDepth(GenericTreeNode<T> node, Map<GenericTreeNode<T>, Integer> traversalResult, int depth) {
-        traversalResult.put(node, depth);
-
-        for (GenericTreeNode<T> child : node.getChildren()) {
-            buildPreOrderWithDepth(child, traversalResult, depth + 1);
-        }
-    }
-
-    private void buildPostOrderWithDepth(GenericTreeNode<T> node, Map<GenericTreeNode<T>, Integer> traversalResult, int depth) {
-        for (GenericTreeNode<T> child : node.getChildren()) {
-            buildPostOrderWithDepth(child, traversalResult, depth + 1);
-        }
-
-        traversalResult.put(node, depth);
-    }
-
+    @Override
     public String toString() {
         /*
         We're going to assume a pre-order traversal by default
@@ -160,20 +149,6 @@ public class GenericTree<T> implements Serializable {
         if (root != null) {
             stringRepresentation = build(GenericTreeTraversalOrderEnum.PRE_ORDER).toString();
 
-        }
-
-        return stringRepresentation;
-    }
-
-    public String toStringWithDepth() {
-        /*
-        We're going to assume a pre-order traversal by default
-         */
-
-        String stringRepresentation = "";
-
-        if (root != null) {
-            stringRepresentation = buildWithDepth(GenericTreeTraversalOrderEnum.PRE_ORDER).toString();
         }
 
         return stringRepresentation;

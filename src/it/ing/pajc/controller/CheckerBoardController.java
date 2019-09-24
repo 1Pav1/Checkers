@@ -5,37 +5,47 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
+/**
+ * Controller of the board displaying page.
+ */
+public class CheckerBoardController{
+    private double x, y;
 
-import java.io.IOException;
-import java.io.Serializable;
-
-public class CheckerBoardController implements Serializable {
-    private double x,y;
-
-    public void close(){
+    /**
+     * Closes the game.
+     */
+    public void close() {
         Platform.exit();
     }
 
+    /**
+     * Goes back to home page.
+     */
     public void back() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("../graphics/Home.fxml"));
             Scene scene = new Scene(root);
-            Main.getPrimaryStage().setScene(scene);
-            Main.getPrimaryStage().setTitle("Checker main menu");
-            //we gonna drag the frame
-            root.setOnMousePressed(event -> {
-                x = event.getSceneX();
-                y = event.getSceneY();
-            });
-        }catch (Exception e) {
+            changeScene(root, scene);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
-
-
+    /**
+     * Changes the current scene.
+     *  @param root  Graphics file.
+     * @param scene Graphics file scene.
+     */
+    private void changeScene(Parent root, Scene scene) {
+        Main.getPrimaryStage().setTitle("Home");
+        Main.getPrimaryStage().setScene(scene);
+        root.setOnMousePressed(event -> {
+            x = event.getSceneX();
+            y = event.getSceneY();
+        });
+        root.setOnMouseDragged(event -> {
+            Main.getPrimaryStage().setX(event.getScreenX() - x);
+            Main.getPrimaryStage().setY(event.getScreenY() - y);
+        });
+    }
 }

@@ -1,123 +1,177 @@
 package it.ing.pajc.data.movements;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class GenericTreeNode<T> implements Serializable {
+/**
+ * Tree of node.
+ *
+ * @param <Position>
+ */
+public class GenericTreeNode<Position> {
+    private Position data;
+    private List<GenericTreeNode<Position>> children;
+    private GenericTreeNode<Position> parent;
 
-    private T data;
-    private List<GenericTreeNode<T>> children;
-    private GenericTreeNode<T> parent;
-
+    /**
+     * Constructor that creates children.
+     */
     public GenericTreeNode() {
-        super();
-        children = new ArrayList<GenericTreeNode<T>>();
+        children = new ArrayList<>();
     }
 
-    public GenericTreeNode(T data) {
+    /**
+     * Constructor sets data to a given position.
+     *
+     * @param data position.
+     */
+    public GenericTreeNode(Position data) {
         this();
         setData(data);
     }
 
-    public GenericTreeNode<T> getParent() {
+    public GenericTreeNode<Position> getParent() {
         return this.parent;
     }
 
-    public List<GenericTreeNode<T>> getChildren() {
+    /**
+     * Getter of children.
+     *
+     * @return children of position.
+     */
+    List<GenericTreeNode<Position>> getChildren() {
         return this.children;
     }
 
+    /**
+     * Getter number of children.
+     *
+     * @return Children tree size.
+     */
     public int getNumberOfChildren() {
         return getChildren().size();
     }
 
-    public boolean hasChildren() {
+    /**
+     * Checks if it has children.
+     *
+     * @return True if it has children.
+     */
+    boolean hasChildren() {
         return (getNumberOfChildren() > 0);
     }
 
-    public void setChildren(List<GenericTreeNode<T>> children) {
-        for (GenericTreeNode<T> child : children) {
+    public void setChildren(List<GenericTreeNode<Position>> children) {
+        for (GenericTreeNode<Position> child : children) {
             child.parent = this;
         }
         this.children = children;
     }
 
-    public void addChild(GenericTreeNode<T> child) {
+    /**
+     * Adds a child.
+     *
+     * @param child To add.
+     */
+    public void addChild(GenericTreeNode<Position> child) {
         child.parent = this;
         children.add(child);
     }
 
-    public void addChildAt(int index, GenericTreeNode<T> child) throws IndexOutOfBoundsException {
+    public void addChildAt(int index, GenericTreeNode<Position> child) throws IndexOutOfBoundsException {
         child.parent = this;
         children.add(index, child);
     }
 
+    /**
+     * Removes children.
+     */
     public void removeChildren() {
-        this.children = new ArrayList<GenericTreeNode<T>>();
+        this.children = new ArrayList<>();
     }
 
     public void removeChildAt(int index) throws IndexOutOfBoundsException {
         children.remove(index);
     }
 
-    public GenericTreeNode<T> getChildAt(int index) throws IndexOutOfBoundsException {
+    /**
+     * Getter of child at a given position of the node.
+     *
+     * @param index Position in the node.
+     * @return the requested child.
+     * @throws IndexOutOfBoundsException If it exceeds the bounds.
+     */
+    public GenericTreeNode<Position> getChildAt(int index) throws IndexOutOfBoundsException {
         return children.get(index);
     }
 
     //added
-    public Set<GenericTreeNode<T>> getAllLeafNodes() {
-        Set<GenericTreeNode<T>> leafNodes = new HashSet<>();
+    private Set<GenericTreeNode<Position>> getAllLeafNodes() {
+        Set<GenericTreeNode<Position>> leafNodes = new HashSet<>();
         if (this.children.isEmpty()) {
             leafNodes.add(this);
         } else {
-            for (GenericTreeNode<T> child : this.children) {
+            for (GenericTreeNode<Position> child : this.children) {
                 leafNodes.addAll(child.getAllLeafNodes());
             }
         }
         return leafNodes;
     }
 
-    public T getData() {
+    /**
+     * Getter of data.
+     *
+     * @return The requested position.
+     */
+    public Position getData() {
         return this.data;
     }
 
-    public void setData(T data) {
+    /**
+     * Setter of data.
+     *
+     * @param data that you want to set.
+     */
+    public void setData(Position data) {
         this.data = data;
     }
 
+    /**
+     * Converts the data to a string form.
+     *
+     * @return the requested string.
+     */
     public String toString() {
         return getData().toString();
     }
 
+    /**
+     * Checks if the given object is equal to another one.
+     *
+     * @param obj the object used to check.
+     * @return true if it is equal.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
-            return false;
-        }
+        if (obj == null) return false;
         if (getClass() != obj.getClass()) {
             return false;
         }
         GenericTreeNode<?> other = (GenericTreeNode<?>) obj;
         if (data == null) {
-            if (other.data != null) {
-                return false;
-            }
-        } else if (!data.equals(other.data)) {
-            return false;
-        }
-        return true;
+            return other.data == null;
+        } else return data.equals(other.data);
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
+    /**
+     * Transforms the data in to hash code.
+     *
+     * @return the calculated result.
      */
     @Override
     public int hashCode() {
@@ -126,22 +180,4 @@ public class GenericTreeNode<T> implements Serializable {
         result = prime * result + ((data == null) ? 0 : data.hashCode());
         return result;
     }
-
-    public String toStringVerbose() {
-        String stringRepresentation = getData().toString() + ":[";
-
-        for (GenericTreeNode<T> node : getChildren()) {
-            stringRepresentation += node.getData().toString() + ", ";
-        }
-
-        //Pattern.DOTALL causes ^ and $ to match. Otherwise it won't. It's retarded.
-        Pattern pattern = Pattern.compile(", $", Pattern.DOTALL);
-        Matcher matcher = pattern.matcher(stringRepresentation);
-
-        stringRepresentation = matcher.replaceFirst("");
-        stringRepresentation += "]";
-
-        return stringRepresentation;
-    }
 }
-

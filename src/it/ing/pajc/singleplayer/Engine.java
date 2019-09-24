@@ -9,8 +9,7 @@ import java.util.*;
 
 //BOARD: black on the bottom side
 public class Engine {
-
-    private final static int INFINITY = Integer.MAX_VALUE;
+    /*private final static int INFINITY = Integer.MAX_VALUE;
     private final static int CHECKER = 100; //one checker worth 100
     private final static int POS = 1;  //one position along the -j worth 1
     private final static int KING = 200; //a king's worth
@@ -562,6 +561,5 @@ public class Engine {
             for (int posC = 0; posC < 8; posC++)
                 copy.getBoard()[posR][posC] = board.getBoard()[posR][posC];
         return copy;
-    }//end copy_board
-
+    }//end copy_board*/
 }//end class engine

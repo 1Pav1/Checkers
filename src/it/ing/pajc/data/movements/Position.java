@@ -1,18 +1,17 @@
 package it.ing.pajc.data.movements;
 
-import java.io.Serializable;
-
 /**
- * Position class with all getters and setters
+ * Position class with all getters and setters.
  */
-public class Position implements Serializable {
+public class Position {
     private int posR;
     private int posC;
 
     /**
      * Position constructor.
-     * @param posR Row position
-     * @param posC Column position
+     *
+     * @param posR Row position.
+     * @param posC Column position.
      */
     public Position(int posR, int posC) {
         this.posR = posR;
@@ -20,46 +19,29 @@ public class Position implements Serializable {
     }
 
     /**
-     * Change the position to a final position.
-     * @param fPosR Final row position
-     * @param fPosC Final Column position
+     * Return the position.
+     *
+     * @return the position.
      */
-    public void changePosition(int fPosR, int fPosC){
-        posR=fPosR;
-        posC=fPosC;
-    }
-
-
-    public Position getPosition(){
+    public Position getPosition() {
         return this;
     }
+
     /**
-     * @return Row position
+     * Getter of row.
+     *
+     * @return Row position.
      */
     public int getPosR() {
         return posR;
     }
 
     /**
-     * Change Row position
-     * @param posR new row position
-     */
-    public void setPosR(int posR) {
-        this.posR = posR;
-    }
-
-    /**
-     * @return Column position
+     * Getter of column.
+     *
+     * @return Column position.
      */
     public int getPosC() {
         return posC;
-    }
-
-    /**
-     * Change column position.
-     * @param posC new column position
-     */
-    public void setPosC(int posC) {
-        this.posC = posC;
     }
 }

@@ -9,91 +9,80 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 import java.io.Serializable;
 
+/**
+ * Controller of the homepage.
+ */
 public class HomeController implements Serializable {
     private double x, y;
 
-
-    public void  singlePlayer() throws IOException {
-        PiecesColors color = PiecesColors.BLACK;
-        Fen fen=new Fen("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
-        ItalianBoard board = new ItalianBoard(fen,color);
-        //board.printBoardConsole();
-
-        StackPane layout = new StackPane();
-
-
-        FXMLLoader loader = new FXMLLoader();
-        Parent root = (Parent) loader.load(getClass().getResource("../graphics/CheckerBoard.fxml"));
-        //Parent root = FXMLLoader.load(getClass().getResource(""));
-        CheckerBoardController cbc = loader.getController();
-
+    /**
+     * Creates the board and displays it.
+     *
+     * @throws IOException In case the graphical file is not found.
+     */
+    public void singlePlayer() throws IOException {
+        PiecesColors color = PiecesColors.WHITE;
+        Fen fen = new Fen("eeeeeeee/eeeeeeee/eeeeeeee/eeeeeeee/eeeeeeee/eeeeeeee/eeeeeeee/eeeeeeeM");
+        ItalianBoard board = new ItalianBoard(fen, color);
+        board.printBoardConsole();
+        Parent root = FXMLLoader.load(getClass().getResource("../graphics/CheckerBoard.fxml"));
         Scene scene = new Scene(root);
         GridPane checkerBoard = (GridPane) scene.lookup("#grid");
         board.placeBoard(checkerBoard, PiecesColors.WHITE);
-
-        Main.getPrimaryStage().setTitle("CheckerBoard");
-        Main.getPrimaryStage().setScene(scene);
-        //we gonna drag the frame
-        root.setOnMousePressed(event -> {
-            x = event.getSceneX();
-            y = event.getSceneY();
-        });
-
-        root.setOnMouseDragged(event -> {
-            Main.getPrimaryStage().setX(event.getScreenX() - x);
-            Main.getPrimaryStage().setY(event.getScreenY() - y);
-        });
-
+        changeScene(root, scene, "CheckerBoard");
     }
 
+
+    /**
+     * Opens settings file.
+     *
+     * @throws IOException In case the graphical file is not found.
+     */
     public void settings() throws IOException {
-
-
-
         Parent root = FXMLLoader.load(getClass().getResource("../graphics/Settings.fxml"));
         Scene scene = new Scene(root);
-
-        Main.getPrimaryStage().setTitle("Settings");
-        Main.getPrimaryStage().setScene(scene);
-        //we gonna drag the frame
-        root.setOnMousePressed(event -> {
-            x = event.getSceneX();
-            y = event.getSceneY();
-        });
-
-        root.setOnMouseDragged(event -> {
-            Main.getPrimaryStage().setX(event.getScreenX() - x);
-            Main.getPrimaryStage().setY(event.getScreenY() - y);
-        });
+        changeScene(root, scene, "Settings");
     }
 
+    /**
+     * Opens multiplayer file.
+     *
+     * @throws IOException In case the graphical file is not found.
+     */
     public void multiplayer() throws IOException {
-
-
-
         Parent root = FXMLLoader.load(getClass().getResource("../graphics/Multiplayer.fxml"));
         Scene scene = new Scene(root);
+        changeScene(root, scene, "Multiplayer");
+    }
 
-        Main.getPrimaryStage().setTitle("Multiplayer");
+    /**
+     * Changes the current scene.
+     *
+     * @param root  Graphics file.
+     * @param scene Graphics file scene.
+     * @param title Title of the current screen.
+     */
+    private void changeScene(Parent root, Scene scene, String title) {
+        Main.getPrimaryStage().setTitle(title);
         Main.getPrimaryStage().setScene(scene);
-        //we gonna drag the frame
         root.setOnMousePressed(event -> {
             x = event.getSceneX();
             y = event.getSceneY();
         });
-
         root.setOnMouseDragged(event -> {
             Main.getPrimaryStage().setX(event.getScreenX() - x);
             Main.getPrimaryStage().setY(event.getScreenY() - y);
         });
     }
 
-    public void close(){
+    /**
+     * Closes the current page.
+     */
+    public void close() {
         Platform.exit();
     }
 }

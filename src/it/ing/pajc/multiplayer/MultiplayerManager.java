@@ -11,6 +11,9 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Manages the creation and the communication between 2 players.
+ */
 public class MultiplayerManager {
     private int port;
     private Socket socket;
@@ -19,17 +22,30 @@ public class MultiplayerManager {
     private BufferedReader in;
     private PrintWriter out;
 
+    /**
+     * Constructor of MultiplayerManager.
+     *
+     * @param color Selected by the player.
+     * @param port  Port on which the communication happens.
+     */
     public MultiplayerManager(PiecesColors color, int port) {
         this.port = port;
         this.color = color;
     }
 
-
+    /**
+     * Getter of the board.
+     *
+     * @return The current board.
+     */
     public MultiplayerItalianBoard getBoard() {
         return board;
     }
 
-    public void serverStartup() throws IOException {
+    /**
+     * Creates new board and a thread that manages the connection.
+     */
+    public void serverStartup() {
 
         Fen fen = new Fen("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
         board = new MultiplayerItalianBoard(fen, color, this);
@@ -40,9 +56,10 @@ public class MultiplayerManager {
                     System.out.println("Trying to connect");
                     ServerSocket serverSocket = new ServerSocket(port);
                     socket = serverSocket.accept();
-                } catch (IOException e) {
+                } catch (IOException ignored) {
                 }
             }
+
             @Override
             public void run() {
 
@@ -62,18 +79,22 @@ public class MultiplayerManager {
 
     }
 
-    public void clientStartup() throws IOException {
+    /**
+     * Creates a new board and a thread that manages the connection to the server.
+     */
+    public void clientStartup() {
         Fen fen = new Fen("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
         board = new MultiplayerItalianBoard(fen, color, this);
         MultiplayerManager mm = this;
         Thread Client = new Thread(new Runnable() {
-            private void tryToConnect(){
+            private void tryToConnect() {
                 try {
                     System.out.println("Trying to connect");
                     socket = new Socket("localhost", port);
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
             }
+
             @Override
             public void run() {
                 try {
@@ -92,11 +113,11 @@ public class MultiplayerManager {
         waitForMove();
     }
 
+    /**
+     * Creates a thread that sends the current board and waits for the other players turn to finish.
+     */
     private void waitForMove() {
-        //String fen = readFen();
         MultiplayerManager mm = this;
-
-
         Platform.runLater(new Runnable() {
             private String readFen() {
                 String fen = null;
@@ -119,11 +140,13 @@ public class MultiplayerManager {
                 }
             }
         });
-
-        /*board = new MultiplayerItalianBoard(fen,color,this);
-        MultiplayerController.drawBoard(board,color);*/
     }
 
+    /**
+     * Sends the current board in form of FEN notation.
+     *
+     * @throws IOException In case the FEN can't be sent.
+     */
     public void sendFen() throws IOException {
         Fen fen = new Fen(board.toString());
         board = new MultiplayerItalianBoard(fen, color, this);
@@ -136,5 +159,4 @@ public class MultiplayerManager {
         out.println(board.toString());
         waitForMove();
     }
-
 }
