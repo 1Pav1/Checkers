@@ -64,7 +64,7 @@ public class MultiplayerController {
     /**
      * Creates the server and waits for another player.
      */
-    public void server() {
+    public void server() throws IOException {
         MultiplayerManager server = new MultiplayerManager(PiecesColors.BLACK, 5555);
         server.serverStartup();
     }

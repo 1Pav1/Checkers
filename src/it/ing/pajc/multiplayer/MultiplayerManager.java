@@ -2,6 +2,7 @@ package it.ing.pajc.multiplayer;
 
 import it.ing.pajc.controller.MultiplayerController;
 import it.ing.pajc.data.board.Fen;
+import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.data.board.MultiplayerItalianBoard;
 import it.ing.pajc.data.movements.Move;
 import it.ing.pajc.data.pieces.PiecesColors;
@@ -45,7 +46,7 @@ public class MultiplayerManager {
     /**
      * Creates new board and a thread that manages the connection.
      */
-    public void serverStartup() {
+    public void serverStartup() throws IOException {
 
         Fen fen = new Fen("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
         board = new MultiplayerItalianBoard(fen, color, this);
@@ -65,6 +66,14 @@ public class MultiplayerManager {
 
                 try {
                     tryToConnect();
+                    System.out.println("Connected");
+                    Platform.runLater(() -> {
+                        try {
+                            draw();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
                     out = new PrintWriter(socket.getOutputStream(), true);
                     in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     out.println(board.toString());
@@ -73,10 +82,13 @@ public class MultiplayerManager {
                 }
             }
         });
-
         Server.setName("Server");
         Server.start();
 
+    }
+
+    private void draw() throws IOException {
+        MultiplayerController.drawBoard(board, color);
     }
 
     /**
@@ -102,7 +114,15 @@ public class MultiplayerManager {
                     out = new PrintWriter(socket.getOutputStream(), true);
                     in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     Fen fen = new Fen(in.readLine());
+                    System.out.println("Connected");
                     board = new MultiplayerItalianBoard(fen, color, mm);
+                    Platform.runLater(() -> {
+                        try {
+                            draw();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
                 } catch (IOException e) {
                     System.err.println("Error receiving board");
                 }
@@ -148,14 +168,12 @@ public class MultiplayerManager {
      * @throws IOException In case the FEN can't be sent.
      */
     public void sendFen() throws IOException {
-        Fen fen = new Fen(board.toString());
-        board = new MultiplayerItalianBoard(fen, color, this);
         board.lock();
         if (Move.noMovesLeft(board, color)) {
             System.out.println("You won");
         }
         MultiplayerController.drawBoard(board, color);
-        System.out.println("FEN code sent to client is: " + board.toString());
+        System.out.println("FEN code sent to client is: " + new Fen(board).getFen());
         out.println(board.toString());
         waitForMove();
     }

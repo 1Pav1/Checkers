@@ -26,7 +26,7 @@ public class HomeController implements Serializable {
      */
     public void singlePlayer() throws IOException {
         PiecesColors color = PiecesColors.WHITE;
-        Fen fen = new Fen("eeeeeeee/eeeeeeee/eeeeeeee/eeeeeeee/eeeeeeee/eeeeeeee/eeeeeeee/eeeeeeeM");
+        Fen fen = new Fen("eeeeeeee/ememeeee/eeMeeeee/eeeeeeee/eeeeeeee/eeeeeeee/eeeeeeee/eeeeeeeM");
         ItalianBoard board = new ItalianBoard(fen, color);
         board.printBoardConsole();
         Parent root = FXMLLoader.load(getClass().getResource("../graphics/CheckerBoard.fxml"));

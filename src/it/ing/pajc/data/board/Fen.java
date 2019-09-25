@@ -26,7 +26,7 @@ public class Fen {
      *
      * @param board The Italianboard.
      */
-    Fen(ItalianBoard board) {
+    public Fen(ItalianBoard board) {
         this.board = board;
         fen = new StringBuilder();
         for (int x = 0; x < board.DIMENSION_ITALIAN_BOARD; x++) {
@@ -102,7 +102,7 @@ public class Fen {
      *
      * @return the fen.
      */
-    StringBuilder getFen() {
+    public StringBuilder getFen() {
         return fen;
     }
 }
