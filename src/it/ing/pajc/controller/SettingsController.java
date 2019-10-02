@@ -5,16 +5,14 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.IOException;
 
 /**
  * Controller of the setting page.
  */
 public class SettingsController {
-    private double x,y;
+    private double x, y;
 
     /**
      * Changes the screen to the home page.
@@ -23,8 +21,8 @@ public class SettingsController {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("../graphics/Home.fxml"));
             Scene scene = new Scene(root);
-            changeScene(root,scene,"Checkers board");
-        }catch (Exception e) {
+            changeScene(root, scene, "Checkers board");
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -51,12 +49,12 @@ public class SettingsController {
 
     /**
      * Changes to wooden style.
-     * @throws IOException
+     *
+     * @throws IOException If input is not found.
      */
     public void woodStyle() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../graphics/Home.fxml"));
         Scene scene = new Scene(root);
-        AnchorPane anchorPane = (AnchorPane) scene.lookup("");
         scene.setUserAgentStylesheet("../graphics/woodStyle.css");
 
         root = FXMLLoader.load(getClass().getResource("../graphics/Multiplayer.fxml"));
@@ -74,7 +72,8 @@ public class SettingsController {
 
     /**
      * Changes to retro style.
-     * @throws IOException
+     *
+     * @throws IOException If no input it found.
      */
     public void retroStyle() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../graphics/Home.fxml"));
@@ -97,7 +96,7 @@ public class SettingsController {
     /**
      * Closes the current displayed.
      */
-    public void close(){
+    public void close() {
         Platform.exit();
     }
 }

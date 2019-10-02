@@ -1,6 +1,4 @@
 package it.ing.pajc;
-import it.ing.pajc.controller.CheckerBoardController;
-import it.ing.pajc.controller.HomeController;
 import javafx.application.Application;
 
 import javafx.fxml.FXMLLoader;

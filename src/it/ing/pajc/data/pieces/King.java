@@ -28,14 +28,6 @@ public abstract class King extends Pieces {
     public abstract GenericTree possibleMoves(ItalianBoard board);
 
     /**
-     * Gives all possible captures of a piece.
-     *
-     * @param board The using board, must be an 8x8 board.
-     * @return the tree of all possible captures.
-     */
-    public abstract GenericTree possibleCaptures(ItalianBoard board);
-
-    /**
      * Calculates all possible captures of a piece, included multiple captures.
      *
      * @param board The using board, must be an 8x8 board.
@@ -45,56 +37,50 @@ public abstract class King extends Pieces {
     /**
      * Calculates possible captures after having captured already a piece.
      *
-     * @param board  The using board, must be an 8x8 board.
+     * @param board           The using board, must be an 8x8 board.
      * @param parentPositions starting position of the creating tree.
-     * @param parentCaptures  starting position of the creating tree.
      */
-    public abstract void childrenPossibleCaptures(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures);
+    public abstract void childrenPossibleCaptures(ItalianBoard board, GenericTreeNode<Position> parentPositions);
 
     /**
      * Calculates all possible captures in all directions where the piece can move.
      *
      * @param board           The using board, must be an 8x8 board.
      * @param parentPositions starting position of the creating tree.
-     * @param parentCaptures  starting position of the creating tree.
      */
-    public abstract void possibleCapturesAllDirections(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures);
+    public abstract void possibleCapturesAllDirections(ItalianBoard board, GenericTreeNode<Position> parentPositions);
 
     /**
      * Calculates possible captures on the up left.
      *
      * @param board           The using board, must be an 8x8 board.
      * @param parentPositions starting position of the creating tree.
-     * @param parentCaptures  starting position of the creating tree.
      */
-    public abstract void possibleCaptureUpLeft(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures);
+    public abstract void possibleCaptureUpLeft(ItalianBoard board, GenericTreeNode<Position> parentPositions);
 
     /**
      * Calculates possible captures on the up right.
      *
      * @param board           The using board, must be an 8x8 board.
      * @param parentPositions starting position of the creating tree.
-     * @param parentCaptures  starting position of the creating tree.
      */
-    public abstract void possibleCaptureUpRight(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures);
+    public abstract void possibleCaptureUpRight(ItalianBoard board, GenericTreeNode<Position> parentPositions);
 
     /**
      * Calculates possible captures on the down left.
      *
      * @param board           The using board, must be an 8x8 board.
      * @param parentPositions starting position of the creating tree.
-     * @param parentCaptures  starting position of the creating tree.
      */
-    public abstract void possibleCaptureDownLeft(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures);
+    public abstract void possibleCaptureDownLeft(ItalianBoard board, GenericTreeNode<Position> parentPositions);
 
     /**
      * Calculates possible captures on the down right.
      *
      * @param board           The using board, must be an 8x8 board.
      * @param parentPositions starting position of the creating tree.
-     * @param parentCaptures  starting position of the creating tree.
      */
-    public abstract void possibleCaptureDownRight(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures);
+    public abstract void possibleCaptureDownRight(ItalianBoard board, GenericTreeNode<Position> parentPositions);
 
     /**
      * Check if the piece can capture at least a piece.

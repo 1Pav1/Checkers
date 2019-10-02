@@ -120,9 +120,9 @@ public class MultiplayerItalianBoard extends ItalianBoard {
                                 public void handle(MouseEvent event) {
                                     GenericTree genericTreePossibleCaptures;
                                     if (piecesBoard[finalJ][finalI].getType() == PiecesType.MAN)
-                                        genericTreePossibleCaptures = ((Man) (piecesBoard[finalJ][finalI])).possibleCaptures(MultiplayerItalianBoard.this);
+                                        genericTreePossibleCaptures = ((Man) (piecesBoard[finalJ][finalI])).possibleMoves(MultiplayerItalianBoard.this);
                                     else
-                                        genericTreePossibleCaptures = ((King) (piecesBoard[finalJ][finalI])).possibleCaptures(MultiplayerItalianBoard.this);
+                                        genericTreePossibleCaptures = ((King) (piecesBoard[finalJ][finalI])).possibleMoves(MultiplayerItalianBoard.this);
 
                                     //GenericTree genericTreePossibleCaptures = ((Man) (piecesBoard[x][y])).possibleCaptures(ItalianBoard.this);
                                     List<GenericTreeNode> listPossibleCaptures = genericTreePossibleCaptures.build(GenericTreeTraversalOrderEnum.PRE_ORDER);

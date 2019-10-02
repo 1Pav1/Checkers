@@ -67,7 +67,7 @@ public class ItalianBoard implements Board {
                     stackPaneBoard[x][y].setId("darkSquare");
             }
     }
-
+    //TODO: FALLO TU
     /**
      * Creation of pieces on the board graphically.
      *
@@ -141,9 +141,9 @@ public class ItalianBoard implements Board {
                                 public void handle(MouseEvent event) {
                                     GenericTree genericTreePossibleCaptures;
                                     if (piecesBoard[finalJ][finalI].getType() == PiecesType.MAN)
-                                        genericTreePossibleCaptures = ((Man) (piecesBoard[finalJ][finalI])).possibleCaptures(ItalianBoard.this);
+                                        genericTreePossibleCaptures = ((Man) (piecesBoard[finalJ][finalI])).possibleMoves(ItalianBoard.this);
                                     else
-                                        genericTreePossibleCaptures = ((King) (piecesBoard[finalJ][finalI])).possibleCaptures(ItalianBoard.this);
+                                        genericTreePossibleCaptures = ((King) (piecesBoard[finalJ][finalI])).possibleMoves(ItalianBoard.this);
 
                                     //GenericTree genericTreePossibleCaptures = ((Man) (piecesBoard[x][y])).possibleCaptures(ItalianBoard.this);
                                     List<GenericTreeNode> listPossibleCaptures = genericTreePossibleCaptures.build(GenericTreeTraversalOrderEnum.PRE_ORDER);

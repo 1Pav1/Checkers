@@ -51,9 +51,9 @@ public class Move {
             posC = position.getPosC();
 
             if (isKing(board.getBoard()[posR][posC].getType()))
-                allPossibleCaptures.add(board.getKing(posR, posC).possibleCaptures(board));
+                allPossibleCaptures.add(board.getKing(posR, posC).possibleMoves(board));
             else
-                allPossibleCaptures.add(board.getMan(posR, posC).possibleCaptures(board));
+                allPossibleCaptures.add(board.getMan(posR, posC).possibleMoves(board));
         }
         return allPossibleCaptures;
     }
@@ -87,10 +87,25 @@ public class Move {
     }
 
     /**
+     * Checks if a piece can capture or move.
+     *
+     * @param piecesWhoCanMove list of pieces position who can capture or move.
+     * @param pieceToCheck     if is inside the piecesWhoCanMove list.
+     * @return true if the piece is inside the list, false otherwise.
+     */
+    public static boolean canDoSomething(ArrayList<Position> piecesWhoCanMove, Position pieceToCheck) {
+        for (int i = 0; i < piecesWhoCanMove.size(); i++) {
+            if (piecesWhoCanMove.get(i).getPosition() == pieceToCheck)
+                return true;
+        }
+        return false;
+    }
+
+    /**
      * Gives informations about moves possibilities of a piece.
      *
      * @param board The using board.
-     * @return true if a piece can't move and capture, false otherwise.
+     * @return true if all the pieces on the board can't move and capture, false otherwise.
      */
     public static boolean noMovesLeft(ItalianBoard board, PiecesColors player) {
         for (int posR = 0; posR < 8; posR++)
@@ -149,11 +164,18 @@ public class Move {
     /**
      * Esegue la mossa in input ed eventualmente "mangia"
      */
-    public static void executeMove(ItalianBoard board, Position init, Position fin, List<GenericTreeNode> listPossibleCaptures) {
-        for (int p = 1; p < listPossibleCaptures.size(); p++) {
-            Position positionPossibleCaptures = (Position) listPossibleCaptures.get(p).getData();
-            System.out.println("Captured " + positionPossibleCaptures.getPosR() + " " + positionPossibleCaptures.getPosC());
-            delete(new Position(positionPossibleCaptures.getPosR(), positionPossibleCaptures.getPosC()), board);
+    public static void executeMove(ItalianBoard board, Position init, Position fin, List<GenericTreeNode> listPossibleMovesAndCaptures) {
+        for (int p = 1; p < listPossibleMovesAndCaptures.size(); p++) {
+            Position positionPossibleCaptures = (Position) listPossibleMovesAndCaptures.get(p).getData();
+            if (canCapture(board, positionPossibleCaptures.getPosR(), positionPossibleCaptures.getPosC())) {
+                System.out.println("Captured " + ((MoveAndCapturedPosition) positionPossibleCaptures).getcPosR() + " " + ((MoveAndCapturedPosition) positionPossibleCaptures).getcPosC());
+                System.out.println("Moved " + positionPossibleCaptures.getPosR() + " " + positionPossibleCaptures.getPosC());
+                delete(((MoveAndCapturedPosition) positionPossibleCaptures).getCapturedPosition(), board);
+                delete(positionPossibleCaptures.getPosition(), board);
+            } else {
+                System.out.println("Moved " + positionPossibleCaptures.getPosR() + " " + positionPossibleCaptures.getPosC());
+                delete(positionPossibleCaptures.getPosition(), board);
+            }
         }
         if (board.getBoard()[init.getPosR()][init.getPosC()].getPlayer() == PiecesColors.WHITE)
             if (board.getBoard()[init.getPosR()][init.getPosC()].getType() == PiecesType.MAN)
@@ -167,42 +189,47 @@ public class Move {
             else
                 board.getBoard()[fin.getPosR()][fin.getPosC()] = new ItalianKing(fin, PiecesColors.BLACK);
 
-        board.getBoard()[init.getPosR()][init.getPosC()] = new Empty(init);
-
         // check for new king
-        if (board.getBoard()[fin.getPosR()][fin.getPosC()].getPlayer() == PiecesColors.WHITE && fin.getPosR() == 7)
+        if (board.getBoard()[fin.getPosR()][fin.getPosC()].getPlayer() == PiecesColors.WHITE && fin.getPosR() == 0)
             board.getBoard()[fin.getPosR()][fin.getPosC()] = new ItalianKing(new Position(fin.getPosR(), fin.getPosC()), PiecesColors.WHITE);
         else if (board.getBoard()[fin.getPosR()][fin.getPosC()].getPlayer() == PiecesColors.BLACK && fin.getPosR() == 0)
             board.getBoard()[fin.getPosR()][fin.getPosC()] = new ItalianKing(new Position(fin.getPosR(), fin.getPosC()), PiecesColors.BLACK);
-
     }
 
-    public static void executeMove(ItalianBoard board, GenericTreeNode<Position> listPossibleMoves, GenericTreeNode<Position> listPossibleCaptures) {
+    public static void executeMove(ItalianBoard board, GenericTreeNode<Position> listPossibleMoves) {
         if (!canCapture(board, listPossibleMoves.getData().getPosR(), listPossibleMoves.getData().getPosC())) {
             if (!isKing(board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getType())) {
-                board.getBoard()[listPossibleMoves.getChildAt(0).getData().getPosR()][listPossibleMoves.getChildAt(0).getData().getPosC()] = new ItalianMan(new Position(listPossibleMoves.getChildAt(0).getData().getPosR(), listPossibleMoves.getChildAt(0).getData().getPosC()), board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getPlayer());
+                board.getBoard()[listPossibleMoves.getChildAt(0).getData().getPosR()][listPossibleMoves.getChildAt(0).getData().getPosC()] =
+                        new ItalianMan(new Position(listPossibleMoves.getChildAt(0).getData().getPosR(), listPossibleMoves.getChildAt(0).getData().getPosC()),
+                                board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getPlayer());
                 delete(board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getPosition(), board);
             } else {
-                board.getBoard()[listPossibleMoves.getChildAt(0).getData().getPosR()][listPossibleMoves.getChildAt(0).getData().getPosC()] = new ItalianKing(new Position(listPossibleMoves.getChildAt(0).getData().getPosR(), listPossibleMoves.getChildAt(0).getData().getPosC()), board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getPlayer());
+                board.getBoard()[listPossibleMoves.getChildAt(0).getData().getPosR()][listPossibleMoves.getChildAt(0).getData().getPosC()] =
+                        new ItalianKing(new Position(listPossibleMoves.getChildAt(0).getData().getPosR(), listPossibleMoves.getChildAt(0).getData().getPosC()),
+                                board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getPlayer());
                 delete(board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getPosition(), board);
             }
         } else {
-            executeCapture(board, listPossibleMoves, listPossibleCaptures);
+            executeCapture(board, listPossibleMoves);
         }
     }
 
-    public static void executeCapture(ItalianBoard board, GenericTreeNode<Position> listPossibleMoves, GenericTreeNode<Position> listPossibleCaptures) {
+    public static void executeCapture(ItalianBoard board, GenericTreeNode<Position> listPossibleMoves) {
         if (listPossibleMoves.hasChildren()) {
             if (!isKing(board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getType())) {
-                board.getBoard()[listPossibleMoves.getChildAt(0).getData().getPosR()][listPossibleMoves.getChildAt(0).getData().getPosC()] = new ItalianMan(new Position(listPossibleMoves.getChildAt(0).getData().getPosR(), listPossibleMoves.getChildAt(0).getData().getPosC()), board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getPlayer());
+                board.getBoard()[listPossibleMoves.getChildAt(0).getData().getPosR()][listPossibleMoves.getChildAt(0).getData().getPosC()] =
+                        new ItalianMan(new Position(listPossibleMoves.getChildAt(0).getData().getPosR(),
+                                listPossibleMoves.getChildAt(0).getData().getPosC()), board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getPlayer());
                 delete(board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getPosition(), board);
-                delete(listPossibleCaptures.getChildAt(0).getData(), board);
+                delete(((MoveAndCapturedPosition) listPossibleMoves.getChildAt(0).getData()).getCapturedPosition(), board);
             } else {
-                board.getBoard()[listPossibleMoves.getChildAt(0).getData().getPosR()][listPossibleMoves.getChildAt(0).getData().getPosC()] = new ItalianKing(new Position(listPossibleMoves.getChildAt(0).getData().getPosR(), listPossibleMoves.getChildAt(0).getData().getPosC()), board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getPlayer());
+                board.getBoard()[listPossibleMoves.getChildAt(0).getData().getPosR()][listPossibleMoves.getChildAt(0).getData().getPosC()] =
+                        new ItalianKing(new Position(listPossibleMoves.getChildAt(0).getData().getPosR(),
+                                listPossibleMoves.getChildAt(0).getData().getPosC()), board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getPlayer());
                 delete(board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getPosition(), board);
-                delete(listPossibleCaptures.getChildAt(0).getData(), board);
+                delete(((MoveAndCapturedPosition) listPossibleMoves.getChildAt(0).getData()).getCapturedPosition(), board);
             }
-            executeCapture(board, listPossibleMoves.getChildAt(0), listPossibleCaptures.getChildAt(0));
+            executeCapture(board, listPossibleMoves.getChildAt(0));
         }
     }
 

@@ -18,7 +18,7 @@ public abstract class Pieces extends Circle implements Serializable {
      *
      * @param position Piece's position
      */
-    public Pieces(Position position) {
+    Pieces(Position position) {
         this.position = position;
     }
 

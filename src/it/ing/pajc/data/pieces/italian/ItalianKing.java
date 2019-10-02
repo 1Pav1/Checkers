@@ -14,8 +14,6 @@ import java.util.ArrayList;
 public class ItalianKing extends King {
     private GenericTreeNode<Position> rootPositions = new GenericTreeNode<>(this.getPosition());
     private GenericTree<Position> possibleMovementsList = new GenericTree<>();
-    private GenericTreeNode<Position> rootCaptures = new GenericTreeNode<>(this.getPosition());
-    private GenericTree<Position> possibleCapturesList = new GenericTree<>();
 
     /**
      * WhiteKing's constructor giving position.
@@ -26,7 +24,6 @@ public class ItalianKing extends King {
         super(pos);
         this.setPlayer(player);
         possibleMovementsList.setRoot(rootPositions);
-        possibleCapturesList.setRoot(rootCaptures);
     }
 
     /**
@@ -45,27 +42,7 @@ public class ItalianKing extends King {
         } else {
             allPossibleCaptures(board);
         }
-
-
         return possibleMovementsList;
-    }
-
-    /**
-     * Gives all possible captures of a piece.
-     *
-     * @param board The using board, must be an 8x8 board.
-     * @return the tree of all possible captures.
-     */
-    @Override
-    public GenericTree<Position> possibleCaptures(ItalianBoard board) {
-        rootCaptures.removeChildren();
-        try {
-            if (canCapture(board, this.getPosition())) {
-                allPossibleCaptures(board);
-            }
-        } catch (Exception ignored) {
-        }
-        return possibleCapturesList;
     }
 
     /**
@@ -75,8 +52,8 @@ public class ItalianKing extends King {
      */
     @Override
     public void allPossibleCaptures(ItalianBoard board) {
-        possibleCapturesAllDirections(board, rootPositions, rootCaptures);
-        childrenPossibleCaptures(board, rootPositions, rootCaptures);
+        possibleCapturesAllDirections(board, rootPositions);
+        childrenPossibleCaptures(board, rootPositions);
     }
 
     /**
@@ -84,14 +61,13 @@ public class ItalianKing extends King {
      *
      * @param board           The using board, must be an 8x8 board.
      * @param parentPositions starting position of the creating tree.
-     * @param parentCaptures  starting position of the creating tree.
      */
     @Override
-    public void childrenPossibleCaptures(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures) {
+    public void childrenPossibleCaptures(ItalianBoard board, GenericTreeNode<Position> parentPositions) {
         for (int i = 0; i < parentPositions.getNumberOfChildren(); i++) {
-            possibleCapturesAllDirections(board, parentPositions.getChildAt(i), parentCaptures.getChildAt(i));
+            possibleCapturesAllDirections(board, parentPositions.getChildAt(i));
             if (canCapture(board, parentPositions.getChildAt(i).getData()))
-                childrenPossibleCaptures(board, parentPositions.getChildAt(i), parentCaptures.getChildAt(i));
+                childrenPossibleCaptures(board, parentPositions.getChildAt(i));
         }
     }
 
@@ -100,14 +76,13 @@ public class ItalianKing extends King {
      *
      * @param board           The using board, must be an 8x8 board.
      * @param parentPositions starting position of the creating tree.
-     * @param parentCaptures  starting position of the creating tree.
      */
     @Override
-    public void possibleCapturesAllDirections(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures) {
-        possibleCaptureUpLeft(board, parentPositions, parentCaptures);
-        possibleCaptureUpRight(board, parentPositions, parentCaptures);
-        possibleCaptureDownLeft(board, parentPositions, parentCaptures);
-        possibleCaptureDownRight(board, parentPositions, parentCaptures);
+    public void possibleCapturesAllDirections(ItalianBoard board, GenericTreeNode<Position> parentPositions) {
+        possibleCaptureUpLeft(board, parentPositions);
+        possibleCaptureUpRight(board, parentPositions);
+        possibleCaptureDownLeft(board, parentPositions);
+        possibleCaptureDownRight(board, parentPositions);
     }
 
     /**
@@ -115,17 +90,17 @@ public class ItalianKing extends King {
      *
      * @param board           The using board, must be an 8x8 board.
      * @param parentPositions starting position of the creating tree.
-     * @param parentCaptures  starting position of the creating tree.
      */
     @Override
-    public void possibleCaptureUpLeft(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures) {
+    public void possibleCaptureUpLeft(ItalianBoard board, GenericTreeNode<Position> parentPositions) {
         try {
             if ((board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() - 1].getPlayer() != getPlayer()) &&
                     (board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() - 1].getType() == PiecesType.MAN ||
                             board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() - 1].getType() == PiecesType.KING) &&
                     (board.getBoard()[parentPositions.getData().getPosR() - 2][parentPositions.getData().getPosC() - 2].getPlayer() == PiecesColors.EMPTY)) {
-                parentPositions.addChild(new GenericTreeNode<>(new Position(parentPositions.getData().getPosR() - 2, parentPositions.getData().getPosC() - 2)));
-                parentCaptures.addChild(new GenericTreeNode<>(new Position(parentPositions.getData().getPosR() - 1, parentPositions.getData().getPosC() - 1)));
+                parentPositions.addChild(new GenericTreeNode<>(new MoveAndCapturedPosition(
+                        parentPositions.getData().getPosR() - 2, parentPositions.getData().getPosC() - 2,
+                        parentPositions.getData().getPosR() - 1, parentPositions.getData().getPosC() - 1)));
             }
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
@@ -136,17 +111,17 @@ public class ItalianKing extends King {
      *
      * @param board           The using board, must be an 8x8 board.
      * @param parentPositions starting position of the creating tree.
-     * @param parentCaptures  starting position of the creating tree.
      */
     @Override
-    public void possibleCaptureUpRight(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures) {
+    public void possibleCaptureUpRight(ItalianBoard board, GenericTreeNode<Position> parentPositions) {
         try {
             if ((board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() + 1].getPlayer() != getPlayer()) &&
                     (board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() + 1].getType() == PiecesType.MAN ||
                             board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() + 1].getType() == PiecesType.KING) &&
                     (board.getBoard()[parentPositions.getData().getPosR() - 2][parentPositions.getData().getPosC() + 2].getPlayer() == PiecesColors.EMPTY)) {
-                parentPositions.addChild(new GenericTreeNode<>(new Position(parentPositions.getData().getPosR() - 2, parentPositions.getData().getPosC() + 2)));
-                parentCaptures.addChild(new GenericTreeNode<>(new Position(parentPositions.getData().getPosR() - 1, parentPositions.getData().getPosC() + 1)));
+                parentPositions.addChild(new GenericTreeNode<>(new MoveAndCapturedPosition(
+                        parentPositions.getData().getPosR() - 2, parentPositions.getData().getPosC() + 2,
+                        parentPositions.getData().getPosR() - 1, parentPositions.getData().getPosC() + 1)));
             }
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
@@ -157,17 +132,17 @@ public class ItalianKing extends King {
      *
      * @param board           The using board, must be an 8x8 board.
      * @param parentPositions starting position of the creating tree.
-     * @param parentCaptures  starting position of the creating tree.
      */
     @Override
-    public void possibleCaptureDownLeft(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures) {
+    public void possibleCaptureDownLeft(ItalianBoard board, GenericTreeNode<Position> parentPositions) {
         try {
             if ((board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() - 1].getPlayer() != getPlayer()) &&
                     (board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() - 1].getType() == PiecesType.MAN ||
                             board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() - 1].getType() == PiecesType.KING) &&
                     (board.getBoard()[parentPositions.getData().getPosR() + 2][parentPositions.getData().getPosC() - 2].getPlayer() == PiecesColors.EMPTY)) {
-                parentPositions.addChild(new GenericTreeNode<>(new Position(parentPositions.getData().getPosR() + 2, parentPositions.getData().getPosC() - 2)));
-                parentCaptures.addChild(new GenericTreeNode<>(new Position(parentPositions.getData().getPosR() + 1, parentPositions.getData().getPosC() - 1)));
+                parentPositions.addChild(new GenericTreeNode<>(new MoveAndCapturedPosition(
+                        parentPositions.getData().getPosR() + 2, parentPositions.getData().getPosC() - 2,
+                        parentPositions.getData().getPosR() + 1, parentPositions.getData().getPosC() - 1)));
             }
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
@@ -178,17 +153,17 @@ public class ItalianKing extends King {
      *
      * @param board           The using board, must be an 8x8 board.
      * @param parentPositions starting position of the creating tree.
-     * @param parentCaptures  starting position of the creating tree.
      */
     @Override
-    public void possibleCaptureDownRight(ItalianBoard board, GenericTreeNode<Position> parentPositions, GenericTreeNode<Position> parentCaptures) {
+    public void possibleCaptureDownRight(ItalianBoard board, GenericTreeNode<Position> parentPositions) {
         try {
             if ((board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() + 1].getPlayer() != getPlayer()) &&
                     (board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() + 1].getType() == PiecesType.MAN ||
                             board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() + 1].getType() == PiecesType.KING) &&
                     (board.getBoard()[parentPositions.getData().getPosR() + 2][parentPositions.getData().getPosC() + 2].getPlayer() == PiecesColors.EMPTY)) {
-                parentPositions.addChild(new GenericTreeNode<>(new Position(parentPositions.getData().getPosR() + 2, parentPositions.getData().getPosC() + 2)));
-                parentCaptures.addChild(new GenericTreeNode<>(new Position(parentPositions.getData().getPosR() + 1, parentPositions.getData().getPosC() + 1)));
+                parentPositions.addChild(new GenericTreeNode<>(new MoveAndCapturedPosition(
+                        parentPositions.getData().getPosR() + 2, parentPositions.getData().getPosC() + 2,
+                        parentPositions.getData().getPosR() + 1, parentPositions.getData().getPosC() + 1)));
             }
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
@@ -219,15 +194,15 @@ public class ItalianKing extends King {
 
         try {
             return ((board.getBoard()[piece.getPosR() + 1][piece.getPosC() - 1].getPlayer() != getPlayer()) &&
-                            (board.getBoard()[piece.getPosR() - 1][piece.getPosC() - 1].getPlayer() != PiecesColors.EMPTY) &&
-                            (board.getBoard()[piece.getPosR() - 2][piece.getPosC() - 2].getPlayer() == PiecesColors.EMPTY));
+                    (board.getBoard()[piece.getPosR() - 1][piece.getPosC() - 1].getPlayer() != PiecesColors.EMPTY) &&
+                    (board.getBoard()[piece.getPosR() - 2][piece.getPosC() - 2].getPlayer() == PiecesColors.EMPTY));
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
 
         try {
             return ((board.getBoard()[piece.getPosR() + 1][piece.getPosC() + 1].getPlayer() != getPlayer()) &&
-                            (board.getBoard()[piece.getPosR() - 1][piece.getPosC() - 1].getPlayer() != PiecesColors.EMPTY) &&
-                            (board.getBoard()[piece.getPosR() - 2][piece.getPosC() - 2].getPlayer() == PiecesColors.EMPTY));
+                    (board.getBoard()[piece.getPosR() - 1][piece.getPosC() - 1].getPlayer() != PiecesColors.EMPTY) &&
+                    (board.getBoard()[piece.getPosR() - 2][piece.getPosC() - 2].getPlayer() == PiecesColors.EMPTY));
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
         return false;
