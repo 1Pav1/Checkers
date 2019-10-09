@@ -6,6 +6,8 @@ package it.ing.pajc.data.movements;
 public class Position {
     private int posR;
     private int posC;
+    private int cPosR;
+    private int cPosC;
 
     /**
      * Position constructor.
@@ -16,6 +18,16 @@ public class Position {
     public Position(int posR, int posC) {
         this.posR = posR;
         this.posC = posC;
+        this.cPosR=-1;
+        this.cPosC=-1;
+    }
+
+    public Position(int posR, int posC, int cPosR, int cPosC) {
+        this.posR = posR;
+        this.posC = posC;
+        this.cPosR = cPosR;
+        this.cPosC = cPosC;
+
     }
 
     /**
@@ -25,6 +37,10 @@ public class Position {
      */
     public Position getPosition() {
         return this;
+    }
+
+    public Position getCapturedPosition() {
+        return new Position(cPosR, cPosC);
     }
 
     /**
@@ -43,5 +59,13 @@ public class Position {
      */
     public int getPosC() {
         return posC;
+    }
+
+    public int getcPosR() {
+        return cPosR;
+    }
+
+    public int getcPosC() {
+        return cPosC;
     }
 }

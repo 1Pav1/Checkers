@@ -93,7 +93,6 @@ public class MultiplayerController {
         Parent root = FXMLLoader.load(MultiplayerController.class.getResource("../graphics/CheckerBoard.fxml"));
         scene = new Scene(root);
         GridPane checkerBoard = (GridPane) scene.lookup("#grid");
-        board.placeBoard(checkerBoard, color);
         //to delete
         RotateTransition shake = new RotateTransition(Duration.millis(1000000200), checkerBoard);
         shake.setByAngle(100020);

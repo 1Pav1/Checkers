@@ -70,7 +70,7 @@ public abstract class Pieces extends Circle implements Serializable {
      *
      * @param type New type
      */
-    void setType(PiecesType type) {
+    public void setType(PiecesType type) {
         this.type = type;
     }
 }

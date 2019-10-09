@@ -1,6 +1,7 @@
 package it.ing.pajc.data.pieces;
 
-import it.ing.pajc.data.board.ItalianBoard;
+import it.ing.pajc.data.board.ItalyBoard;
+import it.ing.pajc.data.board.ItalyBoard;
 import it.ing.pajc.data.movements.*;
 
 import java.util.ArrayList;
@@ -25,14 +26,14 @@ public abstract class Man extends Pieces {
      * @param board The using board, must be an 8x8 board.
      * @return the tree of all possible moves.
      */
-    public abstract GenericTree possibleMoves(ItalianBoard board);
+    public abstract GenericTree possibleMoves(ItalyBoard board);
 
     /**
      * Calculates all possible captures of a piece, included multiple captures.
      *
      * @param board The using board, must be an 8x8 board.
      */
-    public abstract void allPossibleCaptures(ItalianBoard board);
+    public abstract void allPossibleCaptures(ItalyBoard board);
 
     /**
      * Calculates possible captures after having captured already a piece.
@@ -40,7 +41,7 @@ public abstract class Man extends Pieces {
      * @param board           The using board, must be an 8x8 board.
      * @param parentPositions starting position of the creating tree.
      */
-    public abstract void childrenPossibleCaptures(ItalianBoard board, GenericTreeNode<Position> parentPositions);
+    public abstract void childrenPossibleCaptures(ItalyBoard board, GenericTreeNode<Position> parentPositions);
 
     /**
      * Calculates all possible captures in all directions where the piece can move.
@@ -48,7 +49,7 @@ public abstract class Man extends Pieces {
      * @param board           The using board, must be an 8x8 board.
      * @param parentPositions starting position of the creating tree.
      */
-    public abstract void possibleCapturesUpRightAndLeft(ItalianBoard board, GenericTreeNode<Position> parentPositions);
+    public abstract void possibleCapturesUpRightAndLeft(ItalyBoard board, GenericTreeNode<Position> parentPositions);
 
     /**
      * Calculates possible captures on the left.
@@ -56,7 +57,7 @@ public abstract class Man extends Pieces {
      * @param board           The using board, must be an 8x8 board.
      * @param parentPositions starting position of the creating tree.
      */
-    public abstract void possibleCaptureUpLeft(ItalianBoard board, GenericTreeNode<Position> parentPositions);
+    public abstract void possibleCaptureUpLeft(ItalyBoard board, GenericTreeNode<Position> parentPositions);
 
     /**
      * Calculates possible captures on the right.
@@ -64,7 +65,7 @@ public abstract class Man extends Pieces {
      * @param board           The using board, must be an 8x8 board.
      * @param parentPositions starting position of the creating tree.
      */
-    public abstract void possibleCaptureUpRight(ItalianBoard board, GenericTreeNode<Position> parentPositions);
+    public abstract void possibleCaptureUpRight(ItalyBoard board, GenericTreeNode<Position> parentPositions);
 
     /**
      * Check if the piece can capture at least a piece.
@@ -73,7 +74,7 @@ public abstract class Man extends Pieces {
      * @param piece Position of the piece in question.
      * @return a boolean true if can capture, false otherwise.
      */
-    public abstract boolean canCapture(ItalianBoard board, Position piece);
+    public abstract boolean canCapture(ItalyBoard board, Position piece);
 
     /**
      * Check if the piece can move without captures.
@@ -82,7 +83,7 @@ public abstract class Man extends Pieces {
      * @param piece Position of the piece in question.
      * @return a boolean true if can move, false otherwise.
      */
-    public abstract boolean canMove(ItalianBoard board, Position piece);
+    public abstract boolean canMove(ItalyBoard board, Position piece);
 
     /**
      * Gives all possible moves when the piece can't capture.
@@ -90,6 +91,6 @@ public abstract class Man extends Pieces {
      * @param board The using board, must be an 8x8 board.
      * @return an ArrayList of all possible moves.
      */
-    public abstract ArrayList<Position> possibleMovesInEmptySpaces(ItalianBoard board);
+    public abstract ArrayList<Position> possibleMovesInEmptySpaces(ItalyBoard board);
 
 }

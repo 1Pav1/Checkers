@@ -10,7 +10,7 @@ import it.ing.pajc.data.pieces.italian.ItalianMan;
 
 public class Fen {
     private StringBuilder fen = new StringBuilder();
-    private ItalianBoard board;
+    private ItalyBoard board;
 
     /**
      * Assigns a given fen to a class property.
@@ -26,7 +26,7 @@ public class Fen {
      *
      * @param board The Italianboard.
      */
-    public Fen(ItalianBoard board) {
+    public Fen(ItalyBoard board) {
         this.board = board;
         fen = new StringBuilder();
         for (int x = 0; x < board.DIMENSION_ITALIAN_BOARD; x++) {

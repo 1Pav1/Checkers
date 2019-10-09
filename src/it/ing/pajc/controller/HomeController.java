@@ -3,6 +3,7 @@ package it.ing.pajc.controller;
 import it.ing.pajc.Main;
 import it.ing.pajc.data.board.Fen;
 import it.ing.pajc.data.board.ItalianBoard;
+import it.ing.pajc.data.board.ItalyBoard;
 import it.ing.pajc.data.pieces.PiecesColors;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -26,13 +27,14 @@ public class HomeController implements Serializable {
      */
     public void singlePlayer() throws IOException {
         PiecesColors color = PiecesColors.WHITE;
-        Fen fen = new Fen("eeeeeeee/ememeeee/eeMeeeee/eeeeeeee/eeeeeeee/eeeeeeee/eeeeeeee/eeeeeeeM");
-        ItalianBoard board = new ItalianBoard(fen, color);
+        Fen fen = new Fen("memememe/emememem/mekememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeKeMeMe/eMeMeMeM");
+        ItalyBoard board = new ItalyBoard(fen, color);
         board.printBoardConsole();
         Parent root = FXMLLoader.load(getClass().getResource("../graphics/CheckerBoard.fxml"));
         Scene scene = new Scene(root);
         GridPane checkerBoard = (GridPane) scene.lookup("#grid");
-        board.placeBoard(checkerBoard, PiecesColors.WHITE);
+        CheckerBoardController.setGridPane(checkerBoard);
+        CheckerBoardController.placeBoard(board);
         changeScene(root, scene, "CheckerBoard");
     }
 

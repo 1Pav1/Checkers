@@ -9,9 +9,7 @@ public class MoveAndCapturedPosition extends Position {
         this.cPosR = cPosR;
         this.cPosC = cPosC;
     }
-    public Position getCapturedPosition(){
-        return new Position(cPosR,cPosC);
-    }
+ 
 
     public int getcPosR() {
         return cPosR;

@@ -1,26 +1,17 @@
 package it.ing.pajc.data.board;
 
-import it.ing.pajc.data.movements.*;
+import it.ing.pajc.controller.CheckerBoardController;
 import it.ing.pajc.data.pieces.*;
 import it.ing.pajc.data.pieces.italian.*;
-import javafx.event.EventHandler;
-import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
-
-import java.util.List;
 
 /**
  * Creates and manage ItalianBoard
  */
-public class ItalianBoard implements Board {
+public class ItalyBoard implements Board {
     private PiecesColors player;
     private Pieces[][] piecesBoard;
-    private StackPane[][] stackPaneBoard;
     private GridPane gridPane;
 
     /**
@@ -29,7 +20,7 @@ public class ItalianBoard implements Board {
      * @param fen   A string that describes a unique set of positions
      * @param color Rotates the board according to the player color.
      */
-    public ItalianBoard(Fen fen, PiecesColors color) {
+    public ItalyBoard(Fen fen, PiecesColors color) {
         player = color;
         if (player == PiecesColors.WHITE)
             piecesBoard = fen.fenToMultidimensionalArray();
@@ -37,47 +28,13 @@ public class ItalianBoard implements Board {
             fen.reverseFen();
             piecesBoard = fen.fenToMultidimensionalArray();
         }
-        initializeBoardFX();
+        CheckerBoardController.initializeBoardFX();
     }
 
-    /**
-     * Board initializer using JavaFX.
-     */
-    private void initializeBoardFX() {
-        stackPaneBoard = new StackPane[DIMENSION_ITALIAN_BOARD][DIMENSION_ITALIAN_BOARD];
-        for (int x = 0; x < DIMENSION_ITALIAN_BOARD; x++)
-            for (int y = 0; y < DIMENSION_ITALIAN_BOARD; y++) {
-                stackPaneBoard[x][y] = new StackPane();
-                stackPaneBoard[x][y].setPrefWidth(60);
-                stackPaneBoard[x][y].setPrefHeight(60);
-            }
-        resetBoardFXColors();
-    }
 
-    /**
-     * Reset colors of the pieces on the board
-     */
-    void resetBoardFXColors() {
-        for (int x = 0; x < DIMENSION_ITALIAN_BOARD; x++)
-            for (int y = 0; y < DIMENSION_ITALIAN_BOARD; y++) {
-                stackPaneBoard[x][y].setDisable(true);
-                if ((x % 2 == 0 && y % 2 == 1) || (x % 2 == 1 && y % 2 == 0))
-                    stackPaneBoard[x][y].setId("lightSquare");
-                else
-                    stackPaneBoard[x][y].setId("darkSquare");
-            }
-    }
-    //TODO: FALLO TU
 
-    /**
-     * Creation of pieces on the board graphically.
-     *
-     * @param grid   Defines the positions where the pieces can move.
-     * @param player Defines the color of the pieces of a specific player.
-     */
-    public void placeBoard(GridPane grid, PiecesColors player) {
 
-    }
+
 
     /**
      * Print the board, only console.
@@ -121,7 +78,7 @@ public class ItalianBoard implements Board {
      */
     @Override
     public String toString() {
-        Fen fen = new Fen("");
+        Fen fen = new Fen(this);
         return fen.toString();
     }
 
@@ -152,7 +109,7 @@ public class ItalianBoard implements Board {
      *
      * @return the color of the player.
      */
-    PiecesColors getPlayer() {
+    public PiecesColors getPlayer() {
         return player;
     }
 
@@ -161,17 +118,8 @@ public class ItalianBoard implements Board {
      *
      * @return matrix of positions.
      */
-    Pieces[][] getPiecesBoard() {
+    public Pieces[][] getPiecesBoard() {
         return piecesBoard;
-    }
-
-    /**
-     * Getter of stack pane board.
-     *
-     * @return matrix of graphical board.
-     */
-    StackPane[][] getStackPaneBoard() {
-        return stackPaneBoard;
     }
 
     /**
@@ -179,7 +127,21 @@ public class ItalianBoard implements Board {
      *
      * @return box that contains the pieces.
      */
-    GridPane getGridPane() {
+    public GridPane getGridPane() {
         return gridPane;
     }
+
+    public void setPlayer(PiecesColors player) {
+        this.player = player;
+    }
+
+    public void setPiecesBoard(Pieces[][] piecesBoard) {
+        this.piecesBoard = piecesBoard;
+    }
+
+
+    public void setGridPane(GridPane gridPane) {
+        this.gridPane = gridPane;
+    }
 }
+

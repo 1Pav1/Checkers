@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Created Fen class &#10;Minor fix">
-      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/MoveAndCapturedPosition.java" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Functioning thread">
+      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalyBoard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/SettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/SettingsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/CheckerBoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/CheckerBoardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/Fen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/Fen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/MultiplayerItalianBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/MultiplayerItalianBoard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/Move.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/MoveAndCapturedPosition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/MoveAndCapturedPosition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/Position.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/King.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Man.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Man.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Pieces.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Pieces.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/italian/ItalianKing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/italian/ItalianKing.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/italian/ItalianMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/italian/ItalianMan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/multiplayer/MultiplayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/multiplayer/MultiplayerManager.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -95,7 +99,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RESET_MODE" value="MIXED" />
+    <option name="RESET_MODE" value="HARD" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="UPDATE_TYPE" value="MERGE" />
   </component>
@@ -377,6 +381,8 @@
       <workItem from="1569351480240" duration="2668000" />
       <workItem from="1569431454043" duration="564000" />
       <workItem from="1569834894692" duration="18981000" />
+      <workItem from="1570600295883" duration="611000" />
+      <workItem from="1570602823366" duration="11391000" />
     </task>
     <task id="LOCAL-00001" summary="added:&#10;Settings&#10;Possible Moves">
       <created>1564397017327</created>

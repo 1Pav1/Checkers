@@ -169,11 +169,8 @@ public class MultiplayerManager {
      */
     public void sendFen() throws IOException {
         board.lock();
-        if (Move.noMovesLeft(board, color)) {
-            System.out.println("You won");
-        }
         MultiplayerController.drawBoard(board, color);
-        System.out.println("FEN code sent to client is: " + new Fen(board).getFen());
+        System.out.println("FEN code sent to client is: " + new Fen("eeeeeeee/ememeeee/eeMeeeee/eeeeeeee/eeeeeeee/eeeeeeee/eeeeeeee/eeeeeeeM").getFen());
         out.println(board.toString());
         waitForMove();
     }
