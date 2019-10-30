@@ -70,3 +70,6 @@
     -fx-text-fill: white;
     -fx-background-color: black;
 }
+.text-area .content{
+    -fx-background-color: black;
+}

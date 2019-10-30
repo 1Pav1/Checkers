@@ -2,11 +2,10 @@ package it.ing.pajc.data.board;
 
 import it.ing.pajc.data.pieces.*;
 import it.ing.pajc.multiplayer.MultiplayerManager;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+
 import java.io.IOException;
 
-public class MultiplayerItalianBoard extends ItalyBoard {
+public class MultiplayerItalianBoard extends ItalianBoard {
     private Pieces[][] piecesBoard;
     private MultiplayerManager multiplayerManager;
 

@@ -1,12 +1,5 @@
 package it.ing.pajc.singleplayer;
 
-import it.ing.pajc.data.board.ItalianBoard;
-import it.ing.pajc.data.movements.*;
-import it.ing.pajc.data.pieces.PiecesColors;
-import it.ing.pajc.data.pieces.PiecesType;
-
-import java.util.*;
-
 //BOARD: black on the bottom side
 public class Engine {
     /*private final static int INFINITY = Integer.MAX_VALUE;

@@ -1,6 +1,7 @@
 package it.ing.pajc.data.movements;
 
-import it.ing.pajc.data.board.ItalyBoard;
+import it.ing.pajc.controller.CheckerBoardController;
+import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.data.pieces.Empty;
 import it.ing.pajc.data.pieces.PiecesColors;
 import it.ing.pajc.data.pieces.PiecesType;
@@ -18,7 +19,7 @@ public class Move {
      * @param player The actual player.
      * @return an arrayList of all possible moves of pieces.
      */
-    public static ArrayList<GenericTree<Position>> generateMoves(ItalyBoard board, PiecesColors player) {
+    public static ArrayList<GenericTree<Position>> generateMoves(ItalianBoard board, PiecesColors player) {
         int posR;
         int posC;
         ArrayList<Position> piecesWhoCanMove = piecesWhoCanMove(board, player);
@@ -41,7 +42,7 @@ public class Move {
      * @param player The actual player.
      * @return an arrayList of all possible moves of pieces.
      */
-    public static ArrayList<GenericTree<Position>> generateCaptures(ItalyBoard board, PiecesColors player) {
+    public static ArrayList<GenericTree<Position>> generateCaptures(ItalianBoard board, PiecesColors player) {
         int posR;
         int posC;
         ArrayList<Position> piecesWhoCanMove = piecesWhoCanMove(board, player);
@@ -66,7 +67,7 @@ public class Move {
      * @param player The actual player.
      * @return an arrayList with all positions of pieces which can move or capture.
      */
-    public static ArrayList<Position> piecesWhoCanMove(ItalyBoard board, PiecesColors player) {
+    public static ArrayList<Position> piecesWhoCanMove(ItalianBoard board, PiecesColors player) {
         ArrayList<Position> pieces = new ArrayList<>();
         for (int posR = 0; posR < 8; posR++)
             for (int posC = 0; posC < 8; posC++) {
@@ -112,7 +113,7 @@ public class Move {
      * @param board The using board.
      * @return true if all the pieces on the board can't move and capture, false otherwise.
      */
-    public static boolean noMovesLeft(ItalyBoard board, PiecesColors player) {
+    public static boolean noMovesLeft(ItalianBoard board, PiecesColors player) {
         for (int posR = 0; posR < 8; posR++)
             for (int posC = 0; posC < 8; posC++)
                 if (board.getBoard()[posR][posC].getPlayer() == player)
@@ -129,7 +130,7 @@ public class Move {
      * @param posC  of the piece.
      * @return true if can capture, otherwise return false.
      */
-    private static boolean canCapture(ItalyBoard board, int posR, int posC) {
+    private static boolean canCapture(ItalianBoard board, int posR, int posC) {
         boolean result = false;
         if (board.getBoard()[posR][posC].getType() == PiecesType.MAN)
             result = board.getMan(posR, posC).canCapture(board, new Position(posR, posC));
@@ -146,7 +147,7 @@ public class Move {
      * @param posC  columns positions.
      * @return true if it can walk.
      */
-    private static boolean canWalk(ItalyBoard board, int posR, int posC) {
+    private static boolean canWalk(ItalianBoard board, int posR, int posC) {
         boolean result = false;
         if (board.getBoard()[posR][posC].getType() == PiecesType.MAN)
             result = board.getMan(posR, posC).canMove(board, new Position(posR, posC));
@@ -168,13 +169,15 @@ public class Move {
     /**
      * Esegue la mossa in input ed eventualmente "mangia"
      */
-    public static void executeMove(ItalyBoard board, Position init, Position fin, List<GenericTreeNode> listPossibleMovesAndCaptures) {
-
+    public static void executeMove(ItalianBoard board, Position init, Position fin, List<GenericTreeNode> listPossibleMovesAndCaptures) {
+        CheckerBoardController.addToTextArea(board.getBoard()[init.getPosR()][init.getPosC()].getPlayer()+" moved from " + init.getPosR() + " " + init.getPosC()+" "+ "-> " + fin.getPosR() + " " +fin.getPosC()+"\n");
         for (int p = 1; p < listPossibleMovesAndCaptures.size(); p++) {
             Position positionPossibleCaptures = (Position) listPossibleMovesAndCaptures.get(p).getData();
             if (canCapture(board, positionPossibleCaptures.getPosR(), positionPossibleCaptures.getPosC())) {
                 System.out.println("Captured " + ((MoveAndCapturedPosition) positionPossibleCaptures).getcPosR() + " " + ((MoveAndCapturedPosition) positionPossibleCaptures).getcPosC());
+
                 System.out.println("Moved " + positionPossibleCaptures.getPosR() + " " + positionPossibleCaptures.getPosC());
+
                 delete(((MoveAndCapturedPosition) positionPossibleCaptures).getCapturedPosition(), board);
 
             } else {
@@ -202,7 +205,7 @@ public class Move {
 
     }
 
-    public static void executeMove(ItalyBoard board, GenericTreeNode<Position> listPossibleMoves) {
+    public static void executeMove(ItalianBoard board, GenericTreeNode<Position> listPossibleMoves) {
         if (!canCapture(board, listPossibleMoves.getData().getPosR(), listPossibleMoves.getData().getPosC())) {
             if (!isKing(board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getType())) {
                 board.getBoard()[listPossibleMoves.getChildAt(0).getData().getPosR()][listPossibleMoves.getChildAt(0).getData().getPosC()] =
@@ -220,7 +223,7 @@ public class Move {
         }
     }
 
-    public static void executeCapture(ItalyBoard board, GenericTreeNode<Position> listPossibleMoves) {
+    public static void executeCapture(ItalianBoard board, GenericTreeNode<Position> listPossibleMoves) {
         if (listPossibleMoves.hasChildren()) {
             if (!isKing(board.getBoard()[listPossibleMoves.getData().getPosR()][listPossibleMoves.getData().getPosC()].getType())) {
                 board.getBoard()[listPossibleMoves.getChildAt(0).getData().getPosR()][listPossibleMoves.getChildAt(0).getData().getPosC()] =
@@ -239,7 +242,7 @@ public class Move {
         }
     }
 
-    public static ArrayList<Position> sequentialMoves(ItalyBoard board, GenericTreeNode<Position> listPossibleMoves, ArrayList<Position> moves) {
+    public static ArrayList<Position> sequentialMoves(ItalianBoard board, GenericTreeNode<Position> listPossibleMoves, ArrayList<Position> moves) {
         moves.add(listPossibleMoves.getChildAt(0).getData());
         if (listPossibleMoves.getChildAt(0).hasChildren())
             sequentialMoves(board, listPossibleMoves.getChildAt(0), moves);
@@ -251,7 +254,7 @@ public class Move {
      *
      * @param position of the piece wanted to be deleted.
      */
-    public static void delete(Position position, ItalyBoard board) {
+    public static void delete(Position position, ItalianBoard board) {
         board.getBoard()[position.getPosR()][position.getPosC()] = new Empty(position);
     }
 

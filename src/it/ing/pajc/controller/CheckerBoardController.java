@@ -1,14 +1,17 @@
 package it.ing.pajc.controller;
 
 import it.ing.pajc.Main;
-import it.ing.pajc.data.board.ItalyBoard;
+import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.data.movements.*;
 import it.ing.pajc.data.pieces.*;
+import it.ing.pajc.singleplayer.SinglePlayerManager;
+import javafx.animation.RotateTransition;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -16,6 +19,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 
 import java.util.List;
 
@@ -28,7 +32,21 @@ public class CheckerBoardController {
     private double x, y;
     private static GridPane gridPane = null;
     private static StackPane[][] stackPaneBoard;
+    private static TextArea textArea;
+    public static void start(){
+        placeBoard();
+    }
 
+    public static void setTextArea(TextArea textArea){
+        CheckerBoardController.textArea = textArea;
+    }
+
+    public static void setSinglePlayerManager(SinglePlayerManager singlePlayerManager) {
+        CheckerBoardController.singlePlayerManager = singlePlayerManager;
+    }
+
+
+    private static SinglePlayerManager singlePlayerManager;
     /**
      * Closes the game.
      */
@@ -73,21 +91,24 @@ public class CheckerBoardController {
     }
 
 
-    public static void placeBoard(ItalyBoard board) {
+    public static void placeBoard() {
+       ItalianBoard board = singlePlayerManager.getItalianBoard();
         gridPane.getChildren().clear();
         for (int i = 0; i < DIMENSION_ITALIAN_BOARD; i++) {
             for (int j = 0; j < DIMENSION_ITALIAN_BOARD; j++) {
                 gridPane.add(stackPaneBoard[i][j], i, j);
                 if (board.getPiecesBoard()[j][i].getPlayer() != PiecesColors.EMPTY) {
-                    addPieceToGridPane(board.getPiecesBoard()[j][i],board.getPlayer(),i,j);
-                    createClickEvent(board.getPiecesBoard()[j][i], stackPaneBoard[j][i], board);
+                    addPieceToGridPane(board.getPiecesBoard()[j][i],i,j);
+                    createClickEvent(board.getPiecesBoard()[j][i]);
                 }
             }
         }
     }
 
-    private static void addPieceToGridPane(Pieces piece, PiecesColors player,int i,int j) {
+    private static void addPieceToGridPane(Pieces piece,int i,int j) {
         Circle circle = piece;
+        if(singlePlayerManager.getItalianBoard().getBoard()[i][j].getPlayer()!=singlePlayerManager.getPlayer())
+            stackPaneBoard[i][j].setDisable(true);
         styleCircle(circle);
         if (piece.getType() == PiecesType.MAN) {
             if(piece.getPlayer() == PiecesColors.WHITE)
@@ -118,9 +139,11 @@ public class CheckerBoardController {
         }
     }
 
-    private static void createClickEvent(Pieces piece, StackPane stackPanePiece, ItalyBoard board) {
+    private static void createClickEvent(Pieces piece) {
+        ItalianBoard board = singlePlayerManager.getItalianBoard();
         Circle circle = piece;
         circle.setOnMousePressed(event -> {
+
             resetBoardFXColors();
             GenericTree genericTree;
             if (piece.getType() == PiecesType.MAN)
@@ -140,12 +163,21 @@ public class CheckerBoardController {
                     public void handle(MouseEvent event) {
                         Move.executeMove(board,piece.getPosition(),position,list);
                         //board.getPiecesBoard()[piece.getPosition().getPosR()][piece.getPosition().getPosC()] = new Empty(piece.getPosition());
-                        placeBoard(board);
-                        resetBoardFXColors();
+                        /*RotateTransition shake = new RotateTransition(Duration.millis(3000), gridPane);
+                        shake.setByAngle(180);
+                        shake.setCycleCount(1);
+                        shake.play();*/
+                        singlePlayerManager.changePlayer();
+                        placeBoard();
                     }
                 });
             }
         });
+    }
+
+    public static void addToTextArea(String text){
+        text=textArea.getText()+text;
+        textArea.setText(text);
     }
 
     /**

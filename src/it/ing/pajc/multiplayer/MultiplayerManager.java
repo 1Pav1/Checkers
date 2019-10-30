@@ -2,9 +2,7 @@ package it.ing.pajc.multiplayer;
 
 import it.ing.pajc.controller.MultiplayerController;
 import it.ing.pajc.data.board.Fen;
-import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.data.board.MultiplayerItalianBoard;
-import it.ing.pajc.data.movements.Move;
 import it.ing.pajc.data.pieces.PiecesColors;
 import javafx.application.Platform;
 
