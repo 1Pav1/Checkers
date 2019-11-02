@@ -1,11 +1,13 @@
 package it.ing.pajc.data.pieces.italian;
 
+import it.ing.pajc.controller.CheckerBoardController;
 import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.data.movements.*;
 import it.ing.pajc.data.pieces.Man;
 import it.ing.pajc.data.pieces.PiecesColors;
 import it.ing.pajc.data.pieces.PiecesType;
 
+import java.awt.desktop.SystemEventListener;
 import java.util.ArrayList;
 
 /**
@@ -56,6 +58,7 @@ public class ItalianMan extends Man {
     public void allPossibleCaptures(ItalianBoard board) {
         possibleCapturesUpRightAndLeft(board, rootPositions);
         childrenPossibleCaptures(board, rootPositions);
+        System.out.println(possibleMovementsList);
     }
 
     /**
@@ -100,6 +103,9 @@ public class ItalianMan extends Man {
                 parentPositions.addChild(new GenericTreeNode<>(new MoveAndCapturedPosition(
                         parentPositions.getData().getPosR() - 2, parentPositions.getData().getPosC() - 2,
                         parentPositions.getData().getPosR() - 1, parentPositions.getData().getPosC() - 1)));
+                /*CheckerBoardController.createClickEventForDeletion(
+                        new Position(parentPositions.getData().getPosR() - 1, parentPositions.getData().getPosC() -1),
+                        new Position(parentPositions.getData().getPosR() - 2, parentPositions.getData().getPosC() - 2));*/
             }
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
@@ -120,6 +126,10 @@ public class ItalianMan extends Man {
                 parentPositions.addChild(new GenericTreeNode<>(new MoveAndCapturedPosition(
                         parentPositions.getData().getPosR() - 2, parentPositions.getData().getPosC() + 2,
                         parentPositions.getData().getPosR() - 1, parentPositions.getData().getPosC() + 1)));
+
+                /*CheckerBoardController.createClickEventForDeletion(
+                        new Position(parentPositions.getData().getPosR() - 1, parentPositions.getData().getPosC() + 1),
+                        new Position(parentPositions.getData().getPosR() - 2, parentPositions.getData().getPosC() + 2));*/
             }
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
@@ -134,12 +144,36 @@ public class ItalianMan extends Man {
      */
     @Override
     public boolean canCapture(ItalianBoard board, Position piece) {
+        if (canCaptureRight(board, piece) || canCaptureLeft(board, piece))
+            return true;
+        return false;
+    }
+
+    /**
+     * Checks whether the piece can capture on the right.
+     *
+     * @param board The using board, must be an 8x8 board.
+     * @param piece Position of the piece in question.
+     * @return a boolean true if can capture, false otherwise.
+     */
+    public boolean canCaptureRight(ItalianBoard board, Position piece) {
         try {
             return ((board.getBoard()[piece.getPosR() - 1][piece.getPosC() - 1].getPlayer() != getPlayer()) &&
                     (board.getBoard()[piece.getPosR() - 1][piece.getPosC() - 1].getType() == PiecesType.MAN) &&
                     (board.getBoard()[piece.getPosR() - 2][piece.getPosC() - 2].getPlayer() == PiecesColors.EMPTY));
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
+        return false;
+    }
+
+    /**
+     * Checks whether the piece can capture on the left.
+     *
+     * @param board The using board, must be an 8x8 board.
+     * @param piece Position of the piece in question.
+     * @return a boolean true if can capture, false otherwise.
+     */
+    public boolean canCaptureLeft(ItalianBoard board, Position piece) {
         try {
             return ((board.getBoard()[piece.getPosR() - 1][piece.getPosC() + 1].getPlayer() != getPlayer()) &&
                     (board.getBoard()[piece.getPosR() - 1][piece.getPosC() + 1].getType() == PiecesType.MAN) &&

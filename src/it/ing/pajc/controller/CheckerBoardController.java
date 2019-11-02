@@ -4,8 +4,9 @@ import it.ing.pajc.Main;
 import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.data.movements.*;
 import it.ing.pajc.data.pieces.*;
+import it.ing.pajc.data.pieces.italian.ItalianKing;
+import it.ing.pajc.data.pieces.italian.ItalianMan;
 import it.ing.pajc.singleplayer.SinglePlayerManager;
-import javafx.animation.RotateTransition;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -19,9 +20,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.util.Duration;
 
-import java.util.List;
+import java.util.Set;
 
 import static it.ing.pajc.data.board.Board.DIMENSION_ITALIAN_BOARD;
 
@@ -33,11 +33,12 @@ public class CheckerBoardController {
     private static GridPane gridPane = null;
     private static StackPane[][] stackPaneBoard;
     private static TextArea textArea;
-    public static void start(){
+
+    public static void start() {
         placeBoard();
     }
 
-    public static void setTextArea(TextArea textArea){
+    public static void setTextArea(TextArea textArea) {
         CheckerBoardController.textArea = textArea;
     }
 
@@ -47,6 +48,7 @@ public class CheckerBoardController {
 
 
     private static SinglePlayerManager singlePlayerManager;
+
     /**
      * Closes the game.
      */
@@ -92,33 +94,31 @@ public class CheckerBoardController {
 
 
     public static void placeBoard() {
-       ItalianBoard board = singlePlayerManager.getItalianBoard();
+        ItalianBoard board = singlePlayerManager.getItalianBoard();
         gridPane.getChildren().clear();
         for (int i = 0; i < DIMENSION_ITALIAN_BOARD; i++) {
             for (int j = 0; j < DIMENSION_ITALIAN_BOARD; j++) {
                 gridPane.add(stackPaneBoard[i][j], i, j);
                 if (board.getPiecesBoard()[j][i].getPlayer() != PiecesColors.EMPTY) {
-                    addPieceToGridPane(board.getPiecesBoard()[j][i],i,j);
-                    createClickEvent(board.getPiecesBoard()[j][i]);
+                    addPieceToGridPane(board.getPiecesBoard()[j][i], i, j);
+                    createClickEventPiece(board.getPiecesBoard()[j][i]);
                 }
             }
         }
     }
 
-    private static void addPieceToGridPane(Pieces piece,int i,int j) {
+    private static void addPieceToGridPane(Pieces piece, int i, int j) {
         Circle circle = piece;
-        if(singlePlayerManager.getItalianBoard().getBoard()[i][j].getPlayer()!=singlePlayerManager.getPlayer())
+        if (singlePlayerManager.getItalianBoard().getBoard()[i][j].getPlayer() != singlePlayerManager.getPlayer())
             stackPaneBoard[i][j].setDisable(true);
         styleCircle(circle);
         if (piece.getType() == PiecesType.MAN) {
-            if(piece.getPlayer() == PiecesColors.WHITE)
+            if (piece.getPlayer() == PiecesColors.WHITE)
                 circle.setFill(Color.WHITE);
             else
                 circle.setFill(Color.BLACK);
-        }
-
-        else {
-            transformToKing(piece.getPlayer(),circle);
+        } else {
+            transformToKing(piece.getPlayer(), circle);
         }
         gridPane.add(circle, i, j);
     }
@@ -139,18 +139,21 @@ public class CheckerBoardController {
         }
     }
 
-    private static void createClickEvent(Pieces piece) {
+    private static void createClickEventPiece(Pieces piece) {
         ItalianBoard board = singlePlayerManager.getItalianBoard();
         Circle circle = piece;
         circle.setOnMousePressed(event -> {
 
             resetBoardFXColors();
-            GenericTree genericTree;
+            GenericTree<Position> genericTree;
             if (piece.getType() == PiecesType.MAN)
-                genericTree = ((Man) (piece)).possibleMoves(board);
+                genericTree = ((ItalianMan) (piece)).possibleMoves(board);
             else
-                genericTree = ((King) (piece)).possibleMoves(board);
+                genericTree = ((ItalianKing) (piece)).possibleMoves(board);
 
+            GenericTreeNode<Position> parent = genericTree.getRoot();
+            createClickEventForMoveAndDeletion(parent);
+            /*
             List<GenericTreeNode> list = genericTree.build(GenericTreeTraversalOrderEnum.PRE_ORDER);
 
             for (int p = 1; p < list.size(); p++) {
@@ -161,22 +164,111 @@ public class CheckerBoardController {
                 stackPaneBoard[position.getPosC()][position.getPosR()].setOnMousePressed(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        Move.executeMove(board,piece.getPosition(),position,list);
                         //board.getPiecesBoard()[piece.getPosition().getPosR()][piece.getPosition().getPosC()] = new Empty(piece.getPosition());
-                        /*RotateTransition shake = new RotateTransition(Duration.millis(3000), gridPane);
+                       /* RotateTransition shake = new RotateTransition(Duration.millis(3000), gridPane);
                         shake.setByAngle(180);
                         shake.setCycleCount(1);
                         shake.play();*/
+                        /*for (int i = 0; i < list.getNumberOfChildren(); i++) {
+                            System.out.println(rootPositions.getChildAt(i).getData());
+                            CheckerBoardController.createClickEventForDeletion(((MoveAndCapturedPosition) rootPositions.getChildAt(i).getData()).getToCapture(),rootPositions.getChildAt(i).getData());
+                        }
+                        Move.delete(positionDelete,singlePlayerManager.getItalianBoard());
                         singlePlayerManager.changePlayer();
                         placeBoard();
                     }
                 });
-            }
+            }*/
         });
     }
 
-    public static void addToTextArea(String text){
-        text=textArea.getText()+text;
+    public static void createClickEventForMoveAndDeletion(GenericTreeNode parent) {
+        Set<Position> leafs = parent.getAllLeafNodes();
+        for (Object object : leafs) {
+            GenericTreeNode genericTreeNode = (GenericTreeNode) object;
+            MoveAndCapturedPosition element = null;
+            try {
+                GenericTreeNode par = genericTreeNode;
+                boolean con = true;
+                while (con) {
+                    try {
+                        stackPaneBoard[(((MoveAndCapturedPosition) par.getData()).getToCapture()).getPosC()][(((MoveAndCapturedPosition) par.getData()).getToCapture()).getPosR()].setId("captureHighlight");
+                        par = par.getParent();
+                    } catch (Exception e) {
+                        con = false;
+                    }
+                }
+
+                element = (MoveAndCapturedPosition) genericTreeNode.getData();
+                stackPaneBoard[element.getPosC()][element.getPosR()].setId("movementHighlight");
+                stackPaneBoard[element.getPosC()][element.getPosR()].setDisable(false);
+                stackPaneBoard[element.getPosC()][element.getPosR()].setOnMousePressed(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        GenericTreeNode par = genericTreeNode;
+                        boolean con = true;
+                        while (con) {
+                            try {
+                                Move.delete((((MoveAndCapturedPosition) par.getData()).getToCapture()), singlePlayerManager.getItalianBoard());
+                                par = par.getParent();
+                            } catch (Exception e) {
+                                con = false;
+                            }
+                        }
+                        singlePlayerManager.changePlayer();
+                        resetBoardFXColors();
+                        placeBoard();
+                    }
+                });
+            } catch (Exception e) {
+            }
+
+
+        }
+
+
+    /*
+        for (int i = 0; i < leafs.size(); i++) {
+
+            Position position = (Position) leafs..getData();
+            MoveAndCapturedPosition moveAndCapturedPosition = (MoveAndCapturedPosition) parent.getChildAt(i).getData();
+            stackPaneBoard[position.getPosC()][position.getPosR()].setId("movementHighlight");
+            stackPaneBoard[position.getPosC()][position.getPosR()].setDisable(false);
+            stackPaneBoard[position.getPosC()][position.getPosR()].setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    GenericTreeNode par = parent;
+                    try {
+                        while(((MoveAndCapturedPosition)parent.getData()).getToCapture()!=null){
+                            Move.delete(((MoveAndCapturedPosition) parent.getData()).getToCapture(),singlePlayerManager.getItalianBoard());
+                        }
+                    }catch (Exception e){};
+
+
+                    Move.delete(moveAndCapturedPosition.getToCapture(),singlePlayerManager.getItalianBoard());
+                    placeBoard();
+                }
+            });
+            if(parent.getChildAt(i).getNumberOfChildren()!=0)
+                createClickEventForMoveAndDeletion(parent.getChildAt(i));
+        }*/
+    }
+
+    public static void createClickEventForDeletion(Position positionDelete, Position toMoveTo) {
+        stackPaneBoard[toMoveTo.getPosC()][toMoveTo.getPosR()].setId("captureHighlight");
+        //Generating event for the movement positions with deletion of the eaten pieces
+        stackPaneBoard[toMoveTo.getPosC()][toMoveTo.getPosR()].setDisable(false);
+
+        stackPaneBoard[toMoveTo.getPosC()][toMoveTo.getPosR()].setOnMousePressed(event -> {
+            Move.delete(positionDelete, singlePlayerManager.getItalianBoard());
+            //singlePlayerManager.changePlayer();
+            placeBoard();
+        });
+    }
+
+
+    public static void addToTextArea(String text) {
+        text = textArea.getText() + text;
         textArea.setText(text);
     }
 

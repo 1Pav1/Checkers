@@ -108,7 +108,7 @@ public class GenericTreeNode<Position> {
     }
 
     //added
-    private Set<GenericTreeNode<Position>> getAllLeafNodes() {
+    public Set<GenericTreeNode<Position>> getAllLeafNodes() {
         Set<GenericTreeNode<Position>> leafNodes = new HashSet<>();
         if (this.children.isEmpty()) {
             leafNodes.add(this);

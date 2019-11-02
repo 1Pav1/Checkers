@@ -1,22 +1,23 @@
 package it.ing.pajc.data.movements;
 
-public class MoveAndCapturedPosition extends Position {
-    private int cPosR;
-    private int cPosC;
+public class MoveAndCapturedPosition extends Position{
+    private Position toCapture;
 
     public MoveAndCapturedPosition(int mPosR, int mPosC, int cPosR, int cPosC) {
         super(mPosR, mPosC);
-        this.cPosR = cPosR;
-        this.cPosC = cPosC;
-    }
- 
-
-    public int getcPosR() {
-        return cPosR;
+        this.toCapture = new Position(cPosR, cPosC);
     }
 
-    public int getcPosC() {
-        return cPosC;
+    public Position getToCapture() {
+        return toCapture;
     }
 
+    public void setToCapture(Position toCapture) {
+        this.toCapture = toCapture;
+    }
+
+    @Override
+    public String toString() {
+        return "Moving to:"+super.toString()+" Capturing :"+toCapture;
+    }
 }

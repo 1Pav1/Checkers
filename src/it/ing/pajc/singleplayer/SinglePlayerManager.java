@@ -18,7 +18,7 @@ public class SinglePlayerManager {
     }
 
     public SinglePlayerManager(PiecesColors player) {
-        italianBoard = new ItalianBoard(new Fen("memememe/emememem/mekememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeKeMeMe/eMeMeMeM"), player);
+        italianBoard = new ItalianBoard(new Fen("eeeeeeee/eeeeeeee/mekememe/eeeeeeee/mekememe/eMeMeMeM/MeKeMeMe/eMeMeMeM"), player);
         this.player = player;
     }
 

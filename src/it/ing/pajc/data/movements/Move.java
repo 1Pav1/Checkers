@@ -168,7 +168,7 @@ public class Move {
 
     /**
      * Esegue la mossa in input ed eventualmente "mangia"
-     */
+     *//*
     public static void executeMove(ItalianBoard board, Position init, Position fin, List<GenericTreeNode> listPossibleMovesAndCaptures) {
         CheckerBoardController.addToTextArea(board.getBoard()[init.getPosR()][init.getPosC()].getPlayer()+" moved from " + init.getPosR() + " " + init.getPosC()+" "+ "-> " + fin.getPosR() + " " +fin.getPosC()+"\n");
         for (int p = 1; p < listPossibleMovesAndCaptures.size(); p++) {
@@ -240,7 +240,7 @@ public class Move {
             }
             executeCapture(board, listPossibleMoves.getChildAt(0));
         }
-    }
+    }*/
 
     public static ArrayList<Position> sequentialMoves(ItalianBoard board, GenericTreeNode<Position> listPossibleMoves, ArrayList<Position> moves) {
         moves.add(listPossibleMoves.getChildAt(0).getData());
