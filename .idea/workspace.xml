@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Color selection and rotation of board">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Broken recreation of list from leaf">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/CheckerBoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/CheckerBoardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/GenericTreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/GenericTreeNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/Move.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/MoveAndCapturedPosition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/MoveAndCapturedPosition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/Position.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/italian/ItalianMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/italian/ItalianMan.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/singleplayer/SinglePlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/singleplayer/SinglePlayerManager.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -388,7 +384,7 @@
       <workItem from="1572465084927" duration="1658000" />
       <workItem from="1572507151283" duration="5606000" />
       <workItem from="1572552677352" duration="1188000" />
-      <workItem from="1572620243894" duration="13967000" />
+      <workItem from="1572620243894" duration="22756000" />
     </task>
     <task id="LOCAL-00001" summary="added:&#10;Settings&#10;Possible Moves">
       <created>1564397017327</created>
@@ -551,7 +547,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572466117074</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Broken recreation of list from leaf">
+      <created>1572682070317</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1572682070317</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -573,7 +576,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
-    <MESSAGE value="added:&#10;Settings&#10;Possible Moves" />
     <MESSAGE value="addded .idea" />
     <MESSAGE value="Javadoc:&#10;added documentation and comments for several methods&#10;Class:&#10;added new class Empty&#10;PiecesColors:&#10;added new color Empty in order to avoid nullPointerException&#10;&#10;&#10;Change some null in if statements into empty&#10;Added an utility method in Position" />
     <MESSAGE value="Changes&#10;SettingsController&#10;Color changed to blue theme&#10;Animation testing" />
@@ -598,6 +600,7 @@
     <MESSAGE value="Documented and commented" />
     <MESSAGE value="Bugged version" />
     <MESSAGE value="Color selection and rotation of board" />
-    <option name="LAST_COMMIT_MESSAGE" value="Color selection and rotation of board" />
+    <MESSAGE value="Broken recreation of list from leaf" />
+    <option name="LAST_COMMIT_MESSAGE" value="Broken recreation of list from leaf" />
   </component>
 </project>

@@ -130,7 +130,18 @@ public class Move {
      * @param posC  of the piece.
      * @return true if can capture, otherwise return false.
      */
-    private static boolean canCapture(ItalianBoard board, int posR, int posC) {
+    public static boolean canCapture(ItalianBoard board, int posR, int posC) {
+        boolean result = false;
+        if (board.getBoard()[posR][posC].getType() == PiecesType.MAN)
+            result = board.getMan(posR, posC).canCapture(board, new Position(posR, posC));
+        else if (board.getBoard()[posR][posC].getType() == PiecesType.KING)
+            result = board.getKing(posR, posC).canCapture(board, new Position(posR, posC));
+        return result;
+    }
+
+    public static boolean canCapture(ItalianBoard board, Position pos) {
+        int posR = pos.getPosR();
+        int posC = pos.getPosC();
         boolean result = false;
         if (board.getBoard()[posR][posC].getType() == PiecesType.MAN)
             result = board.getMan(posR, posC).canCapture(board, new Position(posR, posC));
@@ -165,6 +176,29 @@ public class Move {
     public static boolean inRange(Position position) {
         return (position.getPosR() > -1 && position.getPosR() < 8 && position.getPosC() > -1 && position.getPosC() < 8);
     }
+
+    public static void executeMove(Position init, Position fin, ItalianBoard italianBoard){
+        if(canCapture(italianBoard,init)) {
+            MoveAndCapturedPosition moveAndCapturedPosition = (MoveAndCapturedPosition) fin;
+            delete(moveAndCapturedPosition.getToCapture(),italianBoard);
+            CheckerBoardController.addToTextArea(moveAndCapturedPosition.getToCapture()+"\n");
+        }
+        else
+            CheckerBoardController.addToTextArea("Moving to :"+fin+"\n");
+        if(checkKingTransformation(fin) || (italianBoard.getBoard()[init.getPosR()][init.getPosC()]).getType() == PiecesType.KING)
+            italianBoard.getBoard()[fin.getPosR()][fin.getPosC()] = new ItalianKing(fin, italianBoard.getPlayer());
+        else
+            italianBoard.getBoard()[fin.getPosR()][fin.getPosC()] = new ItalianMan(fin, italianBoard.getPlayer());
+        delete(init, italianBoard);
+
+    }
+
+    private static boolean checkKingTransformation(Position pos){
+        if(pos.getPosR() == 0)
+            return  true;
+        return false;
+    }
+
 
     /**
      * Esegue la mossa in input ed eventualmente "mangia"
