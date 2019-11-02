@@ -8,49 +8,50 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0"
-            prefWidth="539.0" style="-fx-border-radius: 30;" stylesheets="@retroStyle.css"
-            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="it.ing.pajc.controller.HomeController">
-    <Pane fx:id="windowPanel" prefHeight="111.0" prefWidth="539.0"/>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="539.0" style="-fx-border-radius: 30;" stylesheets="@retroStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ing.pajc.controller.HomeController">
+    <Pane fx:id="windowPanel" prefHeight="111.0" prefWidth="539.0" />
     <Pane fx:id="centerWindow" layoutY="92.0" prefHeight="403.0" prefWidth="539.0">
-        <Separator layoutX="56.0" layoutY="383.0" opacity="0.15" prefHeight="3.0" prefWidth="423.0"/>
-        <Separator layoutX="54.0" layoutY="36.0" opacity="0.15" prefHeight="3.0" prefWidth="423.0"/>
-        <Button fx:id="singlePlayer" layoutX="120.0" layoutY="72.0" mnemonicParsing="false" onAction="#singlePlayer"
-                prefHeight="35.0" prefWidth="300.0" text="Singleplayer" textFill="WHITE">
+        <Separator layoutX="56.0" layoutY="383.0" opacity="0.15" prefHeight="3.0" prefWidth="423.0" />
+        <Separator layoutX="54.0" layoutY="36.0" opacity="0.15" prefHeight="3.0" prefWidth="423.0" />
+        <Button fx:id="singlePlayer" layoutX="118.0" layoutY="144.0" mnemonicParsing="false" onAction="#singlePlayer" onMouseClicked="#singlePlayer" prefHeight="35.0" prefWidth="300.0" text="Local multiplayer" textFill="WHITE">
             <font>
-                <Font name="Franklin Gothic Heavy" size="32.0"/>
+                <Font name="Franklin Gothic Heavy" size="30.0" />
             </font>
             <cursor>
-                <Cursor fx:constant="HAND"/>
+                <Cursor fx:constant="HAND" />
             </cursor>
         </Button>
-        <Button layoutX="120.0" layoutY="175.0" mnemonicParsing="false" onMouseClicked="#multiplayer"
-                prefHeight="35.0" prefWidth="300.0" text="Multiplayer" textFill="WHITE">
+        <Button layoutX="118.0" layoutY="240.0" mnemonicParsing="false" onMouseClicked="#multiplayer" prefHeight="35.0" prefWidth="300.0" text="Multiplayer" textFill="WHITE">
             <font>
-                <Font name="Franklin Gothic Heavy" size="32.0"/>
+                <Font name="Franklin Gothic Heavy" size="30.0" />
             </font>
             <cursor>
-                <Cursor fx:constant="HAND"/>
+                <Cursor fx:constant="HAND" />
             </cursor>
         </Button>
-        <Button layoutX="116.0" layoutY="285.0" mnemonicParsing="false" onMouseClicked="#settings" prefHeight="35.0"
-                prefWidth="300.0" text="Settings" textFill="WHITE">
+        <Button layoutX="116.0" layoutY="332.0" mnemonicParsing="false" onMouseClicked="#settings" prefHeight="35.0" prefWidth="300.0" text="Settings" textFill="WHITE">
             <font>
-                <Font name="Franklin Gothic Heavy" size="32.0"/>
+                <Font name="Franklin Gothic Heavy" size="30.0" />
             </font>
             <cursor>
-                <Cursor fx:constant="HAND"/>
+                <Cursor fx:constant="HAND" />
             </cursor>
         </Button>
+      <Button layoutX="118.0" layoutY="53.0" mnemonicParsing="false" onAction="#singlePlayerWithAI" prefHeight="35.0" prefWidth="300.0" text="Singleplayer" textFill="WHITE">
+         <font>
+            <Font name="Franklin Gothic Heavy" size="30.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
     </Pane>
-    <Label alignment="CENTER" layoutX="509.0" layoutY="3.0" onMouseClicked="#close" prefHeight="20.0" prefWidth="21.0"
-           text="X" textFill="#ddd9d9">
+    <Label alignment="CENTER" layoutX="509.0" layoutY="3.0" onMouseClicked="#close" prefHeight="20.0" prefWidth="21.0" text="X" textFill="#ddd9d9">
         <font>
-            <Font name="Franklin Gothic Heavy" size="35.0"/>
+            <Font name="Franklin Gothic Heavy" size="35.0" />
         </font>
         <cursor>
-        <Cursor fx:constant="HAND"/>
+        <Cursor fx:constant="HAND" />
         </cursor>
     </Label>
 </AnchorPane>

@@ -18,6 +18,17 @@ import java.io.IOException;
 public class SelectColorController {
     private double x, y;
 
+
+
+    private static boolean secondPlayerIsAI;
+
+    public static boolean isSecondPlayerIsAI() {
+        return secondPlayerIsAI;
+    }
+
+    public static void setSecondPlayerIsAI(boolean secondPlayerIsAI) {
+        SelectColorController.secondPlayerIsAI = secondPlayerIsAI;
+    }
     /**
      * Changes the screen to the home page.
      */
@@ -61,13 +72,13 @@ public class SelectColorController {
 
     public void white() throws IOException {
         PiecesColors color = PiecesColors.WHITE;
-        SinglePlayerManager singlePlayerManager = new SinglePlayerManager(color);
+        SinglePlayerManager singlePlayerManager = new SinglePlayerManager(color,color,secondPlayerIsAI);
         sendInfoToCheckerboard(singlePlayerManager);
     }
 
     public void black() throws IOException {
         PiecesColors color = PiecesColors.BLACK;
-        SinglePlayerManager singlePlayerManager = new SinglePlayerManager(color);
+        SinglePlayerManager singlePlayerManager = new SinglePlayerManager(color,color,secondPlayerIsAI);
         sendInfoToCheckerboard(singlePlayerManager);
     }
 

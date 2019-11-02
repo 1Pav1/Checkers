@@ -8,5 +8,6 @@ import java.io.Serializable;
 public enum PiecesColors implements Serializable {
     WHITE,
     BLACK,
-    EMPTY
+    EMPTY,
+    ENGINE
 }

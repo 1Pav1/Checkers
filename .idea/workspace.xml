@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Broken recreation of list from leaf">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Working one capture at a time">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/CheckerBoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/CheckerBoardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/Move.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectColorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectColorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/PiecesColors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/PiecesColors.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Home.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Home.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/singleplayer/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/singleplayer/Engine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/singleplayer/SinglePlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/singleplayer/SinglePlayerManager.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -125,10 +128,9 @@
     <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Pav\Documents\GitHub\Checkers\src\it\ing\pajc\graphics" />
-      <recent name="C:\Users\Pav\IdeaProjects\Checker\src\sample" />
-      <recent name="C:\Users\Pav\IdeaProjects\Checker\src" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Pav\Documents\GitHub\Checkers\src\it\ing\pajc\data\movements" />
+      <recent name="C:\Users\Pav\Documents\GitHub\Checkers\src\it\ing\pajc" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="it.ing.pajc.controller" />
@@ -136,9 +138,10 @@
       <recent name="it.ing.pajc.multiplayer" />
       <recent name="it.ing.pajc" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Pav\Documents\GitHub\Checkers\src\it\ing\pajc\data\movements" />
-      <recent name="C:\Users\Pav\Documents\GitHub\Checkers\src\it\ing\pajc" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Pav\Documents\GitHub\Checkers\src\it\ing\pajc\graphics" />
+      <recent name="C:\Users\Pav\IdeaProjects\Checker\src\sample" />
+      <recent name="C:\Users\Pav\IdeaProjects\Checker\src" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -384,7 +387,8 @@
       <workItem from="1572465084927" duration="1658000" />
       <workItem from="1572507151283" duration="5606000" />
       <workItem from="1572552677352" duration="1188000" />
-      <workItem from="1572620243894" duration="22756000" />
+      <workItem from="1572620243894" duration="23382000" />
+      <workItem from="1572713389578" duration="5685000" />
     </task>
     <task id="LOCAL-00001" summary="added:&#10;Settings&#10;Possible Moves">
       <created>1564397017327</created>
@@ -554,7 +558,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572682070317</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Working one capture at a time">
+      <created>1572696276111</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1572696276111</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -576,7 +587,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
-    <MESSAGE value="addded .idea" />
     <MESSAGE value="Javadoc:&#10;added documentation and comments for several methods&#10;Class:&#10;added new class Empty&#10;PiecesColors:&#10;added new color Empty in order to avoid nullPointerException&#10;&#10;&#10;Change some null in if statements into empty&#10;Added an utility method in Position" />
     <MESSAGE value="Changes&#10;SettingsController&#10;Color changed to blue theme&#10;Animation testing" />
     <MESSAGE value="Changes&#10;SettingsController&#10;Color changed to wood theme" />
@@ -601,6 +611,7 @@
     <MESSAGE value="Bugged version" />
     <MESSAGE value="Color selection and rotation of board" />
     <MESSAGE value="Broken recreation of list from leaf" />
-    <option name="LAST_COMMIT_MESSAGE" value="Broken recreation of list from leaf" />
+    <MESSAGE value="Working one capture at a time" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working one capture at a time" />
   </component>
 </project>

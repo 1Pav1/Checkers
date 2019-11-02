@@ -26,6 +26,16 @@ public class HomeController implements Serializable {
     public void singlePlayer() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../graphics/SelectColor.fxml"));
         Scene scene = new Scene(root);
+        SelectColorController.setSecondPlayerIsAI(false);
+        changeScene(root, scene, "Select color ");
+    }
+
+
+
+    public void singlePlayerWithAI() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../graphics/SelectColor.fxml"));
+        Scene scene = new Scene(root);
+        SelectColorController.setSecondPlayerIsAI(true);
         changeScene(root, scene, "Select color ");
     }
 
