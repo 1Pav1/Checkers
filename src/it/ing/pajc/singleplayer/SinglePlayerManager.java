@@ -3,7 +3,6 @@ package it.ing.pajc.singleplayer;
 import it.ing.pajc.data.board.Fen;
 import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.data.pieces.PiecesColors;
-import it.ing.pajc.data.pieces.italian.ItalianMan;
 
 public class SinglePlayerManager {
     private PiecesColors currentPlayer;
@@ -23,7 +22,7 @@ public class SinglePlayerManager {
     }
 
 
-    public SinglePlayerManager(PiecesColors currentPlayer,PiecesColors chosenPlayer, boolean secondPlayerIsAI) {
+    public SinglePlayerManager(PiecesColors currentPlayer, PiecesColors chosenPlayer, boolean secondPlayerIsAI) {
         italianBoard = new ItalianBoard(new Fen("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM"), currentPlayer);
         this.currentPlayer = currentPlayer;
         this.chosenPlayer = chosenPlayer;
@@ -51,25 +50,28 @@ public class SinglePlayerManager {
                 fen.reverseFen();
                 italianBoard = new ItalianBoard(fen, currentPlayer);
             }
-        }
-
-
-        else{
-            if(currentPlayer == PiecesColors.ENGINE) {
+        } else {
+            if (currentPlayer == PiecesColors.ENGINE) {
                 currentPlayer = chosenPlayer;
                 italianBoard = new ItalianBoard(fen, currentPlayer);
             }
             //If computers turn
-            else{
-                System.err.println("Computers turn");
+            else {
+
                 String changedFen;
-                if(chosenPlayer == PiecesColors.WHITE)
+                Fen cf;
+                if (chosenPlayer == PiecesColors.WHITE) {
                     changedFen = Engine.execute(new ItalianBoard(fen, PiecesColors.BLACK)).toString();
-                else
+                    cf = new Fen(changedFen);
+                    cf.reverseFen();
+                }
+                else {
+                    System.err.println(fen.getFen());
+                    fen.reverseFen();
                     changedFen = Engine.execute(new ItalianBoard(fen, PiecesColors.WHITE)).toString();
-                Fen cf = new Fen(changedFen);
-                cf.reverseFen();
-                italianBoard = new ItalianBoard(cf,chosenPlayer);
+                    cf = new Fen(changedFen);
+                }
+                italianBoard = new ItalianBoard(cf, chosenPlayer);
 
             }
         }
