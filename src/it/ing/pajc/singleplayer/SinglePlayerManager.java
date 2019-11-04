@@ -39,7 +39,6 @@ public class SinglePlayerManager {
 
     public void changePlayer() {
         String fenStr = italianBoard.toString();
-        System.out.println(fenStr);
         Fen fen = new Fen(fenStr);
         if (!secondPlayerIsAI) {
             if (currentPlayer == PiecesColors.WHITE) {
@@ -66,7 +65,6 @@ public class SinglePlayerManager {
                     cf.reverseFen();
                 }
                 else {
-                    System.err.println(fen.getFen());
                     fen.reverseFen();
                     changedFen = Engine.execute(new ItalianBoard(fen, PiecesColors.WHITE)).toString();
                     cf = new Fen(changedFen);

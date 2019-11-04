@@ -168,14 +168,13 @@ public class CheckerBoardController {
             for (int i = 0; i < parent.getNumberOfChildren(); i++) {
 
                 Position position = (Position) parent.getChildAt(i).getData();
-                MoveAndCapturedPosition moveAndCapturedPosition = (MoveAndCapturedPosition) parent.getChildAt(i).getData();
+                Position moveAndCapturedPosition = (Position) parent.getChildAt(i).getData();
                 stackPaneBoard[position.getPosC()][position.getPosR()].setId("movementHighlight");
-                stackPaneBoard[moveAndCapturedPosition.getToCapture().getPosC()][moveAndCapturedPosition.getToCapture().getPosR()].setId("captureHighlight");
+                stackPaneBoard[moveAndCapturedPosition.getPosition().getPosC()][moveAndCapturedPosition.getPosition().getPosR()].setId("captureHighlight");
                 stackPaneBoard[position.getPosC()][position.getPosR()].setDisable(false);
                 stackPaneBoard[position.getPosC()][position.getPosR()].setOnMousePressed(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-
                         Move.executeMove((Position) parent.getData(),moveAndCapturedPosition,singlePlayerManager.getItalianBoard());
                         if (!Move.canCapture(singlePlayerManager.getItalianBoard(), moveAndCapturedPosition.getPosR(), moveAndCapturedPosition.getPosC()))
                             singlePlayerManager.changePlayer();

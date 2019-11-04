@@ -177,25 +177,22 @@ public class Move {
         return (position.getPosR() > -1 && position.getPosR() < 8 && position.getPosC() > -1 && position.getPosC() < 8);
     }
 
-    public static void executeMove(Position init, Position fin, ItalianBoard italianBoard){
-        if(canCapture(italianBoard,init)) {
-            MoveAndCapturedPosition moveAndCapturedPosition = (MoveAndCapturedPosition) fin;
-            delete(moveAndCapturedPosition.getToCapture(),italianBoard);
-            CheckerBoardController.addToTextArea(moveAndCapturedPosition.getToCapture()+"\n");
-        }
-        else
-            CheckerBoardController.addToTextArea("Moving to :"+fin+"\n");
-        if(checkKingTransformation(fin) || (italianBoard.getBoard()[init.getPosR()][init.getPosC()]).getType() == PiecesType.KING)
+    public static void executeMove(Position init, Position fin, ItalianBoard italianBoard) {
+        if (canCapture(italianBoard, init)) {
+            deleteCaptured(fin, italianBoard);
+            CheckerBoardController.addToTextArea(fin.getPosition() + "\n");
+        } else
+            CheckerBoardController.addToTextArea("Moving to :" + fin + "\n");
+        if (checkKingTransformation(fin) || (italianBoard.getBoard()[init.getPosR()][init.getPosC()]).getType() == PiecesType.KING)
             italianBoard.getBoard()[fin.getPosR()][fin.getPosC()] = new ItalianKing(fin, italianBoard.getPlayer());
         else
             italianBoard.getBoard()[fin.getPosR()][fin.getPosC()] = new ItalianMan(fin, italianBoard.getPlayer());
         delete(init, italianBoard);
-
     }
 
-    private static boolean checkKingTransformation(Position pos){
-        if(pos.getPosR() == 0)
-            return  true;
+    private static boolean checkKingTransformation(Position pos) {
+        if (pos.getPosR() == 0)
+            return true;
         return false;
     }
 
@@ -275,7 +272,6 @@ public class Move {
             executeCapture(board, listPossibleMoves.getChildAt(0));
         }
     }*/
-
     public static ArrayList<Position> sequentialMoves(ItalianBoard board, GenericTreeNode<Position> listPossibleMoves, ArrayList<Position> moves) {
         moves.add(listPossibleMoves.getChildAt(0).getData());
         if (listPossibleMoves.getChildAt(0).hasChildren())
@@ -290,6 +286,14 @@ public class Move {
      */
     public static void delete(Position position, ItalianBoard board) {
         board.getBoard()[position.getPosR()][position.getPosC()] = new Empty(position);
+    }
+    /**
+     * Deletes the piece in the given position and replaces it with an empty object.
+     *
+     * @param position of the piece wanted to be deleted.
+     */
+    public static void deleteCaptured(Position position, ItalianBoard board) {
+        board.getBoard()[position.getcPosR()][position.getcPosC()] = new Empty(position);
     }
 
     /**
