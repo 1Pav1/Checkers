@@ -151,7 +151,7 @@ public class CheckerBoardController {
             if (piece.getType() == PiecesType.MAN)
                 genericTree = ((ItalianMan) (piece)).possibleMoves(board);
             else
-                genericTree = ((ItalianKing) (piece)).possibleMoves(board);
+                genericTree = ((ItalianKing) (piece)).enginePossibleMoves(board);//TODO
 
             GenericTreeNode<Position> parent = genericTree.getRoot();
             createClickEventForMoveAndDeletion(parent);

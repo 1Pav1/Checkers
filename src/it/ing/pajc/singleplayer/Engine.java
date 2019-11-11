@@ -25,15 +25,15 @@ public class Engine {
 
                     if (piece.getType() == PiecesType.MAN)
                         genericTree = ((ItalianMan) (piece)).possibleMoves(board);
-                    else
-                        genericTree = ((ItalianKing) (piece)).possibleMoves(board);
+                    else//TODO
+                        genericTree = ((ItalianKing) (piece)).enginePossibleMoves(board);
 
                     System.err.println(genericTree);
                     try {
                         GenericTreeNode<Position> parent = genericTree.getRoot();
 
                         for(int x=0;x<=parent.getNumberOfChildren();x++){
-                            Position fin = (Position) parent.getChildAt(x).getData();
+                            Position fin = parent.getChildAt(x).getData();
                             int eval = evaluateMove((parent.getData()), (fin), board);
                             if(eval<=point){
                                 point = eval;

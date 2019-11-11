@@ -1,7 +1,9 @@
 package it.ing.pajc.data.pieces.italian;
 
+import it.ing.pajc.data.board.Fen;
 import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.data.movements.*;
+import it.ing.pajc.data.pieces.Empty;
 import it.ing.pajc.data.pieces.King;
 import it.ing.pajc.data.pieces.PiecesColors;
 import it.ing.pajc.data.pieces.PiecesType;
@@ -14,8 +16,6 @@ import java.util.ArrayList;
 public class ItalianKing extends King {
     private GenericTreeNode<Position> rootPositions = new GenericTreeNode<>(this.getPosition());
     private GenericTree<Position> possibleMovementsList = new GenericTree<>();
-    boolean canCapture = false;
-    boolean canMove = false;
 
     /**
      * WhiteKing's constructor giving position.
@@ -49,6 +49,7 @@ public class ItalianKing extends King {
 
     /**
      * Calculates all possible captures of a piece, included multiple captures.
+     * IMPORTANT: Use this method because otherwise this is going to delete unpredictable pieces.
      *
      * @param board The using board, must be an 8x8 board.
      */
@@ -282,5 +283,152 @@ public class ItalianKing extends King {
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
         return possibleMovementList;
+    }
+
+    /**
+     * Gives all possible moves of a piece.
+     *
+     * @param board The using board, must be an 8x8 board.
+     * @return the tree of all possible moves.
+     */
+    public GenericTree<Position> enginePossibleMoves(ItalianBoard board) {
+        ItalianBoard tmpBoard = new ItalianBoard(new Fen(board.toString()), board.getPlayer());
+        rootPositions.removeChildren();
+        if (!canCapture(tmpBoard, this.getPosition())) {
+            ArrayList<Position> positions = possibleMovesInEmptySpaces(tmpBoard);
+            for (Position position : positions) rootPositions.addChild(new GenericTreeNode<>(position));
+            return possibleMovementsList;
+        } else {
+            engineAllPossibleCaptures(tmpBoard);
+        }
+        return possibleMovementsList;
+    }
+
+    /**
+     * Calculates all possible captures of a piece, included multiple captures.
+     * IMPORTANT: Use this method because otherwise this is going to delete unpredictable pieces.
+     *
+     * @param board The using board, must be an 8x8 board.
+     */
+    public void engineAllPossibleCaptures(ItalianBoard board) {
+        enginePossibleCapturesAllDirections(board, rootPositions);
+        engineChildrenPossibleCaptures(board, rootPositions);
+    }
+
+    /**
+     * Calculates possible captures after having captured already a piece.
+     *
+     * @param board           The using board, must be an 8x8 board.
+     * @param parentPositions starting position of the creating tree.
+     */
+    public void engineChildrenPossibleCaptures(ItalianBoard board, GenericTreeNode<Position> parentPositions) {
+        for (int i = 0; i < parentPositions.getNumberOfChildren(); i++) {
+            enginePossibleCapturesAllDirections(board, parentPositions.getChildAt(i));
+            if (canCapture(board, parentPositions.getChildAt(i).getData()))
+                childrenPossibleCaptures(board, parentPositions.getChildAt(i));
+        }
+    }
+
+    /**
+     * Calculates all possible captures in all directions where the piece can move.
+     *
+     * @param board           The using board, must be an 8x8 board.
+     * @param parentPositions starting position of the creating tree.
+     */
+    public void enginePossibleCapturesAllDirections(ItalianBoard board, GenericTreeNode<Position> parentPositions) {
+        enginePossibleCaptureUpLeft(board, parentPositions);
+        enginePossibleCaptureUpRight(board, parentPositions);
+        enginePossibleCaptureDownLeft(board, parentPositions);
+        enginePossibleCaptureDownRight(board, parentPositions);
+    }
+
+    /**
+     * Calculates possible captures on the up left.
+     *
+     * @param board           The using board, must be an 8x8 board.
+     * @param parentPositions starting position of the creating tree.
+     */
+    public void enginePossibleCaptureUpLeft(ItalianBoard board, GenericTreeNode<Position> parentPositions) {
+        try {
+            if ((board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() - 1].getPlayer() != getPlayer()) &&
+                    (board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() - 1].getType() == PiecesType.MAN ||
+                            board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() - 1].getType() == PiecesType.KING) &&
+                    (board.getBoard()[parentPositions.getData().getPosR() - 2][parentPositions.getData().getPosC() - 2].getPlayer() == PiecesColors.EMPTY)) {
+                parentPositions.addChild(new GenericTreeNode<>(new Position(
+                        parentPositions.getData().getPosR() - 2, parentPositions.getData().getPosC() - 2,
+                        parentPositions.getData().getPosR() - 1, parentPositions.getData().getPosC() - 1)));
+                board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() - 1]
+                        = new Empty(new Position(parentPositions.getData().getPosR() - 1, parentPositions.getData().getPosC() - 1));
+            }
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+    }
+
+    /**
+     * Calculates possible captures on the up right.
+     *
+     * @param board           The using board, must be an 8x8 board.
+     * @param parentPositions starting position of the creating tree.
+     */
+    public void enginePossibleCaptureUpRight(ItalianBoard board, GenericTreeNode<Position> parentPositions) {
+        try {
+            if ((board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() + 1].getPlayer() != getPlayer()) &&
+                    (board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() + 1].getType() == PiecesType.MAN ||
+                            board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() + 1].getType() == PiecesType.KING) &&
+                    (board.getBoard()[parentPositions.getData().getPosR() - 2][parentPositions.getData().getPosC() + 2].getPlayer() == PiecesColors.EMPTY)) {
+                parentPositions.addChild(new GenericTreeNode<>(new Position(
+                        parentPositions.getData().getPosR() - 2, parentPositions.getData().getPosC() + 2,
+                        parentPositions.getData().getPosR() - 1, parentPositions.getData().getPosC() + 1)));
+                board.getBoard()[parentPositions.getData().getPosR() - 1][parentPositions.getData().getPosC() + 1]
+                        = new Empty(new Position(parentPositions.getData().getPosR() - 1, parentPositions.getData().getPosC() + 1));
+            }
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+    }
+
+    /**
+     * Calculates possible captures on the down left.
+     *
+     * @param board           The using board, must be an 8x8 board.
+     * @param parentPositions starting position of the creating tree.
+     */
+    public void enginePossibleCaptureDownLeft(ItalianBoard board, GenericTreeNode<Position> parentPositions) {
+        try {
+            if ((board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() - 1].getPlayer() != getPlayer()) &&
+                    (board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() - 1].getType() == PiecesType.MAN ||
+                            board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() - 1].getType() == PiecesType.KING) &&
+                    (board.getBoard()[parentPositions.getData().getPosR() + 2][parentPositions.getData().getPosC() - 2].getPlayer() == PiecesColors.EMPTY)) {
+
+                parentPositions.addChild(new GenericTreeNode<>(new Position(
+                        parentPositions.getData().getPosR() + 2, parentPositions.getData().getPosC() - 2,
+                        parentPositions.getData().getPosR() + 1, parentPositions.getData().getPosC() - 1)));
+                board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() - 1]
+                        = new Empty(new Position(parentPositions.getData().getPosR() + 1, parentPositions.getData().getPosC() - 1));
+            }
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+    }
+
+    /**
+     * Calculates possible captures on the down right.
+     *
+     * @param board           The using board, must be an 8x8 board.
+     * @param parentPositions starting position of the creating tree.
+     */
+    public void enginePossibleCaptureDownRight(ItalianBoard board, GenericTreeNode<Position> parentPositions) {
+        try {
+            if ((board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() + 1].getPlayer() != getPlayer()) &&
+                    (board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() + 1].getType() == PiecesType.MAN ||
+                            board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() + 1].getType() == PiecesType.KING) &&
+                    (board.getBoard()[parentPositions.getData().getPosR() + 2][parentPositions.getData().getPosC() + 2].getPlayer() == PiecesColors.EMPTY)) {
+
+                parentPositions.addChild(new GenericTreeNode<>(new Position(
+                        parentPositions.getData().getPosR() + 2, parentPositions.getData().getPosC() + 2,
+                        parentPositions.getData().getPosR() + 1, parentPositions.getData().getPosC() + 1)));
+                board.getBoard()[parentPositions.getData().getPosR() + 1][parentPositions.getData().getPosC() + 1]
+                        = new Empty(new Position(parentPositions.getData().getPosR() + 1, parentPositions.getData().getPosC() + 1));
+            }
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
     }
 }
