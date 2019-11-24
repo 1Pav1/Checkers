@@ -53,8 +53,10 @@ public class Engine {
 
 
     public static int evaluateMove(Position init, Position fin, ItalianBoard board) {
-        System.out.println(board.getPlayer());
-        ItalianBoard tempBoard = new ItalianBoard(new Fen(board.toString()), board.getPlayer());
+        Fen fen = new Fen(board.toString());
+        if(board.getPlayer() == PiecesColors.BLACK)
+            fen.reverseFen();
+        ItalianBoard tempBoard = new ItalianBoard(fen, board.getPlayer());
         Move.executeMove(init, fin, tempBoard);
         tempBoard.printBoardConsole();
         System.out.println();

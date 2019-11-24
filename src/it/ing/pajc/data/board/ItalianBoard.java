@@ -29,6 +29,7 @@ public class ItalianBoard implements Board {
             piecesBoard = fen.fenToMultidimensionalArray();
         }
         CheckerBoardController.initializeBoardFX();
+        printBoardConsole();
     }
 
     /**

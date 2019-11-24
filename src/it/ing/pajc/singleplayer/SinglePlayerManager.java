@@ -60,12 +60,14 @@ public class SinglePlayerManager {
                 String changedFen;
                 Fen cf;
                 if (chosenPlayer == PiecesColors.WHITE) {
+                    System.out.println(fen.getFen());
                     changedFen = Engine.execute(new ItalianBoard(fen, PiecesColors.BLACK)).toString();
                     cf = new Fen(changedFen);
                     cf.reverseFen();
                 }
                 else {
                     fen.reverseFen();
+                    System.out.println(fen.getFen());
                     changedFen = Engine.execute(new ItalianBoard(fen, PiecesColors.WHITE)).toString();
                     cf = new Fen(changedFen);
                 }

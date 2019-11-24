@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="MoveAndCapturedPosition deleted and united with Position class.">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Animation try.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/CheckerBoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/CheckerBoardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/CheckerBoard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/graphics/CheckerBoard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/singleplayer/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/singleplayer/Engine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/singleplayer/SinglePlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/singleplayer/SinglePlayerManager.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -387,6 +392,10 @@
       <workItem from="1572850645450" duration="488000" />
       <workItem from="1572851218503" duration="17222000" />
       <workItem from="1572963132531" duration="7218000" />
+      <workItem from="1573022204209" duration="356000" />
+      <workItem from="1573023341935" duration="2984000" />
+      <workItem from="1574593435239" duration="160000" />
+      <workItem from="1574594196415" duration="462000" />
     </task>
     <task id="LOCAL-00001" summary="added:&#10;Settings&#10;Possible Moves">
       <created>1564397017327</created>
@@ -584,7 +593,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572883385278</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="MoveAndCapturedPosition deleted and united with Position class.">
+      <created>1573022275603</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1573022275603</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -606,7 +622,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
-    <MESSAGE value="Changes&#10;Added tree and treenodes&#10;calculation of capture postions" />
     <MESSAGE value="Changes&#10;graphics of capture positions and movements" />
     <MESSAGE value="Added WhiteKing and BlackKing" />
     <MESSAGE value="Fix BlackMan" />
@@ -631,6 +646,7 @@
     <MESSAGE value="Random engine added" />
     <MESSAGE value="Working engine(1 layer) and P vs P offline" />
     <MESSAGE value="MoveAndCapturedPosition deleted and united with Position class." />
-    <option name="LAST_COMMIT_MESSAGE" value="MoveAndCapturedPosition deleted and united with Position class." />
+    <MESSAGE value="Animation try." />
+    <option name="LAST_COMMIT_MESSAGE" value="Animation try." />
   </component>
 </project>

@@ -7,6 +7,7 @@ import it.ing.pajc.data.pieces.*;
 import it.ing.pajc.data.pieces.italian.ItalianKing;
 import it.ing.pajc.data.pieces.italian.ItalianMan;
 import it.ing.pajc.singleplayer.SinglePlayerManager;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +21,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 
 import static it.ing.pajc.data.board.Board.DIMENSION_ITALIAN_BOARD;
 
@@ -154,7 +156,7 @@ public class CheckerBoardController {
                 genericTree = ((ItalianKing) (piece)).possibleMoves(board);
 
             GenericTreeNode<Position> parent = genericTree.getRoot();
-            createClickEventForMoveAndDeletion(parent);
+            createClickEventForMoveAndDeletion(parent, circle);
         });
     }
 
@@ -162,7 +164,7 @@ public class CheckerBoardController {
      * Creates the events related to the movement of pieces.
      * @param parent Initial node position.
      */
-    public static void createClickEventForMoveAndDeletion(GenericTreeNode parent) {
+    public static void createClickEventForMoveAndDeletion(GenericTreeNode parent,Circle circle) {
 
         if(Move.canCapture(singlePlayerManager.getItalianBoard(),((Position)parent.getData()).getPosR(),((Position) parent.getData()).getPosC()))
             for (int i = 0; i < parent.getNumberOfChildren(); i++) {
@@ -172,33 +174,46 @@ public class CheckerBoardController {
                 stackPaneBoard[position.getPosC()][position.getPosR()].setId("movementHighlight");
                 stackPaneBoard[moveAndCapturedPosition.getPosition().getPosC()][moveAndCapturedPosition.getPosition().getPosR()].setId("captureHighlight");
                 stackPaneBoard[position.getPosC()][position.getPosR()].setDisable(false);
+
                 stackPaneBoard[position.getPosC()][position.getPosR()].setOnMousePressed(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        Move.executeMove((Position) parent.getData(),moveAndCapturedPosition,singlePlayerManager.getItalianBoard());
+                        TranslateTransition tt = new TranslateTransition(Duration.millis(1000),circle);
+                        int x = (moveAndCapturedPosition.getPosC())-((Position) parent.getData()).getPosC();
+                        int y = (moveAndCapturedPosition.getPosR())-((Position) parent.getData()).getPosR();
+                        tt.setByX(x*59);
+                        tt.setByY(y*59);
+                        tt.play();
+                        /*Move.executeMove((Position) parent.getData(),moveAndCapturedPosition,singlePlayerManager.getItalianBoard());
                         if (!Move.canCapture(singlePlayerManager.getItalianBoard(), moveAndCapturedPosition.getPosR(), moveAndCapturedPosition.getPosC()))
                             singlePlayerManager.changePlayer();
                         else
                             disableAllBoard();
                         singlePlayerManager.getItalianBoard().getBoard()[moveAndCapturedPosition.getPosR()][moveAndCapturedPosition.getPosC()].setDisable(false);
                         resetBoardFXColors();
-                        placeBoard();
+                        placeBoard();*/
 
                     }
                 });
             }
         else{
             for (int i = 0; i < parent.getNumberOfChildren(); i++) {
-
                 Position position = (Position) parent.getChildAt(i).getData();
                 stackPaneBoard[position.getPosC()][position.getPosR()].setId("movementHighlight");
                 stackPaneBoard[position.getPosC()][position.getPosR()].setDisable(false);
                 stackPaneBoard[position.getPosC()][position.getPosR()].setOnMousePressed(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
+                        TranslateTransition tt = new TranslateTransition(Duration.millis(1000),circle);
+                        int x = (position.getPosC())-((Position) parent.getData()).getPosC();
+                        int y = (position.getPosR())-((Position) parent.getData()).getPosR();
+                        tt.setByX(x*35);
+                        tt.setByY(y*35);
+                        tt.play();
+                        /*
                         Move.executeMove((Position) parent.getData(),position,singlePlayerManager.getItalianBoard());singlePlayerManager.changePlayer();
                         resetBoardFXColors();
-                        placeBoard();
+                        placeBoard();*/
                     }
                 });
             }
