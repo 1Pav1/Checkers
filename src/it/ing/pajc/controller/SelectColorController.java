@@ -1,8 +1,8 @@
 package it.ing.pajc.controller;
 
 import it.ing.pajc.Main;
-import it.ing.pajc.data.pieces.PiecesColors;
-import it.ing.pajc.singleplayer.SinglePlayerManager;
+import it.ing.pajc.data.pieces.PlaceType;
+import it.ing.pajc.manager.LocalGameManager;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * Controller of the setting page.
  */
-public class SelectColorController {
+class SelectColorController {
     private double x, y;
 
 
@@ -34,7 +34,7 @@ public class SelectColorController {
      */
     public void back() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("../graphics/Home.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
             Scene scene = new Scene(root);
             changeScene(root, scene, "Select color");
         } catch (Exception e) {
@@ -71,26 +71,22 @@ public class SelectColorController {
     }
 
     public void white() throws IOException {
-        PiecesColors color = PiecesColors.WHITE;
-        SinglePlayerManager singlePlayerManager = new SinglePlayerManager(color,color,secondPlayerIsAI);
-        sendInfoToCheckerboard(singlePlayerManager);
+        PlaceType color = PlaceType.WHITE;
     }
 
     public void black() throws IOException {
-        PiecesColors color = PiecesColors.BLACK;
-        SinglePlayerManager singlePlayerManager = new SinglePlayerManager(color,color,secondPlayerIsAI);
-        sendInfoToCheckerboard(singlePlayerManager);
+        PlaceType color = PlaceType.BLACK;
     }
 
-    public void sendInfoToCheckerboard(SinglePlayerManager singlePlayerManager) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../graphics/CheckerBoard.fxml"));
+    public void sendInfoToCheckerboard(LocalGameManager localGameManager) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../GUI/CheckerBoard.fxml"));
         Scene scene = new Scene(root);
         GridPane checkerBoard = (GridPane) scene.lookup("#grid");
         TextArea textArea = (TextArea) scene.lookup("#textArea");
-        CheckerBoardController.setGridPane(checkerBoard);
-        CheckerBoardController.setTextArea(textArea);
-        CheckerBoardController.setSinglePlayerManager(singlePlayerManager);
-        CheckerBoardController.start();
+        //Controller.setGridPane(checkerBoard);
+        //Controller.setTextArea(textArea);
+        //Controller.setLocalGameManager(localGameManager);
+        //Controller.start();
 
         changeScene(root, scene, "CheckerBoard");
     }

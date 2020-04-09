@@ -1,4 +1,4 @@
-package it.ing.pajc.controller;
+package it.ing.pajc.homeController;
 
 import it.ing.pajc.Main;
 import javafx.application.Platform;
@@ -19,7 +19,7 @@ public class SettingsController {
      */
     public void back() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("../graphics/Home.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
             Scene scene = new Scene(root);
             changeScene(root, scene, "Checkers board");
         } catch (Exception e) {
@@ -53,19 +53,19 @@ public class SettingsController {
      * @throws IOException If input is not found.
      */
     public void woodStyle() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../graphics/Home.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
         Scene scene = new Scene(root);
         scene.setUserAgentStylesheet("../graphics/woodStyle.css");
 
-        root = FXMLLoader.load(getClass().getResource("../graphics/Multiplayer.fxml"));
+        root = FXMLLoader.load(getClass().getResource("../GUI/Multiplayer.fxml"));
         scene = new Scene(root);
         scene.setUserAgentStylesheet("../graphics/woodStyle.css");
 
-        root = FXMLLoader.load(getClass().getResource("../graphics/CheckerBoard.fxml"));
+        root = FXMLLoader.load(getClass().getResource("../GUI/CheckerBoard.fxml"));
         scene = new Scene(root);
         scene.setUserAgentStylesheet("../graphics/woodStyle.css");
 
-        root = FXMLLoader.load(getClass().getResource("../graphics/Settings.fxml"));
+        root = FXMLLoader.load(getClass().getResource("../GUI/Settings.fxml"));
         scene = new Scene(root);
         scene.setUserAgentStylesheet("../graphics/woodStyle.css");
     }
@@ -76,19 +76,19 @@ public class SettingsController {
      * @throws IOException If no input it found.
      */
     public void retroStyle() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../graphics/Home.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
         Scene scene = new Scene(root);
         scene.setUserAgentStylesheet("../graphics/retroStyle.css");
 
-        root = FXMLLoader.load(getClass().getResource("../graphics/Multiplayer.fxml"));
+        root = FXMLLoader.load(getClass().getResource("../GUI/Multiplayer.fxml"));
         scene = new Scene(root);
         scene.setUserAgentStylesheet("../graphics/retroStyle.css");
 
-        root = FXMLLoader.load(getClass().getResource("../graphics/CheckerBoard.fxml"));
+        root = FXMLLoader.load(getClass().getResource("../GUI/CheckerBoard.fxml"));
         scene = new Scene(root);
         scene.setUserAgentStylesheet("../graphics/retroStyle.css");
 
-        root = FXMLLoader.load(getClass().getResource("../graphics/Settings.fxml"));
+        root = FXMLLoader.load(getClass().getResource("../GUI/Settings.fxml"));
         scene = new Scene(root);
         scene.setUserAgentStylesheet("../graphics/retroStyle.css");
     }

@@ -1,16 +1,26 @@
-package it.ing.pajc.data.movements;
+package it.ing.pajc.controller;
 
-import it.ing.pajc.controller.CheckerBoardController;
 import it.ing.pajc.data.board.ItalianBoard;
-import it.ing.pajc.data.pieces.Empty;
-import it.ing.pajc.data.pieces.PiecesColors;
-import it.ing.pajc.data.pieces.PiecesType;
-import it.ing.pajc.data.pieces.italian.ItalianKing;
-import it.ing.pajc.data.pieces.italian.ItalianMan;
+import it.ing.pajc.data.movements.Position;
+import it.ing.pajc.data.pieces.PieceType;
+import it.ing.pajc.data.pieces.PlaceType;
 
 import java.util.*;
 
-public class Move {
+class Move {
+
+    public static void executeMove(Position init, Position fin, ItalianBoard board) {
+        PlaceType place = board.getBoard()[init.getPosR()][init.getPosC()].getPlace();
+        if (CheckPossibleMovements.canCapture(board, init.getPosR(),init.getPosC()))
+            deleteCaptured(fin, board);
+        if (checkKingTransformation(fin) || (board.getBoard()[init.getPosR()][init.getPosC()]).getPiece() == PieceType.KING)
+            board.getBoard()[fin.getPosR()][fin.getPosC()].setPiece(PieceType.KING);
+        else
+            board.getBoard()[fin.getPosR()][fin.getPosC()].setPiece(PieceType.MAN);
+
+        board.getBoard()[fin.getPosR()][fin.getPosC()].setPlace(place);
+        delete(init, board);
+    }
 
     /**
      * Generates moves of all pieces of a player.
@@ -19,18 +29,16 @@ public class Move {
      * @param player The actual player.
      * @return an arrayList of all possible moves of pieces.
      */
-    public static ArrayList<GenericTree<Position>> generateMoves(ItalianBoard board, PiecesColors player) {
+    public static ArrayList<Position> generateMoves(ItalianBoard board, PlaceType player) {
         int posR;
         int posC;
         ArrayList<Position> piecesWhoCanMove = piecesWhoCanMove(board, player);
-        ArrayList<GenericTree<Position>> allPossibleMoves = new ArrayList<>();
+        ArrayList<Position> allPossibleMoves = new ArrayList<>();
         for (Position position : piecesWhoCanMove) {
             posR = position.getPosR();
             posC = position.getPosC();
-            if (isKing(board.getBoard()[posR][posC].getType()))
-                allPossibleMoves.add(board.getKing(posR, posC).possibleMoves(board));
-            else
-                allPossibleMoves.add(board.getMan(posR, posC).possibleMoves(board));
+
+            allPossibleMoves.addAll(CheckPossibleMovements.allPossibleMoves(board, posR, posC));
         }
         return allPossibleMoves;
     }
@@ -42,49 +50,20 @@ public class Move {
      * @param player The actual player.
      * @return an arrayList of all possible moves of pieces.
      */
-    public static ArrayList<GenericTree<Position>> generateCaptures(ItalianBoard board, PiecesColors player) {
+    public static ArrayList<Position> generateCaptures(ItalianBoard board, PlaceType player) {
         int posR;
         int posC;
         ArrayList<Position> piecesWhoCanMove = piecesWhoCanMove(board, player);
-        ArrayList<GenericTree<Position>> allPossibleCaptures = new ArrayList<>();
+        ArrayList<Position> allPossibleCaptures = new ArrayList<>();
         for (Position position : piecesWhoCanMove) {
             posR = position.getPosR();
             posC = position.getPosC();
 
-            if (isKing(board.getBoard()[posR][posC].getType()))
-                allPossibleCaptures.add(board.getKing(posR, posC).possibleMoves(board));
-            else
-                allPossibleCaptures.add(board.getMan(posR, posC).possibleMoves(board));
+            allPossibleCaptures.addAll(CheckPossibleMovements.allPossibleCaptures(board, posR, posC));
+
+
         }
         return allPossibleCaptures;
-    }
-
-    /**
-     * First check if pieces can captures and adds them in arrayList,
-     * if none can captures do the same for movements else return an empty arrayList.
-     *
-     * @param board  The using board.
-     * @param player The actual player.
-     * @return an arrayList with all positions of pieces which can move or capture.
-     */
-    public static ArrayList<Position> piecesWhoCanMove(ItalianBoard board, PiecesColors player) {
-        ArrayList<Position> pieces = new ArrayList<>();
-        for (int posR = 0; posR < 8; posR++)
-            for (int posC = 0; posC < 8; posC++) {
-                if (board.getBoard()[posR][posC].getPlayer() == player) {
-                    if (canCapture(board, posR, posC))
-                        pieces.add(new Position(posR, posC));
-                }
-            }
-        if (pieces.isEmpty())
-            for (int posR = 0; posR < 8; posR++)
-                for (int posC = 0; posC < 8; posC++) {
-                    if (board.getBoard()[posR][posC].getPlayer() == player) {
-                        if (canWalk(board, posR, posC))
-                            pieces.add(new Position(posR, posC));
-                    }
-                }
-        return pieces;
     }
 
     /**
@@ -96,76 +75,40 @@ public class Move {
      */
     public static boolean canDoSomething(ArrayList<Position> piecesWhoCanMove, Position pieceToCheck) {
         for (int i = 0; i < piecesWhoCanMove.size(); i++) {
-            if (piecesWhoCanMove.get(i).getPosition() == pieceToCheck)
+            if (piecesWhoCanMove.get(i) == pieceToCheck)
                 return true;
         }
         return false;
     }
 
-    //TODO ci penso io
-    public static ArrayList<Position> possibleFinalMoves() {
-        return null;
-    }
-
     /**
-     * Gives informations about moves possibilities of a piece.
+     * First check if pieces can captures and adds them in arrayList,
+     * if none can captures do the same for movements else return an empty arrayList.
      *
-     * @param board The using board.
-     * @return true if all the pieces on the board can't move and capture, false otherwise.
+     * @param board  The using board.
+     * @param player The actual player.
+     * @return an arrayList with all positions of pieces which can move or capture.
      */
-    public static boolean noMovesLeft(ItalianBoard board, PiecesColors player) {
+    public static ArrayList<Position> piecesWhoCanMove(ItalianBoard board, PlaceType player) {
+        ArrayList<Position> pieces = new ArrayList<>();
         for (int posR = 0; posR < 8; posR++)
-            for (int posC = 0; posC < 8; posC++)
-                if (board.getBoard()[posR][posC].getPlayer() == player)
-                    if (canWalk(board, posR, posC) || canCapture(board, posR, posC))
-                        return false;
-        return true;
+            for (int posC = 0; posC < 8; posC++) {
+                if (board.getBoard()[posR][posC].getPlace() == player) {
+                    if (CheckPossibleMovements.canCapture(board, posR, posC))
+                        pieces.add(new Position(posR, posC));
+                }
+            }
+        if (pieces.isEmpty())
+            for (int posR = 0; posR < 8; posR++)
+                for (int posC = 0; posC < 8; posC++) {
+                    if (board.getBoard()[posR][posC].getPlace() == player) {
+                        if (CheckPossibleMovements.canCapture(board, posR, posC))
+                            pieces.add(new Position(posR, posC));
+                    }
+                }
+        return pieces;
     }
 
-    /**
-     * Check if a piece can capture.
-     *
-     * @param board the given one.
-     * @param posR  of the piece.
-     * @param posC  of the piece.
-     * @return true if can capture, otherwise return false.
-     */
-    public static boolean canCapture(ItalianBoard board, int posR, int posC) {
-        boolean result = false;
-        if (board.getBoard()[posR][posC].getType() == PiecesType.MAN)
-            result = board.getMan(posR, posC).canCapture(board, new Position(posR, posC));
-        else if (board.getBoard()[posR][posC].getType() == PiecesType.KING)
-            result = board.getKing(posR, posC).canCapture(board, new Position(posR, posC));
-        return result;
-    }
-
-    public static boolean canCapture(ItalianBoard board, Position pos) {
-        int posR = pos.getPosR();
-        int posC = pos.getPosC();
-        boolean result = false;
-        if (board.getBoard()[posR][posC].getType() == PiecesType.MAN)
-            result = board.getMan(posR, posC).canCapture(board, new Position(posR, posC));
-        else if (board.getBoard()[posR][posC].getType() == PiecesType.KING)
-            result = board.getKing(posR, posC).canCapture(board, new Position(posR, posC));
-        return result;
-    }
-
-    /**
-     * Checks if is man or king and gets the positions where it can move.
-     *
-     * @param board the current board.
-     * @param posR  row positions.
-     * @param posC  columns positions.
-     * @return true if it can walk.
-     */
-    private static boolean canWalk(ItalianBoard board, int posR, int posC) {
-        boolean result = false;
-        if (board.getBoard()[posR][posC].getType() == PiecesType.MAN)
-            result = board.getMan(posR, posC).canMove(board, new Position(posR, posC));
-        else if (board.getBoard()[posR][posC].getType() == PiecesType.KING)
-            result = board.getKing(posR, posC).canMove(board, new Position(posR, posC));
-        return result;
-    }
 
     /**
      * Checks if the position is inside the board.
@@ -177,18 +120,7 @@ public class Move {
         return (position.getPosR() > -1 && position.getPosR() < 8 && position.getPosC() > -1 && position.getPosC() < 8);
     }
 
-    public static void executeMove(Position init, Position fin, ItalianBoard italianBoard) {
-        if (canCapture(italianBoard, init)) {
-            deleteCaptured(fin, italianBoard);
-            CheckerBoardController.addToTextArea(fin.getPosition() + "\n");
-        } else
-            CheckerBoardController.addToTextArea("Moving to :" + fin + "\n");
-        if (checkKingTransformation(fin) || (italianBoard.getBoard()[init.getPosR()][init.getPosC()]).getType() == PiecesType.KING)
-            italianBoard.getBoard()[fin.getPosR()][fin.getPosC()] = new ItalianKing(fin, italianBoard.getPlayer());
-        else
-            italianBoard.getBoard()[fin.getPosR()][fin.getPosC()] = new ItalianMan(fin, italianBoard.getPlayer());
-        delete(init, italianBoard);
-    }
+
 
     private static boolean checkKingTransformation(Position pos) {
         if (pos.getPosR() == 0)
@@ -272,37 +204,20 @@ public class Move {
             executeCapture(board, listPossibleMoves.getChildAt(0));
         }
     }*/
-    public static ArrayList<Position> sequentialMoves(ItalianBoard board, GenericTreeNode<Position> listPossibleMoves, ArrayList<Position> moves) {
-        moves.add(listPossibleMoves.getChildAt(0).getData());
-        if (listPossibleMoves.getChildAt(0).hasChildren())
-            sequentialMoves(board, listPossibleMoves.getChildAt(0), moves);
-        return moves;
-    }
 
-    /**
-     * Deletes the piece in the given position and replaces it with an empty object.
-     *
-     * @param position of the piece wanted to be deleted.
-     */
+
+
     public static void delete(Position position, ItalianBoard board) {
-        board.getBoard()[position.getPosR()][position.getPosC()] = new Empty(position);
-    }
-    /**
-     * Deletes the piece in the given position and replaces it with an empty object.
-     *
-     * @param position of the piece wanted to be deleted.
-     */
-    public static void deleteCaptured(Position position, ItalianBoard board) {
-        board.getBoard()[position.getcPosR()][position.getcPosC()] = new Empty(position);
+        board.getBoard()[position.getPosR()][position.getPosC()].setPlace(PlaceType.EMPTY);
+        board.getBoard()[position.getPosR()][position.getPosC()].setPiece(null);
     }
 
-    /**
-     * Check if a piece is a king.
-     *
-     * @param piece to check.
-     * @return true if this is a king, else return false.
-     */
-    private static boolean isKing(PiecesType piece) {
-        return (piece == PiecesType.KING);
+    public static void deleteCaptured(Position position, ItalianBoard board) {
+        board.getBoard()[position.getcPosR()][position.getcPosC()].setPlace(PlaceType.EMPTY);
+        board.getBoard()[position.getcPosR()][position.getcPosC()].setPiece(null);
+    }
+
+    private static boolean isKing(ItalianBoard board, int posR, int posC) {
+        return (board.getBoard()[posR][posC].getPiece() == PieceType.KING);
     }
 }

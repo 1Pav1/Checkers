@@ -1,17 +1,16 @@
-package it.ing.pajc.singleplayer;
+package it.ing.pajc.manager;
 
-import it.ing.pajc.data.board.Fen;
+import it.ing.pajc.controller.Controller;
 import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.data.movements.*;
-import it.ing.pajc.data.pieces.Pieces;
-import it.ing.pajc.data.pieces.PiecesColors;
-import it.ing.pajc.data.pieces.PiecesType;
-import it.ing.pajc.data.pieces.italian.ItalianKing;
-import it.ing.pajc.data.pieces.italian.ItalianMan;
+import it.ing.pajc.data.pieces.PlaceType;
+import it.ing.pajc.data.pieces.PieceType;
 
 import static it.ing.pajc.data.board.Board.DIMENSION_ITALIAN_BOARD;
-
-public class Engine {
+//TODO PENSACI TU
+class Engine {
+/*
+    
     public static ItalianBoard execute(ItalianBoard board) {
         int point = 13;
         Position initial = null;
@@ -23,12 +22,12 @@ public class Engine {
                 if (board.getBoard()[i][j].getPlayer() == board.getPlayer()) {
                     GenericTree<Position> genericTree;
 
-                    if (piece.getType() == PiecesType.MAN)
+                    if (piece.getType() == PieceType.MAN)
                         genericTree = ((ItalianMan) (piece)).possibleMoves(board);
                     else
                         genericTree = ((ItalianKing) (piece)).possibleMoves(board);
 
-                    System.err.println(genericTree);
+                    //System.err.println(genericTree);
                     try {
                         GenericTreeNode<Position> parent = genericTree.getRoot();
 
@@ -46,31 +45,37 @@ public class Engine {
                 }
             }
         }
-        System.out.println("Selected piece "+ initial +" with points "+point);
-        Move.executeMove(initial,end,board);
+        if(initial!=null && end !=null) {
+            System.out.println("Selected piece " + initial + " with points " + point);
+            if (end.getcPosC() == -1 && end.getcPosR() == -1)
+                Controller.addToTextArea("Engine Moving to: Position r:" + end.getPosR() + " c:" + end.getPosC() + "\n");
+            Move.executeMove(initial, end, board);
+        }
         return board;
     }
 
 
     public static int evaluateMove(Position init, Position fin, ItalianBoard board) {
         Fen fen = new Fen(board.toString());
-        if(board.getPlayer() == PiecesColors.BLACK)
+        if(board.getPlayer() == PlaceType.BLACK)
             fen.reverseFen();
         ItalianBoard tempBoard = new ItalianBoard(fen, board.getPlayer());
         Move.executeMove(init, fin, tempBoard);
-        tempBoard.printBoardConsole();
+        //tempBoard.printBoardConsole();
         System.out.println();
         return countPiecesOnBoard(tempBoard, tempBoard.getPlayer());
     }
 
-    public static int countPiecesOnBoard(ItalianBoard board, PiecesColors piecesColors) {
+    public static int countPiecesOnBoard(ItalianBoard board, PlaceType piecesColors) {
         int count = 0;
         for (int i = 0; i < DIMENSION_ITALIAN_BOARD; i++) {
             for (int j = 0; j < DIMENSION_ITALIAN_BOARD; j++) {
-                if (board.getBoard()[i][j].getPlayer() != piecesColors && board.getBoard()[i][j].getPlayer() != PiecesColors.EMPTY)
+                if (board.getBoard()[i][j].getPlayer() != piecesColors && board.getBoard()[i][j].getPlayer() != PlaceType.EMPTY)
                     count++;
             }
         }
         return count;
     }
+    */
+
 }

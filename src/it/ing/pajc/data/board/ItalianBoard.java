@@ -1,34 +1,21 @@
 package it.ing.pajc.data.board;
 
-import it.ing.pajc.controller.CheckerBoardController;
 import it.ing.pajc.data.pieces.*;
-import it.ing.pajc.data.pieces.italian.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+
+import java.util.Arrays;
 
 /**
  * Creates and manage ItalianBoard
  */
 public class ItalianBoard implements Board {
-    private PiecesColors player;
-    private Pieces[][] piecesBoard;
-    private GridPane gridPane;
+    private Square[][] piecesBoard;
 
-    /**
-     * Uses Fen notation to create a board based on the player color.
-     *
-     * @param fen   A string that describes a unique set of positions
-     * @param color Rotates the board according to the player color.
-     */
-    public ItalianBoard(Fen fen, PiecesColors color) {
-        player = color;
-        if (player == PiecesColors.WHITE)
-            piecesBoard = fen.fenToMultidimensionalArray();
-        else {
-            fen.reverseFen();
-            piecesBoard = fen.fenToMultidimensionalArray();
-        }
-        CheckerBoardController.initializeBoardFX();
+
+    public ItalianBoard(StringBuilder fen) {
+        piecesBoard = Fen.fenToMultidimensionalArray(fen);
+        //Per copiare un array multidimensionale fatto per bene
+        //for(int i=0;i<Board.DIMENSION_ITALIAN_BOARD;i++)
+        //System.arraycopy([i],0,piecesBoard[i],0,Board.DIMENSION_ITALIAN_BOARD);
         printBoardConsole();
     }
 
@@ -39,16 +26,16 @@ public class ItalianBoard implements Board {
     public void printBoardConsole() {
         for (int posR = 0; posR < DIMENSION_ITALIAN_BOARD; posR++) {
             for (int posC = 0; posC < DIMENSION_ITALIAN_BOARD; posC++) {
-                if (piecesBoard[posR][posC].getPlayer() == PiecesColors.EMPTY)
+                if (piecesBoard[posR][posC].getPlace() == PlaceType.EMPTY)
                     System.out.print("[ ]");
                 else {
-                    if (piecesBoard[posR][posC].getPlayer() == PiecesColors.BLACK) {
-                        if (piecesBoard[posR][posC].getType() == PiecesType.MAN)
+                    if (piecesBoard[posR][posC].getPlace() == PlaceType.BLACK) {
+                        if (piecesBoard[posR][posC].getPiece() == PieceType.MAN)
                             System.out.print("[m]");
                         else
                             System.out.print("[k]");
-                    } else if (piecesBoard[posR][posC].getPlayer() == PiecesColors.WHITE) {
-                        if (piecesBoard[posR][posC].getType() == PiecesType.MAN)
+                    } else if (piecesBoard[posR][posC].getPlace() == PlaceType.WHITE) {
+                        if (piecesBoard[posR][posC].getPiece() == PieceType.MAN)
                             System.out.print("[M]");
                         else
                             System.out.print("[K]");
@@ -59,85 +46,26 @@ public class ItalianBoard implements Board {
         }
     }
 
-    /**
-     * Man's getter throws an exception, pay attention.
-     *
-     * @param posR Row position.
-     * @param posC Column position.
-     * @return man object.
-     */
-    public ItalianMan getMan(int posR, int posC) {
-        return (ItalianMan) piecesBoard[posR][posC];
+    public void rotate(){
+        StringBuilder fen = Fen.multidimensionalArrayToFen(piecesBoard);
+        fen = fen.reverse();
+        piecesBoard = Fen.fenToMultidimensionalArray(fen);
     }
 
-    /**
-     * King's getter throws an exception, pay attention.
-     *
-     * @param posR Row position.
-     * @param posC Column position.
-     * @return king object.
-     */
-    public ItalianKing getKing(int posR, int posC) {
-        return (ItalianKing) piecesBoard[posR][posC];
-    }
 
-    /**
-     * Player's getter.
-     *
-     * @return the color of the player.
-     */
-    public PiecesColors getPlayer() {
-        return player;
-    }
-
-    /**
-     * Getter of pieces board.
-     *
-     * @return matrix of positions.
-     */
-    public Pieces[][] getPiecesBoard() {
+    public Square [][] getBoard() {
         return piecesBoard;
     }
 
-    /**
-     * @return The board
-     */
-    @Override
-    public Pieces[][] getBoard() {
-        return piecesBoard;
+    public StringBuilder getFen(){
+        return Fen.multidimensionalArrayToFen(piecesBoard);
     }
 
-    /**
-     * Creates a string where the whole board and the pieces postions are saved.
-     *
-     * @return the string generated or FEN notion
-     */
     @Override
     public String toString() {
-        Fen fen = new Fen(this);
-        return fen.getFen().toString();
-    }
-
-    /**
-     * Getter of grid pane.
-     *
-     * @return box that contains the pieces.
-     */
-    public GridPane getGridPane() {
-        return gridPane;
-    }
-
-    public void setPlayer(PiecesColors player) {
-        this.player = player;
-    }
-
-    public void setPiecesBoard(Pieces[][] piecesBoard) {
-        this.piecesBoard = piecesBoard;
-    }
-
-
-    public void setGridPane(GridPane gridPane) {
-        this.gridPane = gridPane;
+        return "ItalianBoard{" +
+                "piecesBoard=" + Arrays.toString(piecesBoard) +
+                '}';
     }
 }
 

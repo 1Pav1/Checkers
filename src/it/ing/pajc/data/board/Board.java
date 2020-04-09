@@ -1,7 +1,7 @@
 package it.ing.pajc.data.board;
 
-import it.ing.pajc.data.pieces.Pieces;
 
+import it.ing.pajc.data.pieces.Square;
 
 public interface Board {
     int DIMENSION_ITALIAN_BOARD = 8;
@@ -15,5 +15,5 @@ public interface Board {
      * Getter to be overridden.
      * @return Pieces[][]
      */
-    Pieces[][] getBoard();
+    Square[][] getBoard();
 }

@@ -6,15 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 
-import javafx.scene.media.AudioClip;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
-import java.io.File;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import java.net.URL;
 
 
 public class Main extends Application {
@@ -32,7 +25,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
 
-        Parent root = FXMLLoader.load(getClass().getResource("graphics/Home.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("GUI/Home.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Checker main menu");

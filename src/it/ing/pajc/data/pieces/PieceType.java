@@ -3,7 +3,7 @@ package it.ing.pajc.data.pieces;
 /**
  * Type of existing pieces.
  */
-public enum PiecesType {
+public enum PieceType {
     MAN,
     KING
 }

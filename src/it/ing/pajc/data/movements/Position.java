@@ -37,14 +37,6 @@ public class Position {
         this.cPosC = cPosC;
     }
 
-    /**
-     * Return the position.
-     *
-     * @return the position.
-     */
-    public Position getPosition() {
-        return this;
-    }
 
 
     public int getcPosR() {
@@ -74,6 +66,9 @@ public class Position {
     }
 
     public String toString() {
-        return "Moving to:" + "Position r:" + posR + " c:" + posC + " Capturing :" + " r:" + cPosR + "c:" + cPosC;
+        String stringa="Moving to:" + " Position r:" + posR + " c:" + posC;
+        if(cPosC!=-1 && cPosR!=-1)
+            stringa+= " Capturing :" + " r:" + cPosR + " c:" + cPosC;
+        return  stringa;
     }
 }

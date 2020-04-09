@@ -1,108 +1,85 @@
 package it.ing.pajc.data.board;
 
 import it.ing.pajc.data.movements.Position;
-import it.ing.pajc.data.pieces.Empty;
-import it.ing.pajc.data.pieces.Pieces;
-import it.ing.pajc.data.pieces.PiecesColors;
-import it.ing.pajc.data.pieces.PiecesType;
-import it.ing.pajc.data.pieces.italian.ItalianKing;
-import it.ing.pajc.data.pieces.italian.ItalianMan;
+import it.ing.pajc.data.pieces.PieceType;
+import it.ing.pajc.data.pieces.PlaceType;
+import it.ing.pajc.data.pieces.Square;
 
-public class Fen {
-    private StringBuilder fen = new StringBuilder();
-    private ItalianBoard board;
-
-    /**
-     * Assigns a given fen to a class property.
-     *
-     * @param fen Notation that describes a given set of positions.
-     */
-    public Fen(String fen) {
-        this.fen.append(fen);
-    }
-
-    /**
-     * Given an Italianboard, creates the specific fen.
-     *
-     * @param board The Italianboard.
-     */
-    public Fen(ItalianBoard board) {
-        this.board = board;
-        fen = new StringBuilder();
-        for (int x = 0; x < board.DIMENSION_ITALIAN_BOARD; x++) {
-            for (int y = 0; y < board.DIMENSION_ITALIAN_BOARD; y++) {
-                if (board.getBoard()[x][y].getPlayer() == PiecesColors.WHITE)
-                    if (board.getBoard()[x][y].getType() == PiecesType.MAN)
-                        fen.append("M");
-                    else
-                        fen.append("K");
-                else if (board.getBoard()[x][y].getPlayer() == PiecesColors.BLACK)
-                    if (board.getBoard()[x][y].getType() == PiecesType.MAN)
-                        fen.append("m");
-                    else
-                        fen.append("k");
-                else if (board.getBoard()[x][y].getPlayer() == PiecesColors.EMPTY)
-                    fen.append("e");
-            }
-            if (x != board.DIMENSION_ITALIAN_BOARD - 1)
-                fen.append("/");
-        }
-    }
+/**
+ * Works with stringBuilder and board representations of a checkers match
+ */
+class Fen {
 
     /**
      * Given a fen, creates an Italian board.
      *
      * @return a MultidimensionalArray of position.
      */
-    Pieces[][] fenToMultidimensionalArray() {
+    static Square[][] fenToMultidimensionalArray(StringBuilder fenStringBuilder) {
         int i = 0;
-        Pieces[][] pieces = new Pieces[board.DIMENSION_ITALIAN_BOARD][board.DIMENSION_ITALIAN_BOARD];
+        Square[][] squares = new Square[Board.DIMENSION_ITALIAN_BOARD][Board.DIMENSION_ITALIAN_BOARD];
         int boardPosition = 0;
         do {
-            if (fen.charAt(i) != '/') {
-                switch (fen.charAt(i)) {
+            if (fenStringBuilder.charAt(i) != '/') {
+                Position currentPos = new Position(boardPosition / 8, boardPosition % 8);
+                switch (fenStringBuilder.charAt(i)) {
                     case 'm': {
-                        pieces[boardPosition / 8][boardPosition % 8] = new ItalianMan(new Position(boardPosition / 8, boardPosition % 8), PiecesColors.BLACK);
+                        squares[boardPosition / 8][boardPosition % 8] = new Square(PlaceType.BLACK, PieceType.MAN);
                     }
                     break;
                     case 'k': {
-                        pieces[boardPosition / 8][boardPosition % 8] = new ItalianKing(new Position(boardPosition / 8, boardPosition % 8), PiecesColors.BLACK);
+                        squares[boardPosition / 8][boardPosition % 8] = new Square(PlaceType.BLACK, PieceType.KING);
                     }
                     break;
                     //------------------------------------------------------------------
                     case 'M': {
-                        pieces[boardPosition / 8][boardPosition % 8] = new ItalianMan(new Position(boardPosition / 8, boardPosition % 8), PiecesColors.WHITE);
+                        squares[boardPosition / 8][boardPosition % 8] = new Square(PlaceType.WHITE, PieceType.MAN);
                     }
                     break;
                     case 'K': {
-                        pieces[boardPosition / 8][boardPosition % 8] = new ItalianKing(new Position(boardPosition / 8, boardPosition % 8), PiecesColors.WHITE);
+                        squares[boardPosition / 8][boardPosition % 8] = new Square(PlaceType.WHITE, PieceType.KING);
                     }
                     break;
                     //------------------------------------------------------------------
                     case 'e': {
-                        pieces[boardPosition / 8][boardPosition % 8] = new Empty(new Position(boardPosition / 8, boardPosition % 8));
+                        squares[boardPosition / 8][boardPosition % 8] = new Square(PlaceType.EMPTY);
                     }
                 }
                 boardPosition++;
             }
             i++;
-        } while (i < fen.length());
-        return pieces;
+        } while (i < fenStringBuilder.length());
+        return squares;
     }
 
     /**
      * Rotates the board by reversing the fen.
      */
-    public void reverseFen() {
-        fen.reverse();
+    public static StringBuilder reverseFen(StringBuilder fenString) {
+        return fenString.reverse();
     }
 
-    /**
-     * Getter of Fen.
-     *
-     * @return the fen.
-     */
-    public StringBuilder getFen() {
+    //TODO PENSACI TU
+    public static StringBuilder multidimensionalArrayToFen(Square[][] squares) {
+        StringBuilder fen = new StringBuilder();
+        for (int x = 0; x < Board.DIMENSION_ITALIAN_BOARD; x++) {
+            for (int y = 0; y < Board.DIMENSION_ITALIAN_BOARD; y++) {
+                if (squares[x][y].getPlace() == PlaceType.WHITE)
+                    if (squares[x][y].getPiece() == PieceType.MAN)
+                        fen.append("M");
+                    else
+                        fen.append("K");
+                else if (squares[x][y].getPlace() == PlaceType.BLACK)
+                    if (squares[x][y].getPiece() == PieceType.MAN)
+                        fen.append("m");
+                    else
+                        fen.append("k");
+                else if (squares[x][y].getPlace() == PlaceType.EMPTY)
+                    fen.append("e");
+            }
+            if (x != Board.DIMENSION_ITALIAN_BOARD - 1)
+                fen.append("/");
+        }
         return fen;
     }
 }

@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" style="-fx-border-radius: 30;" stylesheets="@woodStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ing.pajc.controller.CheckerBoardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" style="-fx-border-radius: 30;" stylesheets="@retroStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ing.pajc.controller.Controller">
     <Pane fx:id="windowPanel" prefHeight="60.0" prefWidth="900.0">
-        <Label alignment="CENTER" layoutX="863.0" layoutY="2.0" onMouseClicked="#close" prefHeight="20.0" prefWidth="21.0" text="X" textFill="#ddd9d9">
+        <Label alignment="CENTER" layoutX="863.0" layoutY="2.0" onMouseReleased="#close" prefHeight="20.0" prefWidth="21.0" text="X" textFill="#ddd9d9">
             <font>
                 <Font name="Franklin Gothic Heavy" size="35.0" />
             </font>
@@ -25,7 +25,7 @@
                 <Font name="Franklin Gothic Heavy" size="40.0" />
             </font>
         </Label>
-        <Label alignment="CENTER" layoutX="9.0" layoutY="2.0" onMouseClicked="#back" prefHeight="40.0" prefWidth="41.0" text="🡄" textFill="#ddd9d9">
+        <Label alignment="CENTER" layoutX="9.0" layoutY="2.0" onMouseReleased="#back" prefHeight="40.0" prefWidth="41.0" text="🡄" textFill="#ddd9d9">
             <font>
                 <Font name="Franklin Gothic Heavy" size="35.0" />
             </font>
@@ -37,7 +37,7 @@
     <Pane fx:id="centerWindow" layoutY="52.0" prefHeight="600.0" prefWidth="900.0">
       <TextArea id="textArea" editable="false" layoutX="555.0" layoutY="60.0" prefHeight="475.0" prefWidth="330.0">
          <font>
-            <Font name="Algerian" size="18.0" />
+            <Font name="Arial" size="14.0" />
          </font></TextArea>
         <GridPane id="grid" fx:id="grid" layoutX="60.0" layoutY="60.0" prefHeight="475.0" prefWidth="475.0">
             <columnConstraints>
