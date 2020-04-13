@@ -44,6 +44,7 @@ public class ItalianBoard implements Board {
             }
             System.out.println(" ");
         }
+        System.out.println();
     }
 
     public void rotate(){

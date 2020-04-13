@@ -1,59 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Animation try.">
-      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/CheckPossibleMovements.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Square.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/manager/EndCondition.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/manager/Player.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/serverClient/Client.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/serverClient/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/cssdialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cssdialects.xml" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="I don't know you guess it">
+      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/FXUtility.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/CheckerBoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/homeController/HomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/MultiplayerController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectColorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectColorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/SettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/homeController/SettingsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/Fen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/Fen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/CheckPossibleMovements.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/CheckPossibleMovements.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/MultiplayerItalianBoard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/GenericTree.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/GenericTreeNode.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/GenericTreeTraversalOrderEnum.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/Move.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/Position.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Empty.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/King.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Man.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Pieces.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/PiecesColors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/PlaceType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/PiecesType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/PieceType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/italian/ItalianKing.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/italian/ItalianMan.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/CheckerBoard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/GUI/CheckerBoard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Home.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/GUI/Home.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Images/RetroStyle/Background.gif" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/GUI/Images/RetroStyle/Background.gif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Images/RetroStyle/Background.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/GUI/Images/RetroStyle/Background.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Images/WoodenStyle/Board/darkWood.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/GUI/Images/WoodenStyle/Board/darkWood.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Images/WoodenStyle/Board/lightWood.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/GUI/Images/WoodenStyle/Board/lightWood.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Images/WoodenStyle/Checkers.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/GUI/Images/WoodenStyle/Checkers.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Images/WoodenStyle/Kings/blackKing.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/GUI/Images/WoodenStyle/Kings/blackKing.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Images/WoodenStyle/Kings/whiteKing.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/GUI/Images/WoodenStyle/Kings/whiteKing.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Images/WoodenStyle/Win/winAnimation.gif" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/GUI/Images/WoodenStyle/Win/winAnimation.gif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Images/WoodenStyle/background.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/GUI/Images/WoodenStyle/background.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/IpAddressForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/GUI/IpAddressForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Multiplayer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/GUI/Multiplayer.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/SelectColor.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/GUI/SelectColor.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/Settings.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/GUI/Settings.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/YouWon.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/GUI/YouWon.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/retroStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/GUI/retroStyle.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/graphics/woodStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/GUI/woodStyle.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/multiplayer/MultiplayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/manager/MultiplayerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/singleplayer/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/manager/Engine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/singleplayer/SinglePlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/manager/LocalGameManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/homeController/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/homeController/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/manager/EndCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/manager/EndCondition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/manager/LocalGameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/manager/LocalGameManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/manager/MultiplayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/manager/MultiplayerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/serverClient/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/serverClient/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/serverClient/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/serverClient/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,8 +83,8 @@
       <list>
         <option value="FxmlFile" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -476,7 +436,9 @@
       <workItem from="1585728053275" duration="7802000" />
       <workItem from="1585900320077" duration="7737000" />
       <workItem from="1586247427134" duration="7449000" />
-      <workItem from="1586417934950" duration="7583000" />
+      <workItem from="1586417934950" duration="8552000" />
+      <workItem from="1586591266738" duration="8886000" />
+      <workItem from="1586763527336" duration="7860000" />
     </task>
     <task id="LOCAL-00001" summary="added:&#10;Settings&#10;Possible Moves">
       <created>1564397017327</created>
@@ -681,7 +643,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573022275603</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="I don't know you guess it">
+      <created>1586425649015</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1586425649015</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -703,7 +672,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
-    <MESSAGE value="Changes&#10;graphics of capture positions and movements" />
     <MESSAGE value="Added WhiteKing and BlackKing" />
     <MESSAGE value="Fix BlackMan" />
     <MESSAGE value="Server Client added" />
@@ -728,7 +696,8 @@
     <MESSAGE value="Working engine(1 layer) and P vs P offline" />
     <MESSAGE value="MoveAndCapturedPosition deleted and united with Position class." />
     <MESSAGE value="Animation try." />
-    <option name="LAST_COMMIT_MESSAGE" value="Animation try." />
+    <MESSAGE value="I don't know you guess it" />
+    <option name="LAST_COMMIT_MESSAGE" value="I don't know you guess it" />
   </component>
   <component name="WindowStateProjectService">
     <state x="971" y="178" key="#com.intellij.ide.util.MemberChooser" timestamp="1585730523514">
@@ -751,63 +720,75 @@
       <screen x="78" y="0" width="1842" height="1080" />
     </state>
     <state x="734" y="414" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/78.0.1842.1080@78.0.1842.1080" timestamp="1583579243642" />
+    <state x="305" y="28" key="CommitChangelistDialog2" timestamp="1586425642059">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="305" y="28" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1586425642059" />
     <state x="585" y="235" key="FileChooserDialogImpl" timestamp="1585554252785">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="585" y="235" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1585554252785" />
     <state x="779" y="294" key="FileChooserDialogImpl/78.0.1842.1080@78.0.1842.1080" timestamp="1578756606717" />
-    <state width="1493" height="336" key="GridCell.Tab.0.bottom" timestamp="1586425528008">
+    <state width="1493" height="183" key="GridCell.Tab.0.bottom" timestamp="1586773216868">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="336" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1586425528008" />
+    <state width="1493" height="183" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1586773216868" />
     <state width="1415" height="276" key="GridCell.Tab.0.bottom/78.0.1458.864@78.0.1458.864" timestamp="1580333213598" />
     <state width="1799" height="204" key="GridCell.Tab.0.bottom/78.0.1842.1080@78.0.1842.1080" timestamp="1583576686333" />
-    <state width="1493" height="336" key="GridCell.Tab.0.center" timestamp="1586425528008">
+    <state width="1493" height="183" key="GridCell.Tab.0.center" timestamp="1586773216868">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="336" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1586425528008" />
+    <state width="1493" height="183" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1586773216868" />
     <state width="1415" height="276" key="GridCell.Tab.0.center/78.0.1458.864@78.0.1458.864" timestamp="1580333213598" />
     <state width="1799" height="204" key="GridCell.Tab.0.center/78.0.1842.1080@78.0.1842.1080" timestamp="1583576686333" />
-    <state width="1493" height="336" key="GridCell.Tab.0.left" timestamp="1586425528008">
+    <state width="1493" height="183" key="GridCell.Tab.0.left" timestamp="1586773216868">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="336" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1586425528008" />
+    <state width="1493" height="183" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1586773216868" />
     <state width="1415" height="276" key="GridCell.Tab.0.left/78.0.1458.864@78.0.1458.864" timestamp="1580333213598" />
     <state width="1799" height="204" key="GridCell.Tab.0.left/78.0.1842.1080@78.0.1842.1080" timestamp="1583576686333" />
-    <state width="1493" height="336" key="GridCell.Tab.0.right" timestamp="1586425528008">
+    <state width="1493" height="183" key="GridCell.Tab.0.right" timestamp="1586773216868">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="336" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1586425528008" />
+    <state width="1493" height="183" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1586773216868" />
     <state width="1415" height="276" key="GridCell.Tab.0.right/78.0.1458.864@78.0.1458.864" timestamp="1580333213598" />
     <state width="1799" height="204" key="GridCell.Tab.0.right/78.0.1842.1080@78.0.1842.1080" timestamp="1583576686333" />
-    <state width="1493" height="272" key="GridCell.Tab.1.bottom" timestamp="1586254900851">
+    <state width="1493" height="272" key="GridCell.Tab.1.bottom" timestamp="1586772989662">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="272" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1586254900851" />
+    <state width="1493" height="272" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1586772989662" />
     <state width="1415" height="272" key="GridCell.Tab.1.bottom/78.0.1458.864@78.0.1458.864" timestamp="1579073733195" />
     <state width="1799" height="358" key="GridCell.Tab.1.bottom/78.0.1842.1080@78.0.1842.1080" timestamp="1578827935611" />
-    <state width="1493" height="272" key="GridCell.Tab.1.center" timestamp="1586254900851">
+    <state width="1493" height="272" key="GridCell.Tab.1.center" timestamp="1586772989661">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="272" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1586254900851" />
+    <state width="1493" height="272" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1586772989661" />
     <state width="1415" height="272" key="GridCell.Tab.1.center/78.0.1458.864@78.0.1458.864" timestamp="1579073733195" />
     <state width="1799" height="358" key="GridCell.Tab.1.center/78.0.1842.1080@78.0.1842.1080" timestamp="1578827935611" />
-    <state width="1493" height="272" key="GridCell.Tab.1.left" timestamp="1586254900851">
+    <state width="1493" height="272" key="GridCell.Tab.1.left" timestamp="1586772989661">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="272" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1586254900851" />
+    <state width="1493" height="272" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1586772989661" />
     <state width="1415" height="272" key="GridCell.Tab.1.left/78.0.1458.864@78.0.1458.864" timestamp="1579073733195" />
     <state width="1799" height="358" key="GridCell.Tab.1.left/78.0.1842.1080@78.0.1842.1080" timestamp="1578827935611" />
-    <state width="1493" height="272" key="GridCell.Tab.1.right" timestamp="1586254900851">
+    <state width="1493" height="272" key="GridCell.Tab.1.right" timestamp="1586772989661">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="272" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1586254900851" />
+    <state width="1493" height="272" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1586772989661" />
     <state width="1415" height="272" key="GridCell.Tab.1.right/78.0.1458.864@78.0.1458.864" timestamp="1579073733195" />
     <state width="1799" height="358" key="GridCell.Tab.1.right/78.0.1842.1080@78.0.1842.1080" timestamp="1578827935611" />
+    <state x="481" y="149" key="MultipleFileMergeDialog" timestamp="1586425701799">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="481" y="149" key="MultipleFileMergeDialog/0.0.1536.864@0.0.1536.864" timestamp="1586425701799" />
     <state x="502" y="184" key="SettingsEditor" timestamp="1583579007798">
       <screen x="78" y="0" width="1842" height="1080" />
     </state>
     <state x="502" y="184" key="SettingsEditor/78.0.1842.1080@78.0.1842.1080" timestamp="1583579007798" />
+    <state x="361" y="167" key="Vcs.Push.Dialog.v2" timestamp="1586425750855">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="361" y="167" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1586425750855" />
     <state x="808" y="456" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1578821206488">
       <screen x="78" y="0" width="1842" height="1080" />
     </state>

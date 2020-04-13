@@ -5,6 +5,8 @@ import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.data.movements.*;
 import it.ing.pajc.data.pieces.PlaceType;
 import it.ing.pajc.data.pieces.PieceType;
+import it.ing.pajc.manager.Player;
+
 import java.util.ArrayList;
 
 
@@ -21,10 +23,10 @@ public class CheckPossibleMovements {
         return positions;
     }
 
-    public static boolean canSomebodyCapture(ItalianBoard board){
+    public static boolean canSomebodyCapture(ItalianBoard board, Player player){
         for(int i=0;i<Board.DIMENSION_ITALIAN_BOARD;i++){
             for(int j=0;j<Board.DIMENSION_ITALIAN_BOARD;j++){
-                if(board.getBoard()[i][j].getPlace()!=PlaceType.EMPTY && canCapture(board, i, j))
+                if(PlaceType.confrontPlayer(board.getBoard()[i][j].getPlace(), player) && board.getBoard()[i][j].getPlace()!=PlaceType.EMPTY && canCapture(board, i, j))
                     return true;
             }
         }
@@ -49,9 +51,9 @@ public class CheckPossibleMovements {
 
     public static Position possibleCaptureUpLeft(ItalianBoard board, int posR, int posC) {
         try {
-            if ((board.getBoard()[posR - 1][posC - 1].getPlace() != board.getBoard()[posR][posC].getPlace()) &&
-                    (board.getBoard()[posR - 1][posC - 1].getPiece() == PieceType.MAN ||
-                            board.getBoard()[posR - 1][posC - 1].getPiece() == PieceType.KING) &&
+            if ((board.getBoard()[posR - 1][posC - 1].getPlace()!=PlaceType.EMPTY) &&
+                (board.getBoard()[posR - 1][posC - 1].getPlace() != board.getBoard()[posR][posC].getPlace()) &&
+                    (board.getBoard()[posR - 1][posC - 1].getPiece() == PieceType.MAN || board.getBoard()[posR][posC].getPiece()==PieceType.KING) &&
                     (board.getBoard()[posR - 2][posC - 2].getPlace() == PlaceType.EMPTY)) {
                 return new Position(posR - 2, posC - 2, posR - 1, posC - 1);
             }
@@ -63,10 +65,10 @@ public class CheckPossibleMovements {
 
     public static Position possibleCaptureUpRight(ItalianBoard board, int posR, int posC) {
         try {
-            if ((board.getBoard()[posR - 1][posC + 1].getPlace() != board.getBoard()[posR][posC].getPlace()) &&
-                    (board.getBoard()[posR - 1][posC + 1].getPiece() == PieceType.MAN ||
-                            board.getBoard()[posR - 1][posC + 1].getPiece() == PieceType.KING) &&
-                    (board.getBoard()[posR - 2][posC + 2].getPlace() == PlaceType.EMPTY)) {
+            if ((board.getBoard()[posR - 1][posC + 1].getPlace()!=PlaceType.EMPTY) &&
+                    (board.getBoard()[posR - 1][posC +1].getPlace() != board.getBoard()[posR][posC].getPlace()) &&
+                    (board.getBoard()[posR - 1][posC + 1].getPiece() == PieceType.MAN || board.getBoard()[posR][posC].getPiece()==PieceType.KING) &&
+                    (board.getBoard()[posR - 2][posC + 2].getPlace() == PlaceType.EMPTY)){
                 return new Position(posR - 2, posC + 2, posR - 1, posC + 1);
             }
         } catch (ArrayIndexOutOfBoundsException ignored) {
@@ -77,7 +79,8 @@ public class CheckPossibleMovements {
 
     public static Position possibleCaptureDownLeft(ItalianBoard board, int posR, int posC) {
         try {
-            if ((board.getBoard()[posR + 1][posC - 1].getPlace() != board.getBoard()[posR][posC].getPlace()) &&
+            if ((board.getBoard()[posR + 1][posC - 1].getPlace()!=PlaceType.EMPTY) &&
+                    (board.getBoard()[posR + 1][posC - 1].getPlace() != board.getBoard()[posR][posC].getPlace()) &&
                     (board.getBoard()[posR + 1][posC - 1].getPiece() == PieceType.MAN ||
                             board.getBoard()[posR + 1][posC - 1].getPiece() == PieceType.KING) &&
                     (board.getBoard()[posR + 2][posC - 2].getPlace() == PlaceType.EMPTY)) {
@@ -91,7 +94,8 @@ public class CheckPossibleMovements {
 
     public static Position possibleCaptureDownRight(ItalianBoard board, int posR, int posC) {
         try {
-            if ((board.getBoard()[posR + 1][posC + 1].getPlace() != board.getBoard()[posR][posC].getPlace()) &&
+            if ((board.getBoard()[posR + 1][posC + 1].getPlace()!=PlaceType.EMPTY) &&
+                    (board.getBoard()[posR + 1][posC + 1].getPlace() != board.getBoard()[posR][posC].getPlace()) &&
                     (board.getBoard()[posR + 1][posC + 1].getPiece() == PieceType.MAN ||
                             board.getBoard()[posR + 1][posC + 1].getPiece() == PieceType.KING) &&
                     (board.getBoard()[posR + 2][posC + 2].getPlace() == PlaceType.EMPTY)) {
@@ -120,6 +124,7 @@ public class CheckPossibleMovements {
 
     private static boolean canCaptureUpLeft(ItalianBoard board, int posR, int posC) {
         try {
+            if(((board.getBoard()[posR][posC].getPiece()==PieceType.MAN) && (board.getBoard()[posR - 1][posC - 1].getPiece()==PieceType.MAN))|| (board.getBoard()[posR][posC].getPiece()==PieceType.KING) )
             return ((board.getBoard()[posR - 1][posC - 1].getPlace() != board.getBoard()[posR][posC].getPlace()) &&
                     (board.getBoard()[posR - 1][posC - 1].getPlace() != PlaceType.EMPTY) &&
                     (board.getBoard()[posR - 2][posC - 2].getPlace() == PlaceType.EMPTY));
@@ -130,7 +135,8 @@ public class CheckPossibleMovements {
 
     private static boolean canCaptureUpRight(ItalianBoard board, int posR, int posC) {
         try {
-            return ((board.getBoard()[posR - 1][posC + 1].getPlace() != board.getBoard()[posR][posC].getPlace()) &&
+            if(((board.getBoard()[posR][posC].getPiece()==PieceType.MAN) && (board.getBoard()[posR - 1][posC + 1].getPiece()==PieceType.MAN))|| (board.getBoard()[posR][posC].getPiece()==PieceType.KING) )
+                return ((board.getBoard()[posR - 1][posC + 1].getPlace() != board.getBoard()[posR][posC].getPlace()) &&
                     (board.getBoard()[posR - 1][posC + 1].getPlace() != PlaceType.EMPTY) &&
                     (board.getBoard()[posR - 2][posC + 2].getPlace() == PlaceType.EMPTY));
         } catch (ArrayIndexOutOfBoundsException ignored) {

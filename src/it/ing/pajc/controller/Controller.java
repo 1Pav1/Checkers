@@ -5,8 +5,13 @@ import it.ing.pajc.data.board.Board;
 import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.data.movements.Position;
 import it.ing.pajc.data.pieces.*;
+import it.ing.pajc.manager.LocalGameManager;
 import it.ing.pajc.manager.Player;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.input.MouseEvent;
+import jdk.jfr.FlightRecorder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,24 +34,25 @@ import java.util.concurrent.atomic.AtomicReference;
  * Controller of the board displaying page.
  */
 public class Controller {
+    public static BooleanProperty timeToChangePlayer;
 
     public static void placeBoard(ItalianBoard board, Scene scene, Player player) {
         board.printBoardConsole();
         GridPane gridPane = (GridPane) scene.lookup("#grid");
         gridPane.getChildren().clear();
         StackPane[][] stackPaneBoard = initializeBoardFX();
-        boolean canSomebodyCapture = CheckPossibleMovements.canSomebodyCapture(board);
-        System.err.println(canSomebodyCapture);
+        boolean canSomebodyCapture = CheckPossibleMovements.canSomebodyCapture(board, player);
         for (int i = 0; i < Board.DIMENSION_ITALIAN_BOARD; i++) {
             for (int j = 0; j < Board.DIMENSION_ITALIAN_BOARD; j++) {
                 //The method .add is the opposite than normal matrix
                 gridPane.add(stackPaneBoard[i][j], j, i);
                 if (board.getBoard()[i][j].getPlace() != PlaceType.EMPTY) {
                     Circle circle = addPieceToGridPane(board, i, j, gridPane, player, canSomebodyCapture);
-                    createClickEventPiece(circle, board, stackPaneBoard, i, j, scene);
+                    createClickEventPiece(circle, board, stackPaneBoard, i, j, scene, player);
                 }
             }
         }
+        System.err.println("la verità sarà scoperta: "+canSomebodyCapture);
     }
 
 
@@ -119,7 +126,7 @@ public class Controller {
     }
 
 
-    private static void keepCapturing(ItalianBoard board, Scene scene, int posR, int posC) {
+    private static void keepCapturing(ItalianBoard board, Scene scene, int posR, int posC, Player player) {
         board.printBoardConsole();
         GridPane gridPane = (GridPane) scene.lookup("#grid");
         gridPane.getChildren().clear();
@@ -132,7 +139,7 @@ public class Controller {
                     Circle circle = addDisabledPieceToGridPane(board, i, j, gridPane);
                     if (i == posR && j == posC) {
                         circle.setDisable(false);
-                        createClickEventPiece(circle, board, stackPaneBoard, i, j, scene);
+                        createClickEventPiece(circle, board, stackPaneBoard, i, j, scene, player);
                     }
                 }
             }
@@ -156,36 +163,31 @@ public class Controller {
     }
 
 
-    private static void createClickEventPiece(Circle circle, ItalianBoard board, StackPane[][] stackPanes, int i, int j, Scene scene) {
+    private static void createClickEventPiece(Circle circle, ItalianBoard board, StackPane[][] stackPanes, int i, int j, Scene scene, Player player) {
         circle.setOnMousePressed(event -> {
-            System.out.println("cliccato");
             resetBoardFXColors(stackPanes);
             ArrayList<Position> moves = CheckPossibleMovements.allPossibleMoves(board, i, j);
-            for (Position pos : moves) {
-                System.out.println(pos.toString());
-            }
-            createClickEventForMoveAndDeletion(board, stackPanes, i, j, moves, scene);
+            createClickEventForMoveAndDeletion(board, stackPanes, i, j, moves, scene, player);
         });
     }
 
 
-    public static void createClickEventForMoveAndDeletion(ItalianBoard board, StackPane[][] stackPanes, int i, int j, ArrayList<Position> moves, Scene scene) {
+    public static void createClickEventForMoveAndDeletion(ItalianBoard board, StackPane[][] stackPanes, int i, int j, ArrayList<Position> moves, Scene scene, Player player) {
         if (CheckPossibleMovements.canCapture(board, i, j))
             for (Position moveAndCapturedPosition : moves) {
                 stackPanes[i][j].setId("movementHighlight");
                 stackPanes[moveAndCapturedPosition.getPosR()][moveAndCapturedPosition.getPosC()].setId("captureHighlight");
                 stackPanes[moveAndCapturedPosition.getPosR()][moveAndCapturedPosition.getPosC()].setDisable(false);
 
-                stackPanes[moveAndCapturedPosition.getPosR()][moveAndCapturedPosition.getPosC()].setOnMousePressed(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        Move.executeMove(new Position(i, j), moveAndCapturedPosition, board);
-                        //resetBoardFXColors(stackPanes);
-                        //TODO GUARDA CHE NON è FIRST DIAMINE DAMN IT
-                        placeBoard(board, scene, Player.FIRST);
-                        if (CheckPossibleMovements.canCapture(board, moveAndCapturedPosition.getPosR(), moveAndCapturedPosition.getPosC()))
-                            keepCapturing(board, scene, moveAndCapturedPosition.getPosR(), moveAndCapturedPosition.getPosC());
-
+                stackPanes[moveAndCapturedPosition.getPosR()][moveAndCapturedPosition.getPosC()].setOnMousePressed(event -> {
+                    Move.executeMove(new Position(i, j), moveAndCapturedPosition, board);
+                    //resetBoardFXColors(stackPanes);
+                    //TODO GUARDA CHE NON è FIRST DIAMINE DAMN IT
+                    if (CheckPossibleMovements.canCapture(board, moveAndCapturedPosition.getPosR(), moveAndCapturedPosition.getPosC()))
+                        keepCapturing(board, scene, moveAndCapturedPosition.getPosR(), moveAndCapturedPosition.getPosC(), player);
+                    else {
+                        //placeBoard(board, scene, player);
+                        timeToChangePlayer.setValue(true);
                     }
                 });
             }
@@ -197,9 +199,9 @@ public class Controller {
                     @Override
                     public void handle(MouseEvent event) {
                         Move.executeMove(new Position(i, j), position, board);
-                        //resetBoardFXColors(stackPanes);
+                        //placeBoard(board, scene, player);
+                        timeToChangePlayer.setValue(true);
                         //TODO GUARDA CHE NON è FIRST DIAMINE DAMN IT
-                        placeBoard(board, scene, Player.FIRST);
                     }
                 });
             }

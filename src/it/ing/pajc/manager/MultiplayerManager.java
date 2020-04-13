@@ -5,6 +5,8 @@ import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.serverClient.Client;
 import it.ing.pajc.serverClient.Server;
 import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.transform.Scale;
 
 import java.io.*;
 import java.net.Socket;
@@ -21,19 +23,21 @@ public class MultiplayerManager {
     private Player currentPlayer;
     private Player chosenPlayer;
     private ItalianBoard board;
-
+    private Scene scene;
 
     /**
      * @param chosenPlayer
      * @param port
      */
-    public MultiplayerManager(Player chosenPlayer, int port) {
+    public MultiplayerManager(Player chosenPlayer, int port, Scene scene) throws InterruptedException, ExecutionException, IOException {
         StringBuilder fen = new StringBuilder("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
         board = new ItalianBoard(fen);
         this.chosenPlayer = chosenPlayer;
         this.currentPlayer = Player.FIRST;
         this.port = port;
-        //Controller.placeBoard(board);
+        this.scene = scene;
+
+        startServer();
     }
 
 
@@ -41,7 +45,7 @@ public class MultiplayerManager {
      * Creates new board and a thread that manages the connection.
      */
     public void startServer() throws IOException, ExecutionException, InterruptedException {
-        socket = Server.serverStartup(port, board);
+        socket = Server.serverStartup(port, board, scene,chosenPlayer);
         out = new PrintWriter(socket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out.println(board.toString());
@@ -51,7 +55,7 @@ public class MultiplayerManager {
      * Creates a new board and a thread that manages the connection to the server.
      */
     public void clientStartup() throws ExecutionException, InterruptedException, IOException {
-        socket = Client.clientStartup(port);
+        socket = Client.clientStartup(port, board, scene,chosenPlayer);
         out = new PrintWriter(socket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
@@ -76,7 +80,7 @@ public class MultiplayerManager {
             public void run() {
                 board = new ItalianBoard(new StringBuilder(readFen()));
                 try {
-                    Controller.placeBoard(board);
+                    Controller.placeBoard(board, scene,chosenPlayer);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

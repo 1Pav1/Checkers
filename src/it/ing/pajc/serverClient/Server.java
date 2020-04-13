@@ -2,7 +2,9 @@ package it.ing.pajc.serverClient;
 
 import it.ing.pajc.controller.Controller;
 import it.ing.pajc.data.board.ItalianBoard;
+import it.ing.pajc.manager.Player;
 import javafx.application.Platform;
+import javafx.scene.Scene;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -10,8 +12,8 @@ import java.net.Socket;
 import java.util.concurrent.*;
 
 public class Server {
-/*
-    public static Socket serverStartup(int port, ItalianBoard board) throws ExecutionException, InterruptedException {
+
+    public static Socket serverStartup(int port, ItalianBoard board, Scene scene, Player player) throws ExecutionException, InterruptedException {
 
         FutureTask task = new FutureTask(new Callable<Socket>() {
 
@@ -31,7 +33,7 @@ public class Server {
                 System.out.println("Connected");
 
                 Platform.runLater(() -> {
-                    Controller.placeBoard(board);
+                    Controller.placeBoard(board,scene,player);
                 });
                 return socket;
             }
@@ -43,6 +45,6 @@ public class Server {
         return (Socket) task.get();
 
     }
-*/
+
 
 }
