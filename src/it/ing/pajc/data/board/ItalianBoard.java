@@ -16,7 +16,7 @@ public class ItalianBoard implements Board {
         //Per copiare un array multidimensionale fatto per bene
         //for(int i=0;i<Board.DIMENSION_ITALIAN_BOARD;i++)
         //System.arraycopy([i],0,piecesBoard[i],0,Board.DIMENSION_ITALIAN_BOARD);
-        printBoardConsole();
+        //printBoardConsole();
     }
 
     /**

@@ -2,7 +2,6 @@ package it.ing.pajc.data.pieces;
 
 import it.ing.pajc.manager.Player;
 
-import java.io.Serializable;
 
 /**
  * Pieces colors and empty case.
@@ -19,6 +18,6 @@ public enum PlaceType {
         else if(placeType==BLACK)
             convertionOfPlayer = Player.SECOND;
 
-        return convertionOfPlayer==player?true:false;
+        return convertionOfPlayer == player;
     }
 }

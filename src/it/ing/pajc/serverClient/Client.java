@@ -37,9 +37,7 @@ public class Client {
                 assert socket != null;
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 ItalianBoard board = new ItalianBoard(new StringBuilder(in.readLine()));
-                Platform.runLater(() -> {
-                    Controller.placeBoard(board,scene,player);
-                });
+                Platform.runLater(() -> Controller.placeBoard(board,scene,player));
                 return socket;
             }
         });

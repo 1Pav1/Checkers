@@ -1,13 +1,15 @@
 package it.ing.pajc.controller;
 
+import it.ing.pajc.data.board.Board;
 import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.data.movements.Position;
 import it.ing.pajc.data.pieces.PieceType;
 import it.ing.pajc.data.pieces.PlaceType;
+import it.ing.pajc.manager.Player;
 
 import java.util.*;
 
-class Move {
+public class Move {
 
     public static void executeMove(Position init, Position fin, ItalianBoard board) {
         PlaceType place = board.getBoard()[init.getPosR()][init.getPosC()].getPlace();
@@ -74,13 +76,21 @@ class Move {
      * @return true if the piece is inside the list, false otherwise.
      */
     public static boolean canDoSomething(ArrayList<Position> piecesWhoCanMove, Position pieceToCheck) {
-        for (int i = 0; i < piecesWhoCanMove.size(); i++) {
-            if (piecesWhoCanMove.get(i) == pieceToCheck)
+        for (Position position : piecesWhoCanMove) {
+            if (position == pieceToCheck)
                 return true;
         }
         return false;
     }
 
+
+    public static boolean canSomebodyDoSomething(ItalianBoard board, Player player){
+        for(int i=0;i< Board.DIMENSION_ITALIAN_BOARD;i++)
+            for(int j=0;j< Board.DIMENSION_ITALIAN_BOARD;j++)
+                if(PlaceType.confrontPlayer(board.getBoard()[i][j].getPlace(), player) && (!CheckPossibleMovements.allPossibleMoves(board,i,j).isEmpty()))
+                    return true;
+        return  false;
+    }
     /**
      * First check if pieces can captures and adds them in arrayList,
      * if none can captures do the same for movements else return an empty arrayList.
@@ -123,9 +133,7 @@ class Move {
 
 
     private static boolean checkKingTransformation(Position pos) {
-        if (pos.getPosR() == 0)
-            return true;
-        return false;
+        return pos.getPosR() == 0;
     }
 
 

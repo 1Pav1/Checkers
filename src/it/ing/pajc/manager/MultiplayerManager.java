@@ -6,7 +6,6 @@ import it.ing.pajc.serverClient.Client;
 import it.ing.pajc.serverClient.Server;
 import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.transform.Scale;
 
 import java.io.*;
 import java.net.Socket;
@@ -16,7 +15,7 @@ import java.util.concurrent.ExecutionException;
  * Manages the creation and the communication between 2 players.
  */
 public class MultiplayerManager {
-    private int port;
+    private final int port;
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;

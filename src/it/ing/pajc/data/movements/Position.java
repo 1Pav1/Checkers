@@ -4,10 +4,10 @@ package it.ing.pajc.data.movements;
  * Position class with all getters and setters.
  */
 public class Position {
-    private int posR;
-    private int posC;
-    private int cPosR;
-    private int cPosC;
+    private final int posR;
+    private final int posC;
+    private final int cPosR;
+    private final int cPosC;
 
     /**
      * Position constructor.

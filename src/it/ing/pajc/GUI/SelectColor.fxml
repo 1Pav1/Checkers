@@ -32,7 +32,7 @@
                 <Separator layoutX="54.0" layoutY="36.0" opacity="0.15" prefHeight="3.0" prefWidth="423.0" />
             <Button layoutX="120.0" layoutY="110.0" mnemonicParsing="false" onMouseClicked="#white" prefHeight="35.0" prefWidth="300.0" text="White" textFill="WHITE">
                <font>
-                  <Font name="Franklin Gothic Heavy" size="32.0" />
+                  <Font name="System Bold" size="32.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -40,7 +40,7 @@
             </Button>
             <Button layoutX="120.0" layoutY="222.0" mnemonicParsing="false" onMouseClicked="#black" prefHeight="35.0" prefWidth="300.0" text="Black" textFill="#190000">
                <font>
-                  <Font name="Franklin Gothic Heavy" size="32.0" />
+                  <Font name="System Bold Italic" size="32.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />

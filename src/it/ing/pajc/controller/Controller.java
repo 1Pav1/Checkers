@@ -5,14 +5,9 @@ import it.ing.pajc.data.board.Board;
 import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.data.movements.Position;
 import it.ing.pajc.data.pieces.*;
-import it.ing.pajc.manager.LocalGameManager;
 import it.ing.pajc.manager.Player;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,11 +17,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.scene.input.MouseEvent;
-import jdk.jfr.FlightRecorder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
 
@@ -69,14 +61,14 @@ public class Controller {
                 stackPaneBoard[x][y].setPrefHeight(59);
             }
         }
-        stackPaneBoard = resetBoardFXColors(stackPaneBoard);
+        resetBoardFXColors(stackPaneBoard);
         return stackPaneBoard;
     }
 
     /**
      * Reset colors of the pieces on the board
      */
-    private static StackPane[][] resetBoardFXColors(StackPane[][] stackPaneBoard) {
+    private static void resetBoardFXColors(StackPane[][] stackPaneBoard) {
         for (int x = 0; x < Board.DIMENSION_ITALIAN_BOARD; x++)
             for (int y = 0; y < Board.DIMENSION_ITALIAN_BOARD; y++) {
                 stackPaneBoard[x][y].setDisable(true);
@@ -85,7 +77,6 @@ public class Controller {
                 else
                     stackPaneBoard[x][y].setId("darkSquare");
             }
-        return stackPaneBoard;
     }
 
 
@@ -116,13 +107,13 @@ public class Controller {
     }
 
     private static void transformToKing(PlaceType placeType, Circle circle) {
+        Image image;
         if (placeType == PlaceType.WHITE) {
-            Image image = new Image("/it/ing/pajc/GUI/Images/WoodenStyle/Kings/whiteKing.JPG", false);
-            circle.setFill(new ImagePattern(image));
+            image = new Image("/it/ing/pajc/GUI/Images/WoodenStyle/Kings/whiteKing.JPG", false);
         } else {
-            Image image = new Image("/it/ing/pajc/GUI/Images/WoodenStyle/Kings/blackKing.JPG", false);
-            circle.setFill(new ImagePattern(image));
+            image = new Image("/it/ing/pajc/GUI/Images/WoodenStyle/Kings/blackKing.JPG", false);
         }
+        circle.setFill(new ImagePattern(image));
     }
 
 
@@ -187,6 +178,7 @@ public class Controller {
                         keepCapturing(board, scene, moveAndCapturedPosition.getPosR(), moveAndCapturedPosition.getPosC(), player);
                     else {
                         //placeBoard(board, scene, player);
+
                         timeToChangePlayer.setValue(true);
                     }
                 });
@@ -195,14 +187,11 @@ public class Controller {
             for (Position position : moves) {
                 stackPanes[position.getPosR()][position.getPosC()].setId("movementHighlight");
                 stackPanes[position.getPosR()][position.getPosC()].setDisable(false);
-                stackPanes[position.getPosR()][position.getPosC()].setOnMousePressed(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        Move.executeMove(new Position(i, j), position, board);
-                        //placeBoard(board, scene, player);
-                        timeToChangePlayer.setValue(true);
-                        //TODO GUARDA CHE NON è FIRST DIAMINE DAMN IT
-                    }
+                stackPanes[position.getPosR()][position.getPosC()].setOnMousePressed(event -> {
+                    Move.executeMove(new Position(i, j), position, board);
+                    //placeBoard(board, scene, player);
+                    timeToChangePlayer.setValue(true);
+                    //TODO GUARDA CHE NON è FIRST DIAMINE DAMN IT
                 });
             }
 
@@ -232,20 +221,11 @@ public class Controller {
         });
     }
 
-    public void youWon() {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("../GUI/YouWon.fxml"));
-            Scene scene = new Scene(root);
-            changeScene(root, scene);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Goes back to home page.
      */
-    //Se non va la colpa è di ANDREA era getClass().getResource("../GUI/YouWon.fxml") cmq si colpa sua.
+    //Se non va la colpa è di ANDREA era getClass().getResource("../GUI/WhiteWins.fxml") cmq si colpa sua.
     public void back() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
@@ -255,6 +235,27 @@ public class Controller {
             e.printStackTrace();
         }
     }
+
+    public void finishInATie(){
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("../GUI/Tie.fxml"));
+            Scene scene = new Scene(root);
+            changeScene(root, scene);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void resign(){
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("../GUI/Tie.fxml"));
+            Scene scene = new Scene(root);
+            changeScene(root, scene);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     //TODO POTREBBERO ACCADERE COSE MAGICHE ATTENTO ALLA X E ALLA Y ;)

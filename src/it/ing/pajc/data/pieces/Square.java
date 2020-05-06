@@ -1,6 +1,5 @@
 package it.ing.pajc.data.pieces;
 
-import it.ing.pajc.data.movements.Position;
 
 public class Square {
     private PlaceType place;

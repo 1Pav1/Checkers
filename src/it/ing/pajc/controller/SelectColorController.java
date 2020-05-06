@@ -3,6 +3,7 @@ package it.ing.pajc.controller;
 import it.ing.pajc.Main;
 import it.ing.pajc.data.pieces.PlaceType;
 import it.ing.pajc.manager.LocalGameManager;
+import it.ing.pajc.manager.Player;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,11 +12,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
+import static it.ing.pajc.controller.FXUtility.changeScene;
 
 /**
  * Controller of the setting page.
  */
-class SelectColorController {
+public class SelectColorController {
     private double x, y;
 
 
@@ -71,11 +73,19 @@ class SelectColorController {
     }
 
     public void white() throws IOException {
-        PlaceType color = PlaceType.WHITE;
+        //crea oggetto localGameManager @param contro persona
+        Parent root = FXMLLoader.load(getClass().getResource("../GUI/CheckerBoard.fxml"));
+        Scene scene = new Scene(root);
+        FXUtility.changeScene(root, scene);
+        new LocalGameManager(Player.FIRST,scene);
     }
 
     public void black() throws IOException {
-        PlaceType color = PlaceType.BLACK;
+        //crea oggetto localGameManager @param contro persona
+        Parent root = FXMLLoader.load(getClass().getResource("../GUI/CheckerBoard.fxml"));
+        Scene scene = new Scene(root);
+        FXUtility.changeScene(root, scene);
+        new LocalGameManager(Player.SECOND,scene);
     }
 
     public void sendInfoToCheckerboard(LocalGameManager localGameManager) throws IOException {

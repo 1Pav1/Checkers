@@ -1,6 +1,5 @@
 package it.ing.pajc.data.board;
 
-import it.ing.pajc.data.movements.Position;
 import it.ing.pajc.data.pieces.PieceType;
 import it.ing.pajc.data.pieces.PlaceType;
 import it.ing.pajc.data.pieces.Square;
@@ -21,7 +20,6 @@ class Fen {
         int boardPosition = 0;
         do {
             if (fenStringBuilder.charAt(i) != '/') {
-                Position currentPos = new Position(boardPosition / 8, boardPosition % 8);
                 switch (fenStringBuilder.charAt(i)) {
                     case 'm': {
                         squares[boardPosition / 8][boardPosition % 8] = new Square(PlaceType.BLACK, PieceType.MAN);
@@ -52,14 +50,6 @@ class Fen {
         return squares;
     }
 
-    /**
-     * Rotates the board by reversing the fen.
-     */
-    public static StringBuilder reverseFen(StringBuilder fenString) {
-        return fenString.reverse();
-    }
-
-    //TODO PENSACI TU
     public static StringBuilder multidimensionalArrayToFen(Square[][] squares) {
         StringBuilder fen = new StringBuilder();
         for (int x = 0; x < Board.DIMENSION_ITALIAN_BOARD; x++) {

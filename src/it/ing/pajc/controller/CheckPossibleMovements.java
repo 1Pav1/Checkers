@@ -9,7 +9,6 @@ import it.ing.pajc.manager.Player;
 
 import java.util.ArrayList;
 
-
 public class CheckPossibleMovements {
 
 

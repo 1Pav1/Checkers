@@ -21,7 +21,7 @@ public class SettingsController {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
             Scene scene = new Scene(root);
-            changeScene(root, scene, "Checkers board");
+            changeScene(root, scene);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -29,13 +29,11 @@ public class SettingsController {
 
     /**
      * Changes the current scene.
-     *
-     * @param root  Graphics file.
+     *  @param root  Graphics file.
      * @param scene Graphics file scene.
-     * @param title Title of the current screen.
      */
-    private void changeScene(Parent root, Scene scene, String title) {
-        Main.getPrimaryStage().setTitle(title);
+    private void changeScene(Parent root, Scene scene) {
+        Main.getPrimaryStage().setTitle("Checkers board");
         Main.getPrimaryStage().setScene(scene);
         root.setOnMousePressed(event -> {
             x = event.getSceneX();
