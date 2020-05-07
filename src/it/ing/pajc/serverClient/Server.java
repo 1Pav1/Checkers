@@ -43,8 +43,9 @@ public class Server {
                 try {
                     createCommunicationChannels();
                 } catch (IOException e) {}
+
                 drawBoard(board,scene,player);
-                sendMessage(board.getFen());
+                sendMessage(board.getFen().reverse());
             }
         });
         Server.setName("Server");
@@ -72,5 +73,30 @@ public class Server {
         return new StringBuilder(in.readLine());
     }
 
+
+    public void waitForMove(Scene scene, Player player) {
+        Platform.runLater(new Runnable() {
+            private StringBuilder readFen() {
+                StringBuilder fen = null;
+                try {
+                    fen = new StringBuilder(in.readLine());
+                } catch (IOException e) {
+                    readFen();
+                }
+                return fen;
+            }
+
+            @Override
+            public void run() {
+                StringBuilder fen = readFen();
+                ItalianBoard board = new ItalianBoard(fen);
+                try {
+                    drawBoard(board,scene,player);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
 }

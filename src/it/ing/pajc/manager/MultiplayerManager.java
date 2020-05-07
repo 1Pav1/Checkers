@@ -52,10 +52,14 @@ public class MultiplayerManager {
     }
 
     private void changePlayer() {
-        if(server==null)
-            client.sendMessage(board.getFen());
-        else
-            server.sendMessage(board.getFen());
+        if(server==null) {
+            client.sendMessage(board.getFen().reverse());
+            client.waitForMove(scene,chosenPlayer);
+        }
+        else {
+            server.sendMessage(board.getFen().reverse());
+            server.waitForMove(scene,chosenPlayer);
+        }
 
         Controller.timeToChangePlayer.setValue(false);
         currentPlayer = currentPlayer == Player.FIRST ? Player.SECOND : Player.FIRST;
