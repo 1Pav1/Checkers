@@ -44,7 +44,7 @@ public class Controller {
                 }
             }
         }
-        System.err.println("la verità sarà scoperta: "+canSomebodyCapture);
+        //System.err.println("la verità sarà scoperta: "+canSomebodyCapture);
     }
 
 

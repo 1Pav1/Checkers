@@ -59,11 +59,9 @@ public class HomeController {
      * @throws IOException In case the graphical file is not found.
      */
     public void multiplayer() throws IOException, ExecutionException, InterruptedException {
-        //crea oggetoo MultiplayerManger
-        Parent root = FXMLLoader.load(getClass().getResource("../GUI/CheckerBoard.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../GUI/SelectMultiplayer.fxml"));
         Scene scene = new Scene(root);
         changeScene(root, scene);
-        new MultiplayerManager(Player.FIRST,11000,scene);
     }
 
 

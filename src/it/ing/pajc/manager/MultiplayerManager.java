@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 
 import java.io.*;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutionException;
 
@@ -35,8 +36,6 @@ public class MultiplayerManager {
         this.currentPlayer = Player.FIRST;
         this.port = port;
         this.scene = scene;
-
-        startServer();
     }
 
 
@@ -44,10 +43,11 @@ public class MultiplayerManager {
      * Creates new board and a thread that manages the connection.
      */
     public void startServer() throws IOException, ExecutionException, InterruptedException {
-        socket = Server.serverStartup(port, board, scene,chosenPlayer);
+        ServerSocket serverSocket = new ServerSocket(port);
+        /*socket = Server.serverStartup(port, board, scene,chosenPlayer);
         out = new PrintWriter(socket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        out.println(board.toString());
+        out.println(board.getFen());*/
     }
 
     /**

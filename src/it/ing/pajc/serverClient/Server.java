@@ -15,14 +15,15 @@ public class Server {
 
     public static Socket serverStartup(int port, ItalianBoard board, Scene scene, Player player) throws ExecutionException, InterruptedException {
 
-        FutureTask task = new FutureTask(new Callable<Socket>() {
+        FutureTask<Socket> task = new FutureTask<>(new Callable<Socket>() {
 
             private Socket tryToConnect() {
                 try {
-                    System.out.println("Trying to connect");
+                    System.out.println("Server: Trying to connect");
                     ServerSocket serverSocket = new ServerSocket(port);
                     return serverSocket.accept();
                 } catch (IOException ignored) {
+                    System.out.println("errore");
                 }
                 return null;
             }
@@ -42,7 +43,7 @@ public class Server {
         Thread Server = new Thread(task);
         Server.setName("Server");
         Server.start();
-        return (Socket) task.get();
+        return task.get();
 
     }
 

@@ -23,7 +23,7 @@ public class Client {
 
             private Socket tryToConnect() {
                 try {
-                    System.out.println("Trying to connect");
+                    System.out.println("Client: Trying to connect");
                     return new Socket("localhost", port);
                 } catch (IOException ignored) {
                 }

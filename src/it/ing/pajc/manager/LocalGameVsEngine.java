@@ -69,14 +69,13 @@ public class LocalGameVsEngine {
         board.rotate();
 
         if(currentPlayer==Player.SECOND) {
-            System.err.println(currentPlayer);
+            //System.err.println(currentPlayer);
             board = execute(board);
-            board.printBoardConsole();
             Controller.timeToChangePlayer.setValue(true);
         }
         else{
             Controller.placeBoard(board, scene, currentPlayer);
-            System.err.println(currentPlayer);
+            //System.err.println(currentPlayer);
         }
     }
 
@@ -114,12 +113,19 @@ public class LocalGameVsEngine {
         aiBoard.rotate();
         for (int i = 0; i < DIMENSION_ITALIAN_BOARD; i++) {
             for (int j = 0; j < DIMENSION_ITALIAN_BOARD; j++) {
-                if(PlaceType.confrontPlayer(aiBoard.getBoard()[i][j].getPlace(), currentPlayer)) {
-
+                if(PlaceType.confrontPlayer(aiBoard.getBoard()[i][j].getPlace(), currentPlayer) &&
+                !CheckPossibleMovements.allPossibleMoves(aiBoard,i,j).isEmpty()) {
                     tempBoards.add(calculateBestOption(aiBoard, i, j, point));
                 }
 
             }
+        }
+
+        int i=1;
+        for(ItalianBoard calculatedBoards: tempBoards){
+            System.out.println(i);
+            calculatedBoards.printBoardConsole();
+            i++;
         }
 
         for(ItalianBoard calculatedBoards: tempBoards){
@@ -131,6 +137,7 @@ public class LocalGameVsEngine {
         }
         aiBoard.rotate();
         return aiBoard;
+
     }
 
     //TODO calcolo di tutte le tempBoard con scelta di quel con eval minore
@@ -145,25 +152,25 @@ public class LocalGameVsEngine {
             if(CheckPossibleMovements.canCapture(tempBoard,i,j))
                 executedTempBoards.add(executeMovesOnTempBoard(tempBoard,init,fin));
             else{
-                System.err.println("Mossa senza catturare");
                 executedTempBoards.add(executeMoveWithoutCapture(tempBoard,init,fin));
             }
         }
 
         for(ItalianBoard calculatedBoards: executedTempBoards){
             int eval = countPiecesOnBoard(calculatedBoards);
-
             if(eval<=point){
-                System.err.println("Hello madafaka");
                 point = eval;
-                tempBoard = calculatedBoards;
+                tempBoard = new ItalianBoard(calculatedBoards.getFen());
             }
         }
+
+
         return tempBoard;
     }
 
     private ItalianBoard executeMoveWithoutCapture(ItalianBoard tempBoard, Position init, Position fin) {
         Move.executeMove(init,fin,tempBoard);
+
         return tempBoard;
     }
 
@@ -192,7 +199,7 @@ public class LocalGameVsEngine {
         int count = 0;
         for (int i = 0; i < DIMENSION_ITALIAN_BOARD; i++) {
             for (int j = 0; j < DIMENSION_ITALIAN_BOARD; j++) {
-                if (PlaceType.confrontPlayer(tempBoard.getBoard()[i][j].getPlace(), chosenPlayer))
+                if (PlaceType.confrontPlayer(tempBoard.getBoard()[i][j].getPlace(), Player.FIRST))
                     count++;
             }
         }
