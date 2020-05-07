@@ -51,7 +51,7 @@ public class Main extends Application {
         });
         primaryStage.show();
 
-        String filepath = "src/it/ing/pajc/Audio/SoHigh.wav";
+        String filepath = "src/it/ing/pajc/Audio/Background.wav";
 
         playMusic(filepath);
     }
