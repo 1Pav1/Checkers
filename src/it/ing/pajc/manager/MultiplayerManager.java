@@ -1,10 +1,14 @@
 package it.ing.pajc.manager;
 
 import it.ing.pajc.controller.Controller;
+import it.ing.pajc.controller.Move;
 import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.serverClient.Client;
 import it.ing.pajc.serverClient.Server;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 import java.io.*;
@@ -12,57 +16,98 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutionException;
 
+import static it.ing.pajc.controller.FXUtility.changeScene;
+
 /**
  * Manages the creation and the communication between 2 players.
  */
 public class MultiplayerManager {
-    private final int port;
-    private Socket socket;
-    private BufferedReader in;
-    private PrintWriter out;
     private Player currentPlayer;
     private Player chosenPlayer;
     private ItalianBoard board;
     private Scene scene;
+    private Server server;
+    private Client client;
 
-    /**
-     * @param chosenPlayer
-     * @param port
-     */
-    public MultiplayerManager(Player chosenPlayer, int port, Scene scene) throws InterruptedException, ExecutionException, IOException {
+    public MultiplayerManager(Player chosenPlayer, Scene scene) throws InterruptedException, ExecutionException, IOException {
         StringBuilder fen = new StringBuilder("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
         board = new ItalianBoard(fen);
         this.chosenPlayer = chosenPlayer;
         this.currentPlayer = Player.FIRST;
-        this.port = port;
         this.scene = scene;
+        server = null;
+        client = null;
+        multiplayerGame();
+    }
+
+    public void multiplayerGame() {
+        Controller.timeToChangePlayer = new SimpleBooleanProperty(false);
+        Controller.timeToChangePlayer.addListener((observable, oldValue, newValue) -> {
+            if (!oldValue) {
+                changePlayer();
+                System.err.println(currentPlayer);
+            }
+        });
+
+    }
+
+    private void changePlayer() {
+        if(server==null)
+            client.sendMessage(board.getFen());
+        else
+            server.sendMessage(board.getFen());
+
+        Controller.timeToChangePlayer.setValue(false);
+        currentPlayer = currentPlayer == Player.FIRST ? Player.SECOND : Player.FIRST;
+        changePlayerFX();
+    }
+
+    private void changePlayerFX() {
+        //if(currentPlayer!=chosenPlayer)
+          //Block all pieces
+        checkLost();
+        Controller.placeBoard(board, scene, chosenPlayer);
+    }
+
+
+    private void checkLost() {
+        if (!Move.canSomebodyDoSomething(board, currentPlayer)) {
+            Parent root = null;
+            try {
+                if (currentPlayer != Player.FIRST)
+                    root = FXMLLoader.load(getClass().getResource("../GUI/WhiteWins.fxml"));
+                else
+                    root = FXMLLoader.load(getClass().getResource("../GUI/BlackWins.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            assert root != null;
+            Scene scene = new Scene(root);
+            changeScene(root, scene);
+        }
     }
 
 
     /**
      * Creates new board and a thread that manages the connection.
      */
-    public void startServer() throws IOException, ExecutionException, InterruptedException {
-        ServerSocket serverSocket = new ServerSocket(port);
-        /*socket = Server.serverStartup(port, board, scene,chosenPlayer);
-        out = new PrintWriter(socket.getOutputStream(), true);
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        out.println(board.getFen());*/
+    public void startServer(int port) throws IOException {
+        server = new Server(port);
+        server.serverStartup(board,scene,chosenPlayer);
     }
 
     /**
      * Creates a new board and a thread that manages the connection to the server.
      */
-    public void clientStartup() throws ExecutionException, InterruptedException, IOException {
-        socket = Client.clientStartup(port, board, scene,chosenPlayer);
-        out = new PrintWriter(socket.getOutputStream(), true);
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+    public void clientStartup(int port) throws ExecutionException, InterruptedException, IOException {
+        client = new Client(port);
+        client.clientStartup(board,scene,chosenPlayer);
     }
 
     /**
      * Creates a thread that sends the current board and waits for the other players turn to finish.
      */
-    private void waitForMove() {
+    /*private void waitForMove() {
 
         Platform.runLater(new Runnable() {
             private String readFen() {
@@ -87,13 +132,8 @@ public class MultiplayerManager {
         });
     }
 
-    /**
-     * Sends the current board in form of FEN notation.
-     *
-     * @throws IOException In case the FEN can't be sent.
-     */
     public void sendFen() throws IOException {
         out.println(board.toString());
         waitForMove();
-    }
+    }*/
 }

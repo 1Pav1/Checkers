@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Working offline multiplayer, Added engine half working">
-      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/GUI/SelectMultiplayer.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectMultiplayerController.java" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Half working engine and multiplayer doesn't work">
+      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/serverClient/ServerThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/GUI/Home.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/GUI/Home.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/homeController/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/homeController/HomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/manager/LocalGameVsEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/manager/LocalGameVsEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectMultiplayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectMultiplayerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/manager/MultiplayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/manager/MultiplayerManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/serverClient/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/serverClient/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/serverClient/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/serverClient/Server.java" afterDir="false" />
@@ -418,7 +415,7 @@
       <workItem from="1588686198787" duration="690000" />
       <workItem from="1588751811095" duration="6098000" />
       <workItem from="1588795243243" duration="1133000" />
-      <workItem from="1588837009131" duration="3598000" />
+      <workItem from="1588837009131" duration="10595000" />
     </task>
     <task id="LOCAL-00001" summary="added:&#10;Settings&#10;Possible Moves">
       <created>1564397017327</created>
@@ -644,7 +641,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588755682723</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Half working engine and multiplayer doesn't work">
+      <created>1588840970000</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1588840970000</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -665,7 +669,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
-    <MESSAGE value="Server Client added" />
     <MESSAGE value="Added creation of match and connection to game" />
     <MESSAGE value="Added creation of board for specific player(FEN)" />
     <MESSAGE value="Several fixes and modifies" />
@@ -690,7 +693,8 @@
     <MESSAGE value="I don't know you guess it" />
     <MESSAGE value="Functioning moves and win condition" />
     <MESSAGE value="Working offline multiplayer, Added engine half working" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working offline multiplayer, Added engine half working" />
+    <MESSAGE value="Half working engine and multiplayer doesn't work" />
+    <option name="LAST_COMMIT_MESSAGE" value="Half working engine and multiplayer doesn't work" />
   </component>
   <component name="WindowStateProjectService">
     <state x="223" y="72" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588405725577">
@@ -701,9 +705,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="533" y="219" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.834@0.0.1536.834" timestamp="1588619458662" />
-    <state x="971" y="178" key="#com.intellij.ide.util.MemberChooser" timestamp="1585730523514">
-      <screen x="0" y="0" width="1536" height="864" />
+    <state x="971" y="172" key="#com.intellij.ide.util.MemberChooser" timestamp="1588843743244">
+      <screen x="0" y="0" width="1536" height="834" />
     </state>
+    <state x="971" y="172" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1588843743244" />
     <state x="971" y="178" key="#com.intellij.ide.util.MemberChooser/0.0.1536.864@0.0.1536.864" timestamp="1585730523514" />
     <state x="571" y="323" width="393" height="224" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1584611493433">
       <screen x="0" y="0" width="1536" height="864" />
@@ -722,41 +727,41 @@
       <screen x="78" y="0" width="1842" height="1080" />
     </state>
     <state x="734" y="414" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/78.0.1842.1080@78.0.1842.1080" timestamp="1583579243642" />
-    <state x="282" y="17" width="958" height="817" key="CommitChangelistDialog2" timestamp="1588755678396">
+    <state x="282" y="0" width="958" height="817" key="CommitChangelistDialog2" timestamp="1588840968280">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="282" y="17" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1588755678396" />
+    <state x="282" y="0" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1588840968280" />
     <state x="282" y="18" width="958" height="817" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1586773388426" />
     <state x="772" y="227" key="FileChooserDialogImpl" timestamp="1588839956694">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="772" y="227" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1588839956694" />
     <state x="585" y="235" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1585554252785" />
-    <state width="1493" height="2" key="GridCell.Tab.0.bottom" timestamp="1588840596107">
+    <state width="1493" height="32" key="GridCell.Tab.0.bottom" timestamp="1588860094920">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="2" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1588840596107" />
+    <state width="1493" height="32" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1588860094920" />
     <state width="1493" height="272" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1586773667420" />
     <state width="1415" height="276" key="GridCell.Tab.0.bottom/78.0.1458.864@78.0.1458.864" timestamp="1580333213598" />
     <state width="1799" height="204" key="GridCell.Tab.0.bottom/78.0.1842.1080@78.0.1842.1080" timestamp="1583576686333" />
-    <state width="1493" height="2" key="GridCell.Tab.0.center" timestamp="1588840596107">
+    <state width="1493" height="32" key="GridCell.Tab.0.center" timestamp="1588860094920">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="2" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1588840596107" />
+    <state width="1493" height="32" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1588860094920" />
     <state width="1493" height="272" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1586773667420" />
     <state width="1415" height="276" key="GridCell.Tab.0.center/78.0.1458.864@78.0.1458.864" timestamp="1580333213598" />
     <state width="1799" height="204" key="GridCell.Tab.0.center/78.0.1842.1080@78.0.1842.1080" timestamp="1583576686333" />
-    <state width="1493" height="2" key="GridCell.Tab.0.left" timestamp="1588840596107">
+    <state width="1493" height="32" key="GridCell.Tab.0.left" timestamp="1588860094920">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="2" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1588840596107" />
+    <state width="1493" height="32" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1588860094920" />
     <state width="1493" height="272" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1586773667420" />
     <state width="1415" height="276" key="GridCell.Tab.0.left/78.0.1458.864@78.0.1458.864" timestamp="1580333213598" />
     <state width="1799" height="204" key="GridCell.Tab.0.left/78.0.1842.1080@78.0.1842.1080" timestamp="1583576686333" />
-    <state width="1493" height="2" key="GridCell.Tab.0.right" timestamp="1588840596107">
+    <state width="1493" height="32" key="GridCell.Tab.0.right" timestamp="1588860094920">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="2" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1588840596107" />
+    <state width="1493" height="32" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1588860094920" />
     <state width="1493" height="272" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1586773667420" />
     <state width="1415" height="276" key="GridCell.Tab.0.right/78.0.1458.864@78.0.1458.864" timestamp="1580333213598" />
     <state width="1799" height="204" key="GridCell.Tab.0.right/78.0.1842.1080@78.0.1842.1080" timestamp="1583576686333" />
@@ -780,6 +785,10 @@
     </state>
     <state width="1493" height="260" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1588839696068" />
     <state width="1493" height="272" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1586773667421" />
+    <state x="319" y="152" key="IDE.errors.dialog" timestamp="1588859087496">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="319" y="152" key="IDE.errors.dialog/0.0.1536.834@0.0.1536.834" timestamp="1588859087496" />
     <state x="481" y="149" key="MultipleFileMergeDialog" timestamp="1586425701799">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -789,10 +798,10 @@
     </state>
     <state x="202" y="0" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1588619350530" />
     <state x="502" y="184" key="SettingsEditor/78.0.1842.1080@78.0.1842.1080" timestamp="1583579007798" />
-    <state x="361" y="161" key="Vcs.Push.Dialog.v2" timestamp="1588755688713">
+    <state x="361" y="161" key="Vcs.Push.Dialog.v2" timestamp="1588840973490">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="361" y="161" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1588755688713" />
+    <state x="361" y="161" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1588840973490" />
     <state x="361" y="167" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1586773395713" />
     <state x="179" y="52" key="new project wizard" timestamp="1586982979041">
       <screen x="0" y="0" width="1536" height="864" />
@@ -817,17 +826,6 @@
     </state>
     <state x="526" y="225" width="672" height="655" key="search.everywhere.popup/0.0.1536.834@0.0.1536.834" timestamp="1588407101999" />
     <state x="526" y="233" width="672" height="678" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1586418808955" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/it/ing/pajc/serverClient/Client.java</url>
-          <line>45</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="simpleUML.UMLToolWindowPlugin">
     <General>

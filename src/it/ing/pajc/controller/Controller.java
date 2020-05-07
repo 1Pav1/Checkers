@@ -28,6 +28,9 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Controller {
     public static BooleanProperty timeToChangePlayer;
 
+
+
+
     public static void placeBoard(ItalianBoard board, Scene scene, Player player) {
         board.printBoardConsole();
         GridPane gridPane = (GridPane) scene.lookup("#grid");
