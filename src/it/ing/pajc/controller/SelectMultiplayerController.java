@@ -37,7 +37,7 @@ public class SelectMultiplayerController {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/CheckerBoard.fxml"));
         Scene scene = new Scene(root);
         changeScene(root, scene, "Board");
-        MultiplayerManager multiplayerManager = new MultiplayerManager(Player.FIRST,scene);
+        MultiplayerManager multiplayerManager = new MultiplayerManager(Player.SECOND,scene);
         multiplayerManager.clientStartup(3333);
     }
     /**
