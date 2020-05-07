@@ -9,6 +9,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.*;
+import java.io.File;
+
 
 public class Main extends Application {
     private double x, y;
@@ -43,18 +49,34 @@ public class Main extends Application {
             primaryStage.setY(event.getScreenY() - y);
         });
         primaryStage.show();
-        /*AudioClip note = new AudioClip(this.getClass().getResource("Kabza.mp3").toString());
-        note.play();
 
+        String filepath = "src/it/ing/pajc/Audio/SoHigh.wav";
 
+        //playMusic(filepath);
+    }
 
-        String source = new File("Kabza.mp3").toURI().toString();
-        Media media = null;
-        media = new Media(source);
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.play();
+    public static void playMusic(String musicLocation){
+        try
+        {
+            File musicPath = new File(musicLocation);
 
-         */
+            if (musicPath.exists())
+            {
+                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioInput);
+                clip.start();
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+            }
+            else
+            {
+                System.out.println("Can't find file");
+            }
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
 

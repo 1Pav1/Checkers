@@ -53,12 +53,12 @@ public class MultiplayerManager {
 
     private void changePlayer() {
         if(server==null) {
-            client.sendMessage(board.getFen().reverse());
             client.waitForMove(scene,chosenPlayer);
+            client.sendMessage(board.getFen().reverse());
         }
         else {
-            server.sendMessage(board.getFen().reverse());
             server.waitForMove(scene,chosenPlayer);
+            server.sendMessage(board.getFen().reverse());
         }
 
         Controller.timeToChangePlayer.setValue(false);

@@ -63,7 +63,7 @@ public class Client {
     }
 
     public void sendMessage(StringBuilder message){
-        System.out.println("Server has sent : "+message);
+        System.out.println("Client has sent : "+message);
         out.println(message.toString());
     }
 
@@ -78,7 +78,7 @@ public class Client {
                 StringBuilder fen = null;
                 try {
                     fen = new StringBuilder(in.readLine());
-                } catch (IOException e) {
+                } catch (Exception e) {
                     readFen();
                 }
                 return fen;

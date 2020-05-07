@@ -18,6 +18,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -181,7 +185,8 @@ public class Controller {
                         keepCapturing(board, scene, moveAndCapturedPosition.getPosR(), moveAndCapturedPosition.getPosC(), player);
                     else {
                         //placeBoard(board, scene, player);
-
+                        String filepath = "src/it/ing/pajc/Audio/Move.wav";
+                        playMusic(filepath);
                         timeToChangePlayer.setValue(true);
                     }
                 });
@@ -193,6 +198,8 @@ public class Controller {
                 stackPanes[position.getPosR()][position.getPosC()].setOnMousePressed(event -> {
                     Move.executeMove(new Position(i, j), position, board);
                     //placeBoard(board, scene, player);
+                    String filepath = "src/it/ing/pajc/Audio/Move.wav";
+                    playMusic(filepath);
                     timeToChangePlayer.setValue(true);
                     //TODO GUARDA CHE NON è FIRST DIAMINE DAMN IT
                 });
@@ -259,6 +266,28 @@ public class Controller {
         }
     }
 
+    public static void playMusic(String musicLocation){
+        try
+        {
+            File musicPath = new File(musicLocation);
+
+            if (musicPath.exists())
+            {
+                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioInput);
+                clip.start();
+            }
+            else
+            {
+                System.out.println("Can't find file");
+            }
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
 
 
     //TODO POTREBBERO ACCADERE COSE MAGICHE ATTENTO ALLA X E ALLA Y ;)
