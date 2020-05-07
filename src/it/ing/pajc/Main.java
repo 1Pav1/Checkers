@@ -12,6 +12,7 @@ import javafx.stage.StageStyle;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.swing.*;
 import java.io.File;
 
@@ -52,7 +53,7 @@ public class Main extends Application {
 
         String filepath = "src/it/ing/pajc/Audio/SoHigh.wav";
 
-        //playMusic(filepath);
+        playMusic(filepath);
     }
 
     public static void playMusic(String musicLocation){
@@ -67,6 +68,10 @@ public class Main extends Application {
                 clip.open(audioInput);
                 clip.start();
                 clip.loop(Clip.LOOP_CONTINUOUSLY);
+                FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                double gain = 0.1;
+                float dB = (float) (Math.log(gain) / Math.log(10.0) * 20.0);
+                gainControl.setValue(dB);
             }
             else
             {
