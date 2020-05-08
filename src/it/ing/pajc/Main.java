@@ -53,7 +53,7 @@ public class Main extends Application {
 
         String filepath = "src/it/ing/pajc/Audio/Background.wav";
 
-        playMusic(filepath);
+        //playMusic(filepath);
     }
 
     public static void playMusic(String musicLocation){

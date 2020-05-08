@@ -42,10 +42,13 @@ public class Server {
                 System.out.println("Server is connected!");
                 try {
                     createCommunicationChannels();
-                } catch (IOException e) {}
+                    /*Send first fen
+                    sendMessage(board.getFen().reverse());
+                    System.out.println("First fen sent");
+                    drawBoard(board,scene,player);
 
-                drawBoard(board,scene,player);
-                sendMessage(board.getFen().reverse());
+                     */
+                } catch (IOException e) {}
             }
         });
         Server.setName("Server");
@@ -70,33 +73,11 @@ public class Server {
     }
 
     public StringBuilder readMessage() throws IOException {
-        return new StringBuilder(in.readLine());
+        try {
+            return new StringBuilder(in.readLine());
+        }catch (Exception e){}
+        return null;
     }
 
-
-    public void waitForMove(Scene scene, Player player) {
-        Platform.runLater(new Runnable() {
-            private StringBuilder readFen() {
-                StringBuilder fen = null;
-                try {
-                    fen = new StringBuilder(in.readLine());
-                } catch (IOException e) {
-                    readFen();
-                }
-                return fen;
-            }
-
-            @Override
-            public void run() {
-                StringBuilder fen = readFen();
-                ItalianBoard board = new ItalianBoard(fen);
-                try {
-                    drawBoard(board,scene,player);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
 }

@@ -24,7 +24,7 @@ public class SelectMultiplayerController {
 
 
 
-    public void createServer() throws IOException, ExecutionException, InterruptedException {
+    public void createServer() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/CheckerBoard.fxml"));
         Scene scene = new Scene(root);
         changeScene(root, scene, "Board");

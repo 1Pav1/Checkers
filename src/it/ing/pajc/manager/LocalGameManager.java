@@ -20,8 +20,9 @@ public class LocalGameManager {
     private final Scene scene;
 
     public LocalGameManager(Player chosenPlayer, Scene scene) {
-        StringBuilder fen = new StringBuilder("meeeeeee/eeeeeeee/eeeeeeee/eeeeeeee/eeeeeeee/eKeKeKeK/MeMeMeMe/eMeMeMeM");
+        StringBuilder fen = new StringBuilder("MeMeMeMe/eMeMeeeM/MeeeMeMe/eeeeeeee/eeMeeeme/ekememee/memememe/emememem");
         board = new ItalianBoard(fen);
+        board.rotate();
         this.currentPlayer = Player.FIRST;
         this.scene = scene;
         Controller.placeBoard(board, scene, chosenPlayer);

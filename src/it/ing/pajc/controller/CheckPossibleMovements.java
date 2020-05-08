@@ -51,7 +51,7 @@ public class CheckPossibleMovements {
     public static Position possibleCaptureUpLeft(ItalianBoard board, int posR, int posC) {
         try {
             if ((board.getBoard()[posR - 1][posC - 1].getPlace()!=PlaceType.EMPTY) &&
-                (board.getBoard()[posR - 1][posC - 1].getPlace() != board.getBoard()[posR][posC].getPlace()) &&
+                    (board.getBoard()[posR - 1][posC - 1].getPlace() != board.getBoard()[posR][posC].getPlace()) &&
                     (board.getBoard()[posR - 1][posC - 1].getPiece() == PieceType.MAN || board.getBoard()[posR][posC].getPiece()==PieceType.KING) &&
                     (board.getBoard()[posR - 2][posC - 2].getPlace() == PlaceType.EMPTY)) {
                 return new Position(posR - 2, posC - 2, posR - 1, posC - 1);
@@ -107,15 +107,15 @@ public class CheckPossibleMovements {
 
     public static boolean canCapture(ItalianBoard board, int posR, int posC) {
         if (canCaptureUpLeft(board, posR, posC) || canCaptureUpRight(board, posR, posC)) {
-            System.out.println("Cattura sopra "+posR+" "+posC);
+            /*System.out.println("Cattura sopra "+posR+" "+posC);
             System.out.println(board.getBoard()[posR][posC].getPlace());
-            System.out.println(board.getBoard()[posR][posC].getPiece());
+            System.out.println(board.getBoard()[posR][posC].getPiece());*/
             return true;
         }
         if(board.getBoard()[posR][posC].getPiece()==PieceType.KING && (canCaptureDownLeft(board, posR, posC) || canCaptureDownRight(board, posR, posC))) {
-            System.out.println("Cattura sotto "+posR+" "+posC);
+            /*System.out.println("Cattura sotto "+posR+" "+posC);
             System.out.println(board.getBoard()[posR][posC].getPlace());
-            System.out.println(board.getBoard()[posR][posC].getPiece());
+            System.out.println(board.getBoard()[posR][posC].getPiece());*/
             return true;
         }
         return false;
@@ -124,9 +124,9 @@ public class CheckPossibleMovements {
     private static boolean canCaptureUpLeft(ItalianBoard board, int posR, int posC) {
         try {
             if(((board.getBoard()[posR][posC].getPiece()==PieceType.MAN) && (board.getBoard()[posR - 1][posC - 1].getPiece()==PieceType.MAN))|| (board.getBoard()[posR][posC].getPiece()==PieceType.KING) )
-            return ((board.getBoard()[posR - 1][posC - 1].getPlace() != board.getBoard()[posR][posC].getPlace()) &&
-                    (board.getBoard()[posR - 1][posC - 1].getPlace() != PlaceType.EMPTY) &&
-                    (board.getBoard()[posR - 2][posC - 2].getPlace() == PlaceType.EMPTY));
+                return ((board.getBoard()[posR - 1][posC - 1].getPlace() != board.getBoard()[posR][posC].getPlace()) &&
+                        (board.getBoard()[posR - 1][posC - 1].getPlace() != PlaceType.EMPTY) &&
+                        (board.getBoard()[posR - 2][posC - 2].getPlace() == PlaceType.EMPTY));
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
         return false;
@@ -136,8 +136,8 @@ public class CheckPossibleMovements {
         try {
             if(((board.getBoard()[posR][posC].getPiece()==PieceType.MAN) && (board.getBoard()[posR - 1][posC + 1].getPiece()==PieceType.MAN))|| (board.getBoard()[posR][posC].getPiece()==PieceType.KING) )
                 return ((board.getBoard()[posR - 1][posC + 1].getPlace() != board.getBoard()[posR][posC].getPlace()) &&
-                    (board.getBoard()[posR - 1][posC + 1].getPlace() != PlaceType.EMPTY) &&
-                    (board.getBoard()[posR - 2][posC + 2].getPlace() == PlaceType.EMPTY));
+                        (board.getBoard()[posR - 1][posC + 1].getPlace() != PlaceType.EMPTY) &&
+                        (board.getBoard()[posR - 2][posC + 2].getPlace() == PlaceType.EMPTY));
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
         return false;

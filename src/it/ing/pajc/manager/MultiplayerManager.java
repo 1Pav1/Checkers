@@ -13,7 +13,6 @@ import javafx.scene.Scene;
 
 import java.io.*;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.concurrent.ExecutionException;
 
 import static it.ing.pajc.controller.FXUtility.changeScene;
@@ -29,8 +28,11 @@ public class MultiplayerManager {
     private Server server;
     private Client client;
 
-    public MultiplayerManager(Player chosenPlayer, Scene scene) throws InterruptedException, ExecutionException, IOException {
+    public MultiplayerManager(Player chosenPlayer, Scene scene) {
         StringBuilder fen = new StringBuilder("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
+        if(chosenPlayer == Player.SECOND)
+            fen = fen.reverse();
+
         board = new ItalianBoard(fen);
         this.chosenPlayer = chosenPlayer;
         this.currentPlayer = Player.FIRST;
@@ -53,12 +55,14 @@ public class MultiplayerManager {
 
     private void changePlayer() {
         if(server==null) {
-            client.waitForMove(scene,chosenPlayer);
+            client.drawBoard(board,scene,chosenPlayer);
             client.sendMessage(board.getFen().reverse());
+            waitForMove();
         }
         else {
-            server.waitForMove(scene,chosenPlayer);
+            server.drawBoard(board,scene,chosenPlayer);
             server.sendMessage(board.getFen().reverse());
+            waitForMove();
         }
 
         Controller.timeToChangePlayer.setValue(false);
@@ -68,8 +72,8 @@ public class MultiplayerManager {
 
     private void changePlayerFX() {
         //if(currentPlayer!=chosenPlayer)
-          //Block all pieces
-        checkLost();
+        //Block all pieces
+        //checkLost();
         Controller.placeBoard(board, scene, chosenPlayer);
     }
 
@@ -98,6 +102,7 @@ public class MultiplayerManager {
     public void startServer(int port) throws IOException {
         server = new Server(port);
         server.serverStartup(board,scene,chosenPlayer);
+        server.drawBoard(board,scene,chosenPlayer);
     }
 
     /**
@@ -106,18 +111,28 @@ public class MultiplayerManager {
     public void clientStartup(int port) throws ExecutionException, InterruptedException, IOException {
         client = new Client(port);
         client.clientStartup(board,scene,chosenPlayer);
+        waitForMove();
     }
 
     /**
      * Creates a thread that sends the current board and waits for the other players turn to finish.
      */
-    /*private void waitForMove() {
+    private void waitForMove() {
+        /*
+        Thread receive = new Thread(new Runnable() {
 
-        Platform.runLater(new Runnable() {
-            private String readFen() {
-                String fen = null;
+            private StringBuilder readFen() {
+                StringBuilder fen = null;
                 try {
-                    fen = in.readLine();
+                    if(server==null) {
+                        fen = client.readMessage();
+                        //System.out.println("Client has received: "+fen);
+                    }
+                    else {
+                        fen = server.readMessage();
+                        //System.out.println("Server has received: "+fen);
+                    }
+
                 } catch (IOException e) {
                     readFen();
                 }
@@ -126,8 +141,53 @@ public class MultiplayerManager {
 
             @Override
             public void run() {
-                board = new ItalianBoard(new StringBuilder(readFen()));
+                StringBuilder received;
+                do{
+                    received = readFen();
+                }while(received==null);
+                board = new ItalianBoard(received);
                 try {
+                    System.out.println("trying to placeboard "+received);
+                    Controller.placeBoard(board, scene,chosenPlayer);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        receive.setName("rec");
+        receive.start();
+        */
+
+
+        Platform.runLater(new Runnable() {
+
+            private StringBuilder readFen() {
+                StringBuilder fen = null;
+                try {
+                    if(server==null) {
+                        fen = client.readMessage();
+                        //System.out.println("Client has received: "+fen);
+                    }
+                    else {
+                        fen = server.readMessage();
+                        //System.out.println("Server has received: "+fen);
+                    }
+
+                } catch (IOException e) {
+                    readFen();
+                }
+                return fen;
+            }
+
+            @Override
+            public void run() {
+                StringBuilder received;
+                do{
+                    received = readFen();
+                }while(received==null);
+                board = new ItalianBoard(received);
+                try {
+                    System.out.println("trying to placeboard "+received);
                     Controller.placeBoard(board, scene,chosenPlayer);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -136,8 +196,5 @@ public class MultiplayerManager {
         });
     }
 
-    public void sendFen() throws IOException {
-        out.println(board.toString());
-        waitForMove();
-    }*/
+
 }

@@ -2,6 +2,7 @@ package it.ing.pajc.serverClient;
 
 import it.ing.pajc.controller.Controller;
 import it.ing.pajc.data.board.ItalianBoard;
+import it.ing.pajc.manager.MultiplayerManager;
 import it.ing.pajc.manager.Player;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -39,8 +40,11 @@ public class Client {
                     tryToConnect();
                     createCommunicationChannels();
                     System.out.println("Client is connected!");
-                    drawBoard(new ItalianBoard(readMessage()),scene,player);
-                    waitForMove(scene,player);
+                    /*Ricezione prima board
+                    ItalianBoard b = new ItalianBoard(readMessage());
+                    drawBoard(b,scene,player);
+                    */
+
                 } catch (IOException e) {
                     System.err.println("Error receiving board");
                 }
@@ -68,33 +72,11 @@ public class Client {
     }
 
     public StringBuilder readMessage() throws IOException {
-        return new StringBuilder(in.readLine());
+        try {
+            return new StringBuilder(in.readLine());
+        }catch (Exception e){}
+        return null;
     }
 
-
-    public void waitForMove(Scene scene, Player player) {
-        Platform.runLater(new Runnable() {
-            private StringBuilder readFen() {
-                StringBuilder fen = null;
-                try {
-                    fen = new StringBuilder(in.readLine());
-                } catch (Exception e) {
-                    readFen();
-                }
-                return fen;
-            }
-
-            @Override
-            public void run() {
-                StringBuilder fen = readFen();
-                ItalianBoard board = new ItalianBoard(fen);
-                try {
-                    drawBoard(board,scene,player);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
 }

@@ -38,7 +38,7 @@ public class LocalGameVsEngine {
     private Player currentPlayer;
 
     public LocalGameVsEngine(Player chosenPlayer, Scene scene) {
-        StringBuilder fen = new StringBuilder("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
+        StringBuilder fen = new StringBuilder("memememe/emememem/mememeke/eeeeeeee/eeeeeeee/eMeMeMeM/MeeeMeMe/eMeMeMeM");
         board = new ItalianBoard(fen);
         this.currentPlayer = Player.FIRST;
         this.scene = scene;
@@ -67,7 +67,6 @@ public class LocalGameVsEngine {
         board.rotate();
         checkLost();
         board.rotate();
-
         if(currentPlayer==Player.SECOND) {
             //System.err.println(currentPlayer);
             board = execute(board);
@@ -80,13 +79,22 @@ public class LocalGameVsEngine {
     }
 
     private void checkLost() {
+
+        System.err.println("Heyla");
+        board.printBoardConsoleRed();
+
+        System.err.println(board.getFen());
         if (!Move.canSomebodyDoSomething(board, currentPlayer)) {
             Parent root = null;
             try {
-                if (currentPlayer != Player.FIRST)
+                if (currentPlayer != Player.FIRST){
+
                     root = FXMLLoader.load(getClass().getResource("../GUI/WhiteWins.fxml"));
-                else
+                }
+                else{
+
                     root = FXMLLoader.load(getClass().getResource("../GUI/BlackWins.fxml"));
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -121,12 +129,12 @@ public class LocalGameVsEngine {
             }
         }
 
-        int i=1;
+        /*int i=1;
         for(ItalianBoard calculatedBoards: tempBoards){
             System.out.println(i);
             calculatedBoards.printBoardConsole();
             i++;
-        }
+        }*/
 
         for(ItalianBoard calculatedBoards: tempBoards){
             int eval = countPiecesOnBoard(calculatedBoards);
@@ -179,18 +187,17 @@ public class LocalGameVsEngine {
         //Le prime posizioni su cui si può spostare
         Move.executeMove(init, fin, tempBoard);
         //Posizioni seconde
-        ArrayList<Position> finalMovements = CheckPossibleMovements.allPossibleMoves(tempBoard, fin.getPosR(), fin.getPosC());
+        ArrayList<Position> finalMovements = CheckPossibleMovements.allPossibleCaptures(tempBoard, fin.getPosR(), fin.getPosC());
         //Se le posizioni seconde non sono di cattura
         if(!CheckPossibleMovements.canCapture(tempBoard, fin.getPosR(), fin.getPosC())){
             return tempBoard;
         }
         //Se può invece ancora catturare
-        else{
-            for (Position secondCapture : finalMovements) {
-                    executeMovesOnTempBoard(tempBoard,fin,secondCapture);
-            }
+
+        for (Position secondCapture : finalMovements) {
+            return executeMovesOnTempBoard(tempBoard,fin,secondCapture);
         }
-        System.err.println("Errore in executeMovesOnTempBoard In LocalGameVsEngine non doveva capitare si vede che fa schifo sto coso è vero");
+
         return null;
     }
 
