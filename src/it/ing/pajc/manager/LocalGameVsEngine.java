@@ -43,8 +43,19 @@ public class LocalGameVsEngine {
         this.currentPlayer = Player.FIRST;
         this.scene = scene;
         this.chosenPlayer = chosenPlayer;
+        if(chosenPlayer!=Player.FIRST)
+            board.rotate();
         Controller.placeBoard(board, scene, chosenPlayer);
         gameVsAI();
+
+        if(chosenPlayer!=Player.FIRST) {
+            board = execute(board);
+            Controller.timeToChangePlayer.setValue(true);
+            Controller.placeBoard(board, scene, chosenPlayer);
+
+        }
+
+
     }
 
     public void gameVsAI() {
@@ -52,7 +63,6 @@ public class LocalGameVsEngine {
         Controller.timeToChangePlayer.addListener((observable, oldValue, newValue) -> {
             if (!oldValue && newValue) {
                 changePlayer();
-
             }
         });
     }
@@ -60,12 +70,13 @@ public class LocalGameVsEngine {
     private void changePlayer() {
         Controller.timeToChangePlayer.setValue(false);
         currentPlayer = currentPlayer == Player.FIRST ? Player.SECOND : Player.FIRST;
+        checkLost();
         changePlayerFX();
     }
 
     private void changePlayerFX() {
 
-        if(currentPlayer==Player.SECOND) {
+        if(currentPlayer!=chosenPlayer) {
             //System.err.println(currentPlayer);
             board = execute(board);
             Controller.timeToChangePlayer.setValue(true);
@@ -77,34 +88,24 @@ public class LocalGameVsEngine {
     }
 
     private void checkLost() {
-        Player nextPlayer;
-        if(currentPlayer==Player.SECOND) {
+        if(currentPlayer!=chosenPlayer)
             board.rotate();
-            nextPlayer = Player.FIRST;
-        }
-        else{
-            nextPlayer = Player.SECOND;
-        }
         System.err.println("Heyla");
         board.printBoardConsoleRed();
         boolean someoneCanDoSomething = false;
-        for (int i = 0; i < DIMENSION_ITALIAN_BOARD; i++) {
-            for (int j = 0; j < DIMENSION_ITALIAN_BOARD; j++) {
-                if((!CheckPossibleMovements.allPossibleMoves(board,i,j).isEmpty() ||
-                        CheckPossibleMovements.allPossibleMoves(board,i,j)==null) &&
-                                PlaceType.confrontPlayer(board.getBoard()[i][j].getPlace(), nextPlayer))
-                    someoneCanDoSomething = true;
-                }
+        System.err.println(currentPlayer);
 
-        }
-        if(currentPlayer==Player.SECOND)
+        if(Move.canSomebodyDoSomething(board,currentPlayer))
+            someoneCanDoSomething = true;
+
+        if(currentPlayer!=chosenPlayer)
             board.rotate();
 
         System.err.println(someoneCanDoSomething);
         if (!someoneCanDoSomething) {
             Parent root = null;
             try {
-                if (nextPlayer != Player.FIRST){
+                if (currentPlayer==chosenPlayer){
 
                     root = FXMLLoader.load(getClass().getResource("../GUI/WhiteWins.fxml"));
                 }
@@ -147,12 +148,12 @@ public class LocalGameVsEngine {
             }
         }
 
-        /*int i=1;
+        int i=1;
         for(ItalianBoard calculatedBoards: tempBoards){
             System.out.println(i);
             calculatedBoards.printBoardConsole();
             i++;
-        }*/
+        }
 
         for(ItalianBoard calculatedBoards: tempBoards){
             int eval = countPiecesOnBoard(calculatedBoards);
@@ -224,7 +225,7 @@ public class LocalGameVsEngine {
         int count = 0;
         for (int i = 0; i < DIMENSION_ITALIAN_BOARD; i++) {
             for (int j = 0; j < DIMENSION_ITALIAN_BOARD; j++) {
-                if (PlaceType.confrontPlayer(tempBoard.getBoard()[i][j].getPlace(), Player.FIRST))
+                if (PlaceType.confrontPlayer(tempBoard.getBoard()[i][j].getPlace(), currentPlayer))
                     count++;
             }
         }

@@ -1,7 +1,6 @@
 package it.ing.pajc.homeController;
 
 import it.ing.pajc.manager.LocalGameVsEngine;
-import it.ing.pajc.manager.MultiplayerManager;
 import it.ing.pajc.manager.Player;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -37,7 +36,7 @@ public class HomeController {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/CheckerBoard.fxml"));
         Scene scene = new Scene(root);
         changeScene(root, scene);
-        new LocalGameVsEngine(Player.FIRST,scene);
+        new LocalGameVsEngine(Player.SECOND,scene);
     }
 
 
