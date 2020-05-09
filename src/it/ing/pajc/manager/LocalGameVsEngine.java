@@ -10,26 +10,12 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
 import static it.ing.pajc.controller.FXUtility.changeScene;
 import static it.ing.pajc.data.board.Board.DIMENSION_ITALIAN_BOARD;
 
-//TODO FINISCI ENGINE
-/*
-CREA METODO RICORSIVO CHE CALCOLA FINO ALLA FINE DI OGNI CATTURA L'EVAL DI OGNI PEZZO
-E SALVA L'ARRAYLIST DI TUTTE LE POSIZIONI INTERMEDIE E QUELLA FINALE
-
-RIGIRA LA BOARD ALLA FINE
-
-FINISCI LA PARTE DELLA SELEZIONE DEL COLORE NEL CASO DI LOCALGAMEMANAGER(IL NERO NON FUNZIONA SE GIOCA
-COME PRIMO)
-
-BASTA!! PER ORA SE FINISCI TUTTO BRAVOOO!!!!
-SE NO VAI A ....
- */
 public class LocalGameVsEngine {
 
     private ItalianBoard board;
@@ -52,9 +38,7 @@ public class LocalGameVsEngine {
             board = execute(board);
             Controller.timeToChangePlayer.setValue(true);
             Controller.placeBoard(board, scene, chosenPlayer);
-
         }
-
 
     }
 
@@ -77,23 +61,19 @@ public class LocalGameVsEngine {
     private void changePlayerFX() {
 
         if(currentPlayer!=chosenPlayer) {
-            //System.err.println(currentPlayer);
             board = execute(board);
             Controller.timeToChangePlayer.setValue(true);
         }
         else{
             Controller.placeBoard(board, scene, currentPlayer);
-            //System.err.println(currentPlayer);
         }
     }
 
     private void checkLost() {
         if(currentPlayer!=chosenPlayer)
             board.rotate();
-        System.err.println("Heyla");
-        board.printBoardConsoleRed();
+
         boolean someoneCanDoSomething = false;
-        System.err.println(currentPlayer);
 
         if(Move.canSomebodyDoSomething(board,currentPlayer))
             someoneCanDoSomething = true;
@@ -101,12 +81,10 @@ public class LocalGameVsEngine {
         if(currentPlayer!=chosenPlayer)
             board.rotate();
 
-        System.err.println(someoneCanDoSomething);
         if (!someoneCanDoSomething) {
             Parent root = null;
             try {
-                if (currentPlayer==chosenPlayer){
-
+                if (currentPlayer!=Player.FIRST){
                     root = FXMLLoader.load(getClass().getResource("../GUI/WhiteWins.fxml"));
                 }
                 else{
@@ -123,16 +101,7 @@ public class LocalGameVsEngine {
 
     }
 
-   /**************************************************/
-   /**************************************************/
-   /**************************************************/
-   /**************************************************/
-   /**************************************************/
-   /**************************************************/
-   /**************************************************/
-   /**************************************************/
-   /**************************************************/
-    //TODO SCRIVE BEN 2 VOLTE FIRST FIRST BASTA
+
     private ItalianBoard execute(ItalianBoard board) {
         int point = 13;
         ArrayList<ItalianBoard> tempBoards = new ArrayList<>();
@@ -148,13 +117,14 @@ public class LocalGameVsEngine {
             }
         }
 
+        /*
         int i=1;
         for(ItalianBoard calculatedBoards: tempBoards){
             System.out.println(i);
             calculatedBoards.printBoardConsole();
             i++;
         }
-
+        */
         for(ItalianBoard calculatedBoards: tempBoards){
             int eval = countPiecesOnBoard(calculatedBoards);
             if(eval<=point){
@@ -167,7 +137,7 @@ public class LocalGameVsEngine {
 
     }
 
-    //TODO calcolo di tutte le tempBoard con scelta di quel con eval minore
+
     private ItalianBoard calculateBestOption(ItalianBoard aiBoard, int i, int j, int point) {
         Position init = new Position(i, j);
         ArrayList<Position> finalMovements = CheckPossibleMovements.allPossibleMoves(aiBoard, i, j);
@@ -201,7 +171,6 @@ public class LocalGameVsEngine {
         return tempBoard;
     }
 
-    //TODO CORREGGI ERRORE L'ULTIMA MOSSA SARà QUELLA CHE SOVRASCRIVE I VECCHI TEMPBOARD ANCHE SE SONO MIGLIORI
     private ItalianBoard executeMovesOnTempBoard(ItalianBoard tempBoard, Position init, Position fin) {
         //Le prime posizioni su cui si può spostare
         Move.executeMove(init, fin, tempBoard);
@@ -225,7 +194,7 @@ public class LocalGameVsEngine {
         int count = 0;
         for (int i = 0; i < DIMENSION_ITALIAN_BOARD; i++) {
             for (int j = 0; j < DIMENSION_ITALIAN_BOARD; j++) {
-                if (PlaceType.confrontPlayer(tempBoard.getBoard()[i][j].getPlace(), currentPlayer))
+                if (PlaceType.confrontPlayer(tempBoard.getBoard()[i][j].getPlace(), chosenPlayer))
                     count++;
             }
         }

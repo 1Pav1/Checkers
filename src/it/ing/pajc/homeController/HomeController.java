@@ -33,10 +33,9 @@ public class HomeController {
 
     public void singlePlayerWithAI() throws IOException {
         //crea oggetto LocalGameManager @param contro pc
-        Parent root = FXMLLoader.load(getClass().getResource("../GUI/CheckerBoard.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../GUI/SelectColorVsAI.fxml"));
         Scene scene = new Scene(root);
         changeScene(root, scene);
-        new LocalGameVsEngine(Player.SECOND,scene);
     }
 
 
