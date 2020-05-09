@@ -38,7 +38,7 @@ public class LocalGameVsEngine {
     private Player currentPlayer;
 
     public LocalGameVsEngine(Player chosenPlayer, Scene scene) {
-        StringBuilder fen = new StringBuilder("memememe/emememem/mememeke/eeeeeeee/eeeeeeee/eMeMeMeM/MeeeMeMe/eMeMeMeM");
+        StringBuilder fen = new StringBuilder("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
         board = new ItalianBoard(fen);
         this.currentPlayer = Player.FIRST;
         this.scene = scene;
@@ -64,9 +64,7 @@ public class LocalGameVsEngine {
     }
 
     private void changePlayerFX() {
-        board.rotate();
-        checkLost();
-        board.rotate();
+
         if(currentPlayer==Player.SECOND) {
             //System.err.println(currentPlayer);
             board = execute(board);
@@ -79,15 +77,34 @@ public class LocalGameVsEngine {
     }
 
     private void checkLost() {
-
+        Player nextPlayer;
+        if(currentPlayer==Player.SECOND) {
+            board.rotate();
+            nextPlayer = Player.FIRST;
+        }
+        else{
+            nextPlayer = Player.SECOND;
+        }
         System.err.println("Heyla");
         board.printBoardConsoleRed();
+        boolean someoneCanDoSomething = false;
+        for (int i = 0; i < DIMENSION_ITALIAN_BOARD; i++) {
+            for (int j = 0; j < DIMENSION_ITALIAN_BOARD; j++) {
+                if((!CheckPossibleMovements.allPossibleMoves(board,i,j).isEmpty() ||
+                        CheckPossibleMovements.allPossibleMoves(board,i,j)==null) &&
+                                PlaceType.confrontPlayer(board.getBoard()[i][j].getPlace(), nextPlayer))
+                    someoneCanDoSomething = true;
+                }
 
-        System.err.println(board.getFen());
-        if (!Move.canSomebodyDoSomething(board, currentPlayer)) {
+        }
+        if(currentPlayer==Player.SECOND)
+            board.rotate();
+
+        System.err.println(someoneCanDoSomething);
+        if (!someoneCanDoSomething) {
             Parent root = null;
             try {
-                if (currentPlayer != Player.FIRST){
+                if (nextPlayer != Player.FIRST){
 
                     root = FXMLLoader.load(getClass().getResource("../GUI/WhiteWins.fxml"));
                 }
@@ -102,6 +119,7 @@ public class LocalGameVsEngine {
             Scene scene = new Scene(root);
             changeScene(root, scene);
         }
+
     }
 
    /**************************************************/
