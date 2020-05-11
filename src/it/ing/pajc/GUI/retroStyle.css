@@ -55,6 +55,11 @@
     -fx-opacity:75%;
 }
 
+#canCaptureHighlight
+{
+    -fx-background-color:#fae846;
+}
+
 .gridPane
 {
     -fx-hgap: 0;

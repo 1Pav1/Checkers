@@ -42,13 +42,21 @@ public class Server {
                 System.out.println("Server is connected!");
                 try {
                     createCommunicationChannels();
+                    StringBuilder msg;
+                    if(player==Player.FIRST)
+                         msg = new StringBuilder(board.getFen().reverse().toString()+1);
+                    else
+                        msg = new StringBuilder(board.getFen().reverse().toString()+2);
+                    boolean sent = false;
+                    do{
+                        sent = sendMessage(msg);
+                    }while(!sent);
                     /*Send first fen
                     sendMessage(board.getFen().reverse());
                     System.out.println("First fen sent");
                     drawBoard(board,scene,player);
-
                      */
-                } catch (IOException e) {}
+                } catch (Exception e) {System.out.println("error creating channels");}
             }
         });
         Server.setName("Server");
@@ -61,18 +69,20 @@ public class Server {
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
 
-    public void drawBoard(ItalianBoard board, Scene scene, Player player){
-        Platform.runLater(() -> {
-            Controller.placeBoard(board,scene,player);
-        });
-    }
+    public boolean sendMessage(StringBuilder message){
+        try {
+            out.println(message.toString());
+        }catch (Exception e){
+            System.err.println("Chè ci fai quaa!?");
+            return false;
+        }
 
-    public void sendMessage(StringBuilder message){
         System.out.println("Server has sent : "+message);
-        out.println(message.toString());
+        return true;
+
     }
 
-    public StringBuilder readMessage() throws IOException {
+    public StringBuilder readMessage(){
         try {
             return new StringBuilder(in.readLine());
         }catch (Exception e){}

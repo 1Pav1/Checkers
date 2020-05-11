@@ -64,5 +64,10 @@
                 <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
             </rowConstraints>
         </GridPane>
+      <Label id="turnIndicator" disable="true" layoutX="619.0" layoutY="60.0" textFill="#00ff1e">
+         <font>
+            <Font name="Serif Bold" size="34.0" />
+         </font>
+      </Label>
     </Pane>
 </AnchorPane>

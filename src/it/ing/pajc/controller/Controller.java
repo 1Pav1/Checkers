@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -21,6 +22,7 @@ import javafx.scene.shape.Circle;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
@@ -32,6 +34,20 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Controller {
     public static BooleanProperty timeToChangePlayer;
 
+
+    public static void activateTurnIndicator(Scene scene){
+        Label label = (Label) scene.lookup("#turnIndicator");
+        label.setDisable(false);
+    }
+
+    public static void changeTurnIndicator(Scene scene, String text,int color){
+        Label label = (Label) scene.lookup("#turnIndicator");
+        label.setText(text);
+        if(color==0)
+            label.setStyle("-fx-text-fill : #ff0000;");
+        else
+            label.setStyle("-fx-text-fill : #32cd32;");
+    }
 
 
 
@@ -49,11 +65,31 @@ public class Controller {
                     Circle circle = addPieceToGridPane(board, i, j, gridPane, player, canSomebodyCapture);
                     createClickEventPiece(circle, board, stackPaneBoard, i, j, scene, player);
                 }
+                if (CheckPossibleMovements.canCapture(board, i, j) && PlaceType.confrontPlayer(board.getBoard()[i][j].getPlace(),player))
+                    stackPaneBoard[i][j].setId("canCaptureHighlight");
             }
         }
         //System.err.println("la verità sarà scoperta: "+canSomebodyCapture);
     }
 
+    public static void placeBoardWithDisabledClicks(ItalianBoard board, Scene scene, Player player) {
+        board.printBoardConsole();
+        GridPane gridPane = (GridPane) scene.lookup("#grid");
+        gridPane.getChildren().clear();
+        StackPane[][] stackPaneBoard = initializeBoardFX();
+        boolean canSomebodyCapture = CheckPossibleMovements.canSomebodyCapture(board, player);
+        for (int i = 0; i < Board.DIMENSION_ITALIAN_BOARD; i++) {
+            for (int j = 0; j < Board.DIMENSION_ITALIAN_BOARD; j++) {
+                //The method .add is the opposite than normal matrix
+                gridPane.add(stackPaneBoard[i][j], j, i);
+                if (board.getBoard()[i][j].getPlace() != PlaceType.EMPTY) {
+                    Circle circle = addPieceToGridPane(board, i, j, gridPane, player, canSomebodyCapture);
+                    //createClickEventPiece(circle, board, stackPaneBoard, i, j, scene, player);
+                }
+            }
+        }
+        //System.err.println("la verità sarà scoperta: "+canSomebodyCapture);
+    }
 
     /**
      * Board initializer using JavaFX.
@@ -101,7 +137,6 @@ public class Controller {
 
         //If somebody can capture and this piece can't then it is disabled
         if (canSomebodyCapture && !CheckPossibleMovements.canCapture(board, i, j)) circle.setDisable(true);
-
         //The method .add is the opposite than normal matrix
         gridPane.add(circle, j, i);
         return circle;
@@ -171,7 +206,7 @@ public class Controller {
 
 
     public static void createClickEventForMoveAndDeletion(ItalianBoard board, StackPane[][] stackPanes, int i, int j, ArrayList<Position> moves, Scene scene, Player player) {
-        if (CheckPossibleMovements.canCapture(board, i, j))
+        if (CheckPossibleMovements.canCapture(board, i, j)) {
             for (Position moveAndCapturedPosition : moves) {
                 stackPanes[i][j].setId("movementHighlight");
                 stackPanes[moveAndCapturedPosition.getPosR()][moveAndCapturedPosition.getPosC()].setId("captureHighlight");
@@ -191,6 +226,7 @@ public class Controller {
                     }
                 });
             }
+        }
         else {
             for (Position position : moves) {
                 stackPanes[position.getPosR()][position.getPosC()].setId("movementHighlight");
@@ -288,6 +324,7 @@ public class Controller {
             ex.printStackTrace();
         }
     }
+
 
 
     //TODO POTREBBERO ACCADERE COSE MAGICHE ATTENTO ALLA X E ALLA Y ;)
