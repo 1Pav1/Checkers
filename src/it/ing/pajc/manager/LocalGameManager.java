@@ -20,12 +20,16 @@ public class LocalGameManager {
     private final Scene scene;
 
     public LocalGameManager(Player chosenPlayer, Scene scene) {
-        StringBuilder fen = new StringBuilder("MeMeMeMe/eMeMeeeM/MeeeMeMe/eeeeeeee/eeMeeeme/ekememee/memememe/emememem");
+        StringBuilder fen = new StringBuilder("MeMeMeMe/eMeMeMeM/MeMeMeMe/eeeeeeee/eeeeeeee/emememem/memememe/emememem");
         board = new ItalianBoard(fen);
         board.rotate();
         this.currentPlayer = Player.FIRST;
         this.scene = scene;
         Controller.placeBoard(board, scene, chosenPlayer);
+        Controller.activateTurnIndicator(scene);
+
+        Controller.changeTurnIndicator(scene,"Whites turn",1);
+
         gameVsPerson();
 
     }
@@ -44,6 +48,10 @@ public class LocalGameManager {
     private void changePlayer() {
         Controller.timeToChangePlayer.setValue(false);
         currentPlayer = currentPlayer == Player.FIRST ? Player.SECOND : Player.FIRST;
+        if(currentPlayer==Player.FIRST)
+            Controller.changeTurnIndicator(scene,"White turn",1);
+        else
+            Controller.changeTurnIndicator(scene,"Black turn",1);
         changePlayerFX();
     }
 
