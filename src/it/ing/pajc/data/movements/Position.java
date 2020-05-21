@@ -38,7 +38,10 @@ public class Position {
     }
 
 
-
+    /**
+     * Returns the capture position
+     * @return if both negative there is not a right capturing position
+     */
     public int getcPosR() {
         return cPosR;
     }

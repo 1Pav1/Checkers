@@ -29,14 +29,6 @@
                 <Cursor fx:constant="HAND" />
             </cursor>
         </Button>
-        <Button layoutX="116.0" layoutY="332.0" mnemonicParsing="false" onMouseClicked="#settings" prefHeight="35.0" prefWidth="300.0" text="Settings" textFill="WHITE">
-            <font>
-                <Font name="Franklin Gothic Heavy" size="30.0" />
-            </font>
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-        </Button>
       <Button layoutX="118.0" layoutY="53.0" mnemonicParsing="false" onAction="#singlePlayerWithAI" prefHeight="35.0" prefWidth="300.0" text="Singleplayer" textFill="WHITE">
          <font>
             <Font name="Franklin Gothic Heavy" size="30.0" />
