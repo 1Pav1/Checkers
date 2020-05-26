@@ -4,13 +4,8 @@ package it.ing.pajc.serverClient;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-
-import it.ing.pajc.controller.Controller;
 import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.manager.Player;
-import javafx.application.Platform;
-import javafx.scene.Scene;
-
 import java.io.IOException;
 
 public class Server {
@@ -23,7 +18,7 @@ public class Server {
         this.port = port;
     }
 
-    public void serverStartup(ItalianBoard board, Scene scene, Player player) throws IOException {
+    public void serverStartup(ItalianBoard board, Player player){
 
         Thread Server = new Thread(new Runnable() {
 
@@ -43,11 +38,11 @@ public class Server {
                 try {
                     createCommunicationChannels();
                     StringBuilder msg;
-                    if(player==Player.FIRST)
+                    if(player==Player.WHITE_PLAYER)
                          msg = new StringBuilder(board.getFen().reverse().toString()+1);
                     else
                         msg = new StringBuilder(board.getFen().reverse().toString()+2);
-                    boolean sent = false;
+                    boolean sent;
                     do{
                         sent = sendMessage(msg);
                     }while(!sent);
@@ -64,7 +59,7 @@ public class Server {
 
     }
 
-    public void createCommunicationChannels() throws IOException {
+    private void createCommunicationChannels() throws IOException {
         out = new PrintWriter(socket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
@@ -85,7 +80,7 @@ public class Server {
     public StringBuilder readMessage(){
         try {
             return new StringBuilder(in.readLine());
-        }catch (Exception e){}
+        }catch (Exception ignored){}
         return null;
     }
 

@@ -1,7 +1,6 @@
 package it.ing.pajc.controller;
 
 import it.ing.pajc.Main;
-import it.ing.pajc.manager.LocalGameVsEngine;
 import it.ing.pajc.manager.MultiplayerManager;
 import it.ing.pajc.manager.Player;
 import javafx.application.Platform;
@@ -10,14 +9,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Controller of the setting page.
  */
 public class SelectColorControllerMultiplayer {
     private double x, y;
-    private static int serverOrClient;
     /**
      * Changes the screen to the home page.
      */
@@ -29,14 +26,6 @@ public class SelectColorControllerMultiplayer {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public static int getServerOrClient() {
-        return serverOrClient;
-    }
-
-    public static void setServerOrClient(int serverOrClient) {
-        SelectColorControllerMultiplayer.serverOrClient = serverOrClient;
     }
 
     /**
@@ -72,7 +61,7 @@ public class SelectColorControllerMultiplayer {
         Scene scene = new Scene(root);
         changeScene(root, scene, "Board");
         MultiplayerManager multiplayerManager = new MultiplayerManager(scene);
-        multiplayerManager.startServer(Player.FIRST,3333);
+        multiplayerManager.startServer(Player.WHITE_PLAYER,3333);
     }
 
     public void black() throws IOException {
@@ -80,7 +69,7 @@ public class SelectColorControllerMultiplayer {
         Scene scene = new Scene(root);
         changeScene(root, scene, "Board");
         MultiplayerManager multiplayerManager = new MultiplayerManager(scene);
-        multiplayerManager.startServer(Player.SECOND,3333);
+        multiplayerManager.startServer(Player.BLACK_PLAYER,3333);
     }
 
 }

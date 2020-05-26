@@ -6,7 +6,31 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Working Engine and Changed to normal music" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Cleaned classes">
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/Andrea.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/movements/Move.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/CheckPossibleMovements.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/movements/CheckPossibleMovements.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/Move.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectColorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectColorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectColorControllerMultiplayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectColorControllerMultiplayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectColorControllerVsAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectColorControllerVsAI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectMultiplayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectMultiplayerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/Fen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/Fen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/movements/Position.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/PlaceType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/PlaceType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/homeController/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/homeController/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/manager/LocalGameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/manager/LocalGameManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/manager/LocalGameVsEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/manager/LocalGameVsEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/manager/MultiplayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/manager/MultiplayerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/manager/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/manager/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/serverClient/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/serverClient/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/serverClient/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/serverClient/Server.java" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -131,13 +155,19 @@
       <recent name="C:\Users\Pav\IdeaProjects\Checker\src" />
     </key>
   </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
   <component name="RunManager" selected="Application.Main">
-    <configuration default="true" type="Applet">
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -149,6 +179,12 @@
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
       <Port>5050</Port>
+    </configuration>
+    <configuration default="true" type="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="it.ing.pajc.multiplayer.Client" />
@@ -429,6 +465,10 @@
       <workItem from="1589734288741" duration="507000" />
       <workItem from="1589959707539" duration="5044000" />
       <workItem from="1590089510727" duration="3766000" />
+      <workItem from="1590134544678" duration="331000" />
+      <workItem from="1590156392150" duration="3052000" />
+      <workItem from="1590220190206" duration="5713000" />
+      <workItem from="1590486380490" duration="5483000" />
     </task>
     <task id="LOCAL-00001" summary="added:&#10;Settings&#10;Possible Moves">
       <created>1564397017327</created>
@@ -756,19 +796,20 @@
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="1" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />

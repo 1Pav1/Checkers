@@ -1,10 +1,10 @@
 package it.ing.pajc.manager;
 
-import it.ing.pajc.controller.CheckPossibleMovements;
+import it.ing.pajc.movements.CheckPossibleMovements;
 import it.ing.pajc.controller.Controller;
-import it.ing.pajc.controller.Move;
+import it.ing.pajc.movements.Move;
 import it.ing.pajc.data.board.ItalianBoard;
-import it.ing.pajc.data.movements.*;
+import it.ing.pajc.movements.*;
 import it.ing.pajc.data.pieces.PieceType;
 import it.ing.pajc.data.pieces.PlaceType;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -26,21 +26,20 @@ public class LocalGameVsEngine {
     private final Player chosenPlayer;
     private ItalianBoard board;
     private Player currentPlayer;
-
     private ItalianBoard bestBoardEvah;
 
     public LocalGameVsEngine(Player chosenPlayer, Scene scene) {
         StringBuilder fen = new StringBuilder("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
         board = new ItalianBoard(fen);
-        this.currentPlayer = Player.FIRST;
+        this.currentPlayer = Player.WHITE_PLAYER;
         this.scene = scene;
         this.chosenPlayer = chosenPlayer;
-        if (chosenPlayer != Player.FIRST)
+        if (chosenPlayer != Player.WHITE_PLAYER)
             board.rotate();
         Controller.placeBoard(board, scene, chosenPlayer);
         gameVsAI();
 
-        if (chosenPlayer != Player.FIRST) {
+        if (chosenPlayer != Player.WHITE_PLAYER) {
             board = execute(board);
             Controller.timeToChangePlayer.setValue(true);
             Controller.placeBoard(board, scene, chosenPlayer);
@@ -58,7 +57,7 @@ public class LocalGameVsEngine {
 
     private void changePlayer() {
         Controller.timeToChangePlayer.setValue(false);
-        currentPlayer = currentPlayer == Player.FIRST ? Player.SECOND : Player.FIRST;
+        currentPlayer = currentPlayer == Player.WHITE_PLAYER ? Player.BLACK_PLAYER : Player.WHITE_PLAYER;
         checkLost();
         changePlayerFX();
     }
@@ -73,8 +72,6 @@ public class LocalGameVsEngine {
     }
 
     private ItalianBoard execute(ItalianBoard board) {
-        int point = -INFINITY;
-
         //CALCOLO MOSSE
         ItalianBoard aiBoard = new ItalianBoard(board.getFen());
         aiBoard.rotate();
@@ -130,9 +127,9 @@ public class LocalGameVsEngine {
 
         if (depth >= maxDepth)
             if (firstTurn !=player)
-                return -evalSpettacolo(board);
+                return -evaluateBoard(board);
             else
-                return evalSpettacolo(board);
+                return evaluateBoard(board);
         else { //branch
             score = -INFINITY;
 
@@ -161,9 +158,9 @@ public class LocalGameVsEngine {
 
         if (depth >= maxDepth)
             if (firstTurn != player)
-                return -evalSpettacolo(board);
+                return -evaluateBoard(board);
             else
-                return evalSpettacolo(board);
+                return evaluateBoard(board);
         else { //branch
             score = INFINITY;
 
@@ -204,7 +201,7 @@ public class LocalGameVsEngine {
         if (!someoneCanDoSomething) {
             Parent root = null;
             try {
-                if (currentPlayer != Player.FIRST) {
+                if (currentPlayer != Player.WHITE_PLAYER) {
                     root = FXMLLoader.load(getClass().getResource("../GUI/WhiteWins.fxml"));
                 } else {
                     root = FXMLLoader.load(getClass().getResource("../GUI/BlackWins.fxml"));
@@ -218,7 +215,7 @@ public class LocalGameVsEngine {
         }
     }
 
-    private int evalSpettacolo(ItalianBoard board) { //Valuto dal punto di vista del currentPlayer
+    private int evaluateBoard(ItalianBoard board) { //Valuto dal punto di vista del currentPlayer
         int score = 0;
         int numeroPedine = 0;
         boolean damaTrovata = false;
@@ -306,7 +303,7 @@ public class LocalGameVsEngine {
         }
 
         for (ItalianBoard calculatedBoards : executedTempBoards) {
-            int eval = evalSpettacolo(calculatedBoards);
+            int eval = evaluateBoard(calculatedBoards);
             //int eval = miniMax(calculatedBoards, 5, currentPlayer);
             if (eval >= point) {
                 point = eval;
@@ -329,7 +326,7 @@ public class LocalGameVsEngine {
         }
 
         for (ItalianBoard calculatedBoards : executedTempBoards) {
-            int eval = evalSpettacolo(calculatedBoards);
+            int eval = evaluateBoard(calculatedBoards);
             //int eval = miniMax(calculatedBoards, 5, currentPlayer);
             if (eval >= point) {
                 point = eval;
@@ -362,7 +359,7 @@ public class LocalGameVsEngine {
 
 
     private Player opponent(Player turn) {
-        return turn == Player.SECOND ? Player.FIRST : Player.SECOND;
+        return turn == Player.BLACK_PLAYER ? Player.WHITE_PLAYER : Player.BLACK_PLAYER;
     }
 
     private ArrayList<ItalianBoard> calcoloMosse(ItalianBoard board, Player player) {

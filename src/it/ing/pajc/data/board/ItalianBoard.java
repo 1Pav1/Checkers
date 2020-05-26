@@ -47,30 +47,6 @@ public class ItalianBoard implements Board {
         System.out.println();
     }
 
-    public void printBoardConsoleRed() {
-        for (int posR = 0; posR < DIMENSION_ITALIAN_BOARD; posR++) {
-            for (int posC = 0; posC < DIMENSION_ITALIAN_BOARD; posC++) {
-                if (piecesBoard[posR][posC].getPlace() == PlaceType.EMPTY)
-                    System.err.print("[ ]");
-                else {
-                    if (piecesBoard[posR][posC].getPlace() == PlaceType.BLACK) {
-                        if (piecesBoard[posR][posC].getPiece() == PieceType.MAN)
-                            System.err.print("[m]");
-                        else
-                            System.err.print("[k]");
-                    } else if (piecesBoard[posR][posC].getPlace() == PlaceType.WHITE) {
-                        if (piecesBoard[posR][posC].getPiece() == PieceType.MAN)
-                            System.err.print("[M]");
-                        else
-                            System.err.print("[K]");
-                    }
-                }
-            }
-            System.err.println(" ");
-        }
-        System.err.println();
-    }
-
     public void rotate(){
         StringBuilder fen = Fen.multidimensionalArrayToFen(piecesBoard);
         fen = fen.reverse();

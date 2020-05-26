@@ -1,7 +1,6 @@
 package it.ing.pajc.manager;
 
 public enum Player {
-    FIRST,
-    SECOND,
-    ENGINE
+    WHITE_PLAYER,
+    BLACK_PLAYER
 }

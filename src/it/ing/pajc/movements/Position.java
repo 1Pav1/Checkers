@@ -1,4 +1,4 @@
-package it.ing.pajc.data.movements;
+package it.ing.pajc.movements;
 
 /**
  * Position class with all getters and setters.
@@ -30,7 +30,7 @@ public class Position {
      * @param cPosR Row position.
      * @param cPosC Column position.
      */
-    public Position(int posR, int posC, int cPosR, int cPosC) {
+    Position(int posR, int posC, int cPosR, int cPosC) {
         this.posR = posR;
         this.posC = posC;
         this.cPosR = cPosR;
@@ -42,11 +42,11 @@ public class Position {
      * Returns the capture position
      * @return if both negative there is not a right capturing position
      */
-    public int getcPosR() {
+    int getcPosR() {
         return cPosR;
     }
 
-    public int getcPosC() {
+    int getcPosC() {
         return cPosC;
     }
 

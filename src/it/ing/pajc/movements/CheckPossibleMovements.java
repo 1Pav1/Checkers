@@ -1,8 +1,7 @@
-package it.ing.pajc.controller;
+package it.ing.pajc.movements;
 
 import it.ing.pajc.data.board.Board;
 import it.ing.pajc.data.board.ItalianBoard;
-import it.ing.pajc.data.movements.*;
 import it.ing.pajc.data.pieces.PlaceType;
 import it.ing.pajc.data.pieces.PieceType;
 import it.ing.pajc.manager.Player;
@@ -47,7 +46,7 @@ public class CheckPossibleMovements {
     }
 
 
-    public static Position possibleCaptureUpLeft(ItalianBoard board, int posR, int posC) {
+    private static Position possibleCaptureUpLeft(ItalianBoard board, int posR, int posC) {
         try {
             if ((board.getBoard()[posR - 1][posC - 1].getPlace() != PlaceType.EMPTY) &&
                     (board.getBoard()[posR - 1][posC - 1].getPlace() != board.getBoard()[posR][posC].getPlace()) &&
@@ -61,7 +60,7 @@ public class CheckPossibleMovements {
     }
 
 
-    public static Position possibleCaptureUpRight(ItalianBoard board, int posR, int posC) {
+    private static Position possibleCaptureUpRight(ItalianBoard board, int posR, int posC) {
         try {
             if ((board.getBoard()[posR - 1][posC + 1].getPlace() != PlaceType.EMPTY) &&
                     (board.getBoard()[posR - 1][posC + 1].getPlace() != board.getBoard()[posR][posC].getPlace()) &&
@@ -75,7 +74,7 @@ public class CheckPossibleMovements {
     }
 
 
-    public static Position possibleCaptureDownLeft(ItalianBoard board, int posR, int posC) {
+    private static Position possibleCaptureDownLeft(ItalianBoard board, int posR, int posC) {
         try {
             if ((board.getBoard()[posR + 1][posC - 1].getPlace() != PlaceType.EMPTY) &&
                     (board.getBoard()[posR + 1][posC - 1].getPlace() != board.getBoard()[posR][posC].getPlace()) &&
@@ -90,7 +89,7 @@ public class CheckPossibleMovements {
     }
 
 
-    public static Position possibleCaptureDownRight(ItalianBoard board, int posR, int posC) {
+    private static Position possibleCaptureDownRight(ItalianBoard board, int posR, int posC) {
         try {
             if ((board.getBoard()[posR + 1][posC + 1].getPlace() != PlaceType.EMPTY) &&
                     (board.getBoard()[posR + 1][posC + 1].getPlace() != board.getBoard()[posR][posC].getPlace()) &&
@@ -106,18 +105,9 @@ public class CheckPossibleMovements {
 
     public static boolean canCapture(ItalianBoard board, int posR, int posC) {
         if (canCaptureUpLeft(board, posR, posC) || canCaptureUpRight(board, posR, posC)) {
-            /*System.out.println("Cattura sopra "+posR+" "+posC);
-            System.out.println(board.getBoard()[posR][posC].getPlace());
-            System.out.println(board.getBoard()[posR][posC].getPiece());*/
             return true;
         }
-        if (board.getBoard()[posR][posC].getPiece() == PieceType.KING && (canCaptureDownLeft(board, posR, posC) || canCaptureDownRight(board, posR, posC))) {
-            /*System.out.println("Cattura sotto "+posR+" "+posC);
-            System.out.println(board.getBoard()[posR][posC].getPlace());
-            System.out.println(board.getBoard()[posR][posC].getPiece());*/
-            return true;
-        }
-        return false;
+        return board.getBoard()[posR][posC].getPiece() == PieceType.KING && (canCaptureDownLeft(board, posR, posC) || canCaptureDownRight(board, posR, posC));
     }
 
     private static boolean canCaptureUpLeft(ItalianBoard board, int posR, int posC) {
@@ -165,18 +155,9 @@ public class CheckPossibleMovements {
 
     public static boolean canMove(ItalianBoard board, int posR, int posC) {
         if (canMoveUpLeft(board, posR, posC) || canMoveUpRight(board, posR, posC)) {
-            /*System.out.println("Cattura sopra "+posR+" "+posC);
-            System.out.println(board.getBoard()[posR][posC].getPlace());
-            System.out.println(board.getBoard()[posR][posC].getPiece());*/
             return true;
         }
-        if (board.getBoard()[posR][posC].getPiece() == PieceType.KING && (canMoveDownLeft(board, posR, posC) || canMoveDownRight(board, posR, posC))) {
-            /*System.out.println("Cattura sotto "+posR+" "+posC);
-            System.out.println(board.getBoard()[posR][posC].getPlace());
-            System.out.println(board.getBoard()[posR][posC].getPiece());*/
-            return true;
-        }
-        return false;
+        return board.getBoard()[posR][posC].getPiece() == PieceType.KING && (canMoveDownLeft(board, posR, posC) || canMoveDownRight(board, posR, posC));
     }
 
     private static boolean canMoveUpLeft(ItalianBoard board, int posR, int posC) {
@@ -211,7 +192,7 @@ public class CheckPossibleMovements {
         return false;
     }
 
-    public static ArrayList<Position> possibleMovesInEmptySpaces(ItalianBoard board, int posR, int posC) {
+    private static ArrayList<Position> possibleMovesInEmptySpaces(ItalianBoard board, int posR, int posC) {
         ArrayList<Position> possibleMovementList = new ArrayList<>();
 
         try {

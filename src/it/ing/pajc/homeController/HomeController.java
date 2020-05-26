@@ -1,14 +1,11 @@
 package it.ing.pajc.homeController;
 
-import it.ing.pajc.manager.LocalGameVsEngine;
-import it.ing.pajc.manager.Player;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 import static it.ing.pajc.controller.FXUtility.changeScene;
 
@@ -38,25 +35,12 @@ public class HomeController {
         changeScene(root, scene);
     }
 
-
-    /**
-     * Opens settings file.
-     *
-     * @throws IOException In case the graphical file is not found.
-     */
-    public void settings() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../GUI/Settings.fxml"));
-        Scene scene = new Scene(root);
-        changeScene(root, scene);
-    }
-
-
     /**
      * Opens multiplayer file.
      *
      * @throws IOException In case the graphical file is not found.
      */
-    public void multiplayer() throws IOException, ExecutionException, InterruptedException {
+    public void multiplayer() throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/SelectMultiplayer.fxml"));
         Scene scene = new Scene(root);
         changeScene(root, scene);

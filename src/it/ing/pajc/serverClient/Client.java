@@ -1,12 +1,5 @@
     package it.ing.pajc.serverClient;
 
-    import it.ing.pajc.controller.Controller;
-    import it.ing.pajc.data.board.ItalianBoard;
-    import it.ing.pajc.manager.MultiplayerManager;
-    import it.ing.pajc.manager.Player;
-    import javafx.application.Platform;
-    import javafx.scene.Scene;
-
     import java.io.BufferedReader;
     import java.io.IOException;
     import java.io.InputStreamReader;
@@ -23,7 +16,7 @@
             this.port = port;
         }
 
-        public void clientStartup(ItalianBoard board, Scene scene, Player player) {
+        public void clientStartup() {
 
             Thread Client = new Thread(new Runnable() {
                 private void tryToConnect() {
@@ -56,23 +49,22 @@
 
         }
 
-        public void createCommunicationChannels() throws IOException {
+        private void createCommunicationChannels() throws IOException {
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         }
 
-        public boolean sendMessage(StringBuilder message){
+        public void sendMessage(StringBuilder message){
             try {
                 out.println(message.toString());
-            }catch (Exception e){return false;}
+            }catch (Exception e){return;}
             System.out.println("Client has sent : "+message);
-            return true;
 
         }
         public StringBuilder readMessage(){
             try {
                 return new StringBuilder(in.readLine());
-            }catch (Exception e){}
+            }catch (Exception ignored){}
             return null;
         }
 

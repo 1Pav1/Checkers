@@ -14,9 +14,9 @@ public enum PlaceType {
     public static boolean confrontPlayer(PlaceType placeType, Player player){
         Player convertionOfPlayer = null;
         if(placeType==WHITE)
-            convertionOfPlayer = Player.FIRST;
+            convertionOfPlayer = Player.WHITE_PLAYER;
         else if(placeType==BLACK)
-            convertionOfPlayer = Player.SECOND;
+            convertionOfPlayer = Player.BLACK_PLAYER;
 
         return convertionOfPlayer == player;
     }

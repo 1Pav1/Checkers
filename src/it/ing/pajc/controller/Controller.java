@@ -3,7 +3,9 @@ package it.ing.pajc.controller;
 import it.ing.pajc.Main;
 import it.ing.pajc.data.board.Board;
 import it.ing.pajc.data.board.ItalianBoard;
-import it.ing.pajc.data.movements.Position;
+import it.ing.pajc.movements.CheckPossibleMovements;
+import it.ing.pajc.movements.Move;
+import it.ing.pajc.movements.Position;
 import it.ing.pajc.data.pieces.*;
 import it.ing.pajc.manager.Player;
 import javafx.application.Platform;
@@ -22,7 +24,6 @@ import javafx.scene.shape.Circle;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
@@ -83,7 +84,7 @@ public class Controller {
                 //The method .add is the opposite than normal matrix
                 gridPane.add(stackPaneBoard[i][j], j, i);
                 if (board.getBoard()[i][j].getPlace() != PlaceType.EMPTY) {
-                    Circle circle = addPieceToGridPane(board, i, j, gridPane, player, canSomebodyCapture);
+                    addPieceToGridPane(board, i, j, gridPane, player, canSomebodyCapture);
                     //createClickEventPiece(circle, board, stackPaneBoard, i, j, scene, player);
                 }
             }
@@ -94,7 +95,7 @@ public class Controller {
     /**
      * Board initializer using JavaFX.
      */
-    public static StackPane[][] initializeBoardFX() {
+    private static StackPane[][] initializeBoardFX() {
         StackPane[][] stackPaneBoard;
         stackPaneBoard = new StackPane[Board.DIMENSION_ITALIAN_BOARD][Board.DIMENSION_ITALIAN_BOARD];
         for (int x = 0; x < Board.DIMENSION_ITALIAN_BOARD; x++) {
@@ -123,7 +124,7 @@ public class Controller {
     }
 
 
-    private static Circle addPieceToGridPane(ItalianBoard board, int i, int j, GridPane gridPane, Player player, boolean canSomebodyCapture) {
+    private static Circle addPieceToGridPane(ItalianBoard board, int i, int j,  GridPane gridPane, Player player, boolean canSomebodyCapture) {
         Circle circle = new Circle();
         styleCircle(circle);
 
@@ -205,7 +206,7 @@ public class Controller {
     }
 
 
-    public static void createClickEventForMoveAndDeletion(ItalianBoard board, StackPane[][] stackPanes, int i, int j, ArrayList<Position> moves, Scene scene, Player player) {
+    private static void createClickEventForMoveAndDeletion(ItalianBoard board, StackPane[][] stackPanes, int i, int j, ArrayList<Position> moves, Scene scene, Player player) {
         if (CheckPossibleMovements.canCapture(board, i, j)) {
             for (Position moveAndCapturedPosition : moves) {
                 stackPanes[i][j].setId("movementHighlight");
@@ -215,7 +216,6 @@ public class Controller {
                 stackPanes[moveAndCapturedPosition.getPosR()][moveAndCapturedPosition.getPosC()].setOnMousePressed(event -> {
                     Move.executeMove(new Position(i, j), moveAndCapturedPosition, board);
                     //resetBoardFXColors(stackPanes);
-                    //TODO GUARDA CHE NON è FIRST DIAMINE DAMN IT
                     if (CheckPossibleMovements.canCapture(board, moveAndCapturedPosition.getPosR(), moveAndCapturedPosition.getPosC()))
                         keepCapturing(board, scene, moveAndCapturedPosition.getPosR(), moveAndCapturedPosition.getPosC(), player);
                     else {
@@ -237,7 +237,6 @@ public class Controller {
                     String filepath = "src/it/ing/pajc/Audio/Move.wav";
                     playMusic(filepath);
                     timeToChangePlayer.setValue(true);
-                    //TODO GUARDA CHE NON è FIRST DIAMINE DAMN IT
                 });
             }
 
@@ -302,7 +301,7 @@ public class Controller {
         }
     }
 
-    public static void playMusic(String musicLocation){
+    private static void playMusic(String musicLocation){
         try
         {
             File musicPath = new File(musicLocation);
@@ -324,10 +323,6 @@ public class Controller {
             ex.printStackTrace();
         }
     }
-
-
-
-    //TODO POTREBBERO ACCADERE COSE MAGICHE ATTENTO ALLA X E ALLA Y ;)
 
     /**
      * Closes the game.

@@ -13,7 +13,6 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
-import javax.swing.*;
 import java.io.File;
 
 
@@ -56,7 +55,7 @@ public class Main extends Application {
         playMusic(filepath);
     }
 
-    public static void playMusic(String musicLocation){
+    private static void playMusic(String musicLocation){
         try
         {
             File musicPath = new File(musicLocation);

@@ -1,19 +1,14 @@
 package it.ing.pajc.controller;
 
 import it.ing.pajc.Main;
-import it.ing.pajc.manager.LocalGameManager;
 import it.ing.pajc.manager.LocalGameVsEngine;
 import it.ing.pajc.manager.Player;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
-
-import static it.ing.pajc.controller.FXUtility.changeScene;
 
 /**
  * Controller of the setting page.
@@ -66,14 +61,14 @@ public class SelectColorControllerVsAI {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/CheckerBoard.fxml"));
         Scene scene = new Scene(root);
         changeScene(root, scene,"board");
-        new LocalGameVsEngine(Player.FIRST,scene);
+        new LocalGameVsEngine(Player.WHITE_PLAYER,scene);
     }
 
     public void black() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/CheckerBoard.fxml"));
         Scene scene = new Scene(root);
         changeScene(root, scene,"board");
-        new LocalGameVsEngine(Player.SECOND,scene);
+        new LocalGameVsEngine(Player.BLACK_PLAYER,scene);
     }
 
 }

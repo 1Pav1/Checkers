@@ -50,7 +50,7 @@ class Fen {
         return squares;
     }
 
-    public static StringBuilder multidimensionalArrayToFen(Square[][] squares) {
+    static StringBuilder multidimensionalArrayToFen(Square[][] squares) {
         StringBuilder fen = new StringBuilder();
         for (int x = 0; x < Board.DIMENSION_ITALIAN_BOARD; x++) {
             for (int y = 0; y < Board.DIMENSION_ITALIAN_BOARD; y++) {

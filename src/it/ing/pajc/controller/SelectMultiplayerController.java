@@ -1,20 +1,13 @@
 package it.ing.pajc.controller;
 
 import it.ing.pajc.Main;
-import it.ing.pajc.manager.LocalGameManager;
 import it.ing.pajc.manager.MultiplayerManager;
-import it.ing.pajc.manager.Player;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-
-import static it.ing.pajc.controller.FXUtility.changeScene;
 
 /**
  * Controller of the setting page.
@@ -36,7 +29,7 @@ public class SelectMultiplayerController {
         Scene scene = new Scene(root);
         changeScene(root, scene, "Board");
         MultiplayerManager multiplayerManager = new MultiplayerManager(scene);
-        multiplayerManager.clientStartup(3333);
+        multiplayerManager.startClient(3333);
     }
     /**
      * Changes the screen to the home page.
