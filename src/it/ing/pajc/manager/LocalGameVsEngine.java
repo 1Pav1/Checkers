@@ -17,17 +17,22 @@ import java.util.ArrayList;
 
 import static it.ing.pajc.controller.FXUtility.changeScene;
 import static it.ing.pajc.data.board.Board.DIMENSION_ITALIAN_BOARD;
-
+    //TODO: commenta engine
 public class LocalGameVsEngine {
-
     private final static int INFINITY = Integer.MAX_VALUE;
-    private static int MAX_DEPTH = 20;
+    private static int MAX_DEPTH = 5;
     private final Scene scene;
     private final Player chosenPlayer;
     private ItalianBoard board;
     private Player currentPlayer;
-    private ItalianBoard bestBoardEvah;
+    private ItalianBoard bestBoard;
 
+    /**
+     * Constructor of local game vs engine
+     *
+     * @param chosenPlayer the chosen player
+     * @param scene        taken in consideration
+     */
     public LocalGameVsEngine(Player chosenPlayer, Scene scene) {
         StringBuilder fen = new StringBuilder("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
         board = new ItalianBoard(fen);
@@ -46,6 +51,9 @@ public class LocalGameVsEngine {
         }
     }
 
+    /**
+     * Start the game vs AI
+     */
     private void gameVsAI() {
         Controller.timeToChangePlayer = new SimpleBooleanProperty(false);
         Controller.timeToChangePlayer.addListener((observable, oldValue, newValue) -> {
@@ -55,6 +63,9 @@ public class LocalGameVsEngine {
         });
     }
 
+    /**
+     * Change the player
+     */
     private void changePlayer() {
         Controller.timeToChangePlayer.setValue(false);
         currentPlayer = currentPlayer == Player.WHITE_PLAYER ? Player.BLACK_PLAYER : Player.WHITE_PLAYER;
@@ -62,6 +73,9 @@ public class LocalGameVsEngine {
         changePlayerFX();
     }
 
+    /**
+     * Change the player
+     */
     private void changePlayerFX() {
         if (currentPlayer != chosenPlayer) {
             board = execute(board);
@@ -71,45 +85,49 @@ public class LocalGameVsEngine {
         }
     }
 
+    /**
+     * Execute the move
+     *
+     * @param board chosen
+     * @return the board
+     */
     private ItalianBoard execute(ItalianBoard board) {
-        //CALCOLO MOSSE
         ItalianBoard aiBoard = new ItalianBoard(board.getFen());
         aiBoard.rotate();
 
-
-        //int eval = evalSpettacolo(calculatedBoards);
         int eval = miniMax(aiBoard, MAX_DEPTH, currentPlayer);
         System.out.println("EVAL: " + eval);
 
-        aiBoard = bestBoardEvah;
+        aiBoard = bestBoard;
 
-        //aiBoard.rotate();
         return aiBoard;
-
-
-
     }
 
+    /**
+     * MiniMax function
+     *
+     * @param board    chosen
+     * @param maxDepth calculation
+     * @param player   chosen
+     * @return the calculated value
+     */
     private int miniMax(ItalianBoard board, int maxDepth, Player player) {
         int depth = 0;
 
-        //System.out.println("GIOCA PLAYER:"+player);
         int score;
         int bestMax = -INFINITY;
         int punteggio = bestMax;
         int bestMin = INFINITY;
 
-        //CALCOLO MOSSE
         ItalianBoard aiBoard = new ItalianBoard(board.getFen());
         ArrayList<ItalianBoard> tempBoards = calcoloMosse(aiBoard, player);
 
         for (ItalianBoard calculatedBoards : tempBoards) {
-            //dopo aver fatto le mosse giro e passo
             calculatedBoards.rotate();
             score = minimize(player, calculatedBoards, depth + 1, maxDepth, opponent(player), bestMin, bestMax);
             System.out.println("test: " + score);
             if (score >= punteggio) {
-                bestBoardEvah=calculatedBoards;
+                bestBoard = calculatedBoards;
                 punteggio = score;
             }
             if (punteggio >= bestMin) {
@@ -126,7 +144,7 @@ public class LocalGameVsEngine {
         int score;
 
         if (depth >= maxDepth)
-            if (firstTurn !=player)
+            if (firstTurn != player)
                 return -evaluateBoard(board);
             else
                 return evaluateBoard(board);

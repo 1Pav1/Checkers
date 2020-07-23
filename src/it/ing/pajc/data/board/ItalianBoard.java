@@ -10,13 +10,13 @@ import java.util.Arrays;
 public class ItalianBoard implements Board {
     private Square[][] piecesBoard;
 
-
+    /**
+     * Constructor of the board
+     *
+     * @param fen to construct the board
+     */
     public ItalianBoard(StringBuilder fen) {
         piecesBoard = Fen.fenToMultidimensionalArray(fen);
-        //Per copiare un array multidimensionale fatto per bene
-        //for(int i=0;i<Board.DIMENSION_ITALIAN_BOARD;i++)
-        //System.arraycopy([i],0,piecesBoard[i],0,Board.DIMENSION_ITALIAN_BOARD);
-        //printBoardConsole();
     }
 
     /**
@@ -47,21 +47,38 @@ public class ItalianBoard implements Board {
         System.out.println();
     }
 
-    public void rotate(){
+    /**
+     * Rotate the board
+     */
+    public void rotate() {
         StringBuilder fen = Fen.multidimensionalArrayToFen(piecesBoard);
         fen = fen.reverse();
         piecesBoard = Fen.fenToMultidimensionalArray(fen);
     }
 
-
-    public Square [][] getBoard() {
+    /**
+     * Getter
+     *
+     * @return the board
+     */
+    public Square[][] getBoard() {
         return piecesBoard;
     }
 
-    public StringBuilder getFen(){
+    /**
+     * Getter Fen
+     *
+     * @return the fen
+     */
+    public StringBuilder getFen() {
         return Fen.multidimensionalArrayToFen(piecesBoard);
     }
 
+    /**
+     * toString
+     *
+     * @return the string of the piecesBoard
+     */
     @Override
     public String toString() {
         return "ItalianBoard{" +

@@ -11,11 +11,18 @@ public enum PlaceType {
     BLACK,
     EMPTY;
 
-    public static boolean confrontPlayer(PlaceType placeType, Player player){
+    /**
+     * Confront the player with the placeType
+     *
+     * @param placeType of the piece
+     * @param player    of the turn
+     * @return true if that is equal, false otherwise
+     */
+    public static boolean confrontPlayer(PlaceType placeType, Player player) {
         Player convertionOfPlayer = null;
-        if(placeType==WHITE)
+        if (placeType == WHITE)
             convertionOfPlayer = Player.WHITE_PLAYER;
-        else if(placeType==BLACK)
+        else if (placeType == BLACK)
             convertionOfPlayer = Player.BLACK_PLAYER;
 
         return convertionOfPlayer == player;

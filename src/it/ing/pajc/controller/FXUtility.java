@@ -7,6 +7,12 @@ import javafx.scene.Scene;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class FXUtility {
+    /**
+     * Change the scene
+     *
+     * @param root  the parent
+     * @param scene taken in consideration
+     */
     public static void changeScene(Parent root, Scene scene) {
         AtomicReference<Double> x = new AtomicReference<>((double) 0);
         AtomicReference<Double> y = new AtomicReference<>((double) 0);

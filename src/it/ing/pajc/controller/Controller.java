@@ -1,11 +1,7 @@
 package it.ing.pajc.controller;
 
-import it.ing.pajc.Main;
-import it.ing.pajc.data.board.Board;
-import it.ing.pajc.data.board.ItalianBoard;
-import it.ing.pajc.movements.CheckPossibleMovements;
-import it.ing.pajc.movements.Move;
-import it.ing.pajc.movements.Position;
+import it.ing.pajc.data.board.*;
+import it.ing.pajc.movements.*;
 import it.ing.pajc.data.pieces.*;
 import it.ing.pajc.manager.Player;
 import javafx.application.Platform;
@@ -13,6 +9,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import it.ing.pajc.*;
 import javafx.scene.image.Image;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -35,23 +32,13 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Controller {
     public static BooleanProperty timeToChangePlayer;
 
-
-    public static void activateTurnIndicator(Scene scene){
-        Label label = (Label) scene.lookup("#turnIndicator");
-        label.setDisable(false);
-    }
-
-    public static void changeTurnIndicator(Scene scene, String text,int color){
-        Label label = (Label) scene.lookup("#turnIndicator");
-        label.setText(text);
-        if(color==0)
-            label.setStyle("-fx-text-fill : #ff0000;");
-        else
-            label.setStyle("-fx-text-fill : #32cd32;");
-    }
-
-
-
+    /**
+     * place the board
+     *
+     * @param board  chosen
+     * @param scene  taken in consideration
+     * @param player chosen
+     */
     public static void placeBoard(ItalianBoard board, Scene scene, Player player) {
         board.printBoardConsole();
         GridPane gridPane = (GridPane) scene.lookup("#grid");
@@ -66,13 +53,19 @@ public class Controller {
                     Circle circle = addPieceToGridPane(board, i, j, gridPane, player, canSomebodyCapture);
                     createClickEventPiece(circle, board, stackPaneBoard, i, j, scene, player);
                 }
-                if (CheckPossibleMovements.canCapture(board, i, j) && PlaceType.confrontPlayer(board.getBoard()[i][j].getPlace(),player))
+                if (CheckPossibleMovements.canCapture(board, i, j) && PlaceType.confrontPlayer(board.getBoard()[i][j].getPlace(), player))
                     stackPaneBoard[i][j].setId("canCaptureHighlight");
             }
         }
-        //System.err.println("la verità sarà scoperta: "+canSomebodyCapture);
     }
 
+    /**
+     * place board with disabled clicks
+     *
+     * @param board  chosen
+     * @param scene  taken in consideration
+     * @param player chosen
+     */
     public static void placeBoardWithDisabledClicks(ItalianBoard board, Scene scene, Player player) {
         board.printBoardConsole();
         GridPane gridPane = (GridPane) scene.lookup("#grid");
@@ -85,11 +78,9 @@ public class Controller {
                 gridPane.add(stackPaneBoard[i][j], j, i);
                 if (board.getBoard()[i][j].getPlace() != PlaceType.EMPTY) {
                     addPieceToGridPane(board, i, j, gridPane, player, canSomebodyCapture);
-                    //createClickEventPiece(circle, board, stackPaneBoard, i, j, scene, player);
                 }
             }
         }
-        //System.err.println("la verità sarà scoperta: "+canSomebodyCapture);
     }
 
     /**
@@ -124,7 +115,18 @@ public class Controller {
     }
 
 
-    private static Circle addPieceToGridPane(ItalianBoard board, int i, int j,  GridPane gridPane, Player player, boolean canSomebodyCapture) {
+    /**
+     * Add a piece to the grid pane
+     *
+     * @param board              chosen
+     * @param i                  row
+     * @param j                  column
+     * @param gridPane           given
+     * @param player             chosen
+     * @param canSomebodyCapture true if somebody can capture
+     * @return the circle
+     */
+    private static Circle addPieceToGridPane(ItalianBoard board, int i, int j, GridPane gridPane, Player player, boolean canSomebodyCapture) {
         Circle circle = new Circle();
         styleCircle(circle);
 
@@ -143,12 +145,22 @@ public class Controller {
         return circle;
     }
 
-
+    /**
+     * Style of the circle
+     *
+     * @param circle given
+     */
     private static void styleCircle(Circle circle) {
         circle.setRadius(30);
         circle.setStyle("");
     }
 
+    /**
+     * Transform a piece to king
+     *
+     * @param placeType chosen
+     * @param circle    of the piece
+     */
     private static void transformToKing(PlaceType placeType, Circle circle) {
         Image image;
         if (placeType == PlaceType.WHITE) {
@@ -159,7 +171,15 @@ public class Controller {
         circle.setFill(new ImagePattern(image));
     }
 
-
+    /**
+     * Keep capturing if possible
+     *
+     * @param board  chosen
+     * @param scene  taken in consideration
+     * @param posR   row
+     * @param posC   column
+     * @param player chosen
+     */
     private static void keepCapturing(ItalianBoard board, Scene scene, int posR, int posC, Player player) {
         board.printBoardConsole();
         GridPane gridPane = (GridPane) scene.lookup("#grid");
@@ -180,6 +200,15 @@ public class Controller {
         }
     }
 
+    /**
+     * Add disabled piece to grdi pane
+     *
+     * @param board    chosen
+     * @param i        row
+     * @param j        column
+     * @param gridPane the board
+     * @return the circle
+     */
     private static Circle addDisabledPieceToGridPane(ItalianBoard board, int i, int j, GridPane gridPane) {
         Circle circle = new Circle();
         styleCircle(circle);
@@ -188,7 +217,6 @@ public class Controller {
             circle.setFill(board.getBoard()[i][j].getPlace() == PlaceType.WHITE ? Color.WHITE : Color.BLACK);
         else
             transformToKing(board.getBoard()[i][j].getPlace(), circle);
-
         circle.setDisable(true);
 
         //The method .add is the opposite than normal matrix
@@ -196,7 +224,17 @@ public class Controller {
         return circle;
     }
 
-
+    /**
+     * Create the click event for all pieces
+     *
+     * @param circle     of the piece
+     * @param board      chosen
+     * @param stackPanes the board
+     * @param i          row
+     * @param j          column
+     * @param scene      chosen
+     * @param player     chosen
+     */
     private static void createClickEventPiece(Circle circle, ItalianBoard board, StackPane[][] stackPanes, int i, int j, Scene scene, Player player) {
         circle.setOnMousePressed(event -> {
             resetBoardFXColors(stackPanes);
@@ -205,7 +243,17 @@ public class Controller {
         });
     }
 
-
+    /**
+     * Create the click event for move and deletion for each piece on the board
+     *
+     * @param board      chosen
+     * @param stackPanes defining the board
+     * @param i          row
+     * @param j          column
+     * @param moves      possible
+     * @param scene      taken in consideration
+     * @param player     chosen
+     */
     private static void createClickEventForMoveAndDeletion(ItalianBoard board, StackPane[][] stackPanes, int i, int j, ArrayList<Position> moves, Scene scene, Player player) {
         if (CheckPossibleMovements.canCapture(board, i, j)) {
             for (Position moveAndCapturedPosition : moves) {
@@ -226,8 +274,7 @@ public class Controller {
                     }
                 });
             }
-        }
-        else {
+        } else {
             for (Position position : moves) {
                 stackPanes[position.getPosR()][position.getPosC()].setId("movementHighlight");
                 stackPanes[position.getPosR()][position.getPosC()].setDisable(false);
@@ -266,11 +313,57 @@ public class Controller {
         });
     }
 
+    /**
+     * Play the chosen music
+     *
+     * @param musicLocation in the path
+     */
+    private static void playMusic(String musicLocation) {
+        try {
+            File musicPath = new File(musicLocation);
+
+            if (musicPath.exists()) {
+                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioInput);
+                clip.start();
+            } else {
+                System.out.println("Can't find file");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Ativate the turn indicator
+     *
+     * @param scene taken in consideration
+     */
+    public static void activateTurnIndicator(Scene scene) {
+        Label label = (Label) scene.lookup("#turnIndicator");
+        label.setDisable(false);
+    }
+
+    /**
+     * Change the turn indicator
+     *
+     * @param scene taken in consideration
+     * @param text  the given string (WHITE OR BLACK)
+     * @param color chosen
+     */
+    public static void changeTurnIndicator(Scene scene, String text, int color) {
+        Label label = (Label) scene.lookup("#turnIndicator");
+        label.setText(text);
+        if (color == 0)
+            label.setStyle("-fx-text-fill : #ff0000;");
+        else
+            label.setStyle("-fx-text-fill : #32cd32;");
+    }
 
     /**
      * Goes back to home page.
      */
-    //Se non va la colpa è di ANDREA era getClass().getResource("../GUI/WhiteWins.fxml") cmq si colpa sua.
     public void back() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("../GUI/Home.fxml"));
@@ -281,7 +374,10 @@ public class Controller {
         }
     }
 
-    public void finishInATie(){
+    /**
+     * Tie game
+     */
+    public void finishInATie() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("../GUI/Tie.fxml"));
             Scene scene = new Scene(root);
@@ -291,36 +387,16 @@ public class Controller {
         }
     }
 
-    public void resign(){
+    /**
+     * Resign gif
+     */
+    public void resign() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("../GUI/Tie.fxml"));
             Scene scene = new Scene(root);
             changeScene(root, scene);
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    private static void playMusic(String musicLocation){
-        try
-        {
-            File musicPath = new File(musicLocation);
-
-            if (musicPath.exists())
-            {
-                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
-                Clip clip = AudioSystem.getClip();
-                clip.open(audioInput);
-                clip.start();
-            }
-            else
-            {
-                System.out.println("Can't find file");
-            }
-        }
-        catch(Exception ex)
-        {
-            ex.printStackTrace();
         }
     }
 

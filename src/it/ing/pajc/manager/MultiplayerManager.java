@@ -29,6 +29,11 @@ public class MultiplayerManager {
     private Server server;
     private Client client;
 
+    /**
+     * Constructor of multyplayer manager
+     *
+     * @param scene taken in consideration
+     */
     public MultiplayerManager(Scene scene) {
         this.currentPlayer = Player.WHITE_PLAYER;
         this.scene = scene;
@@ -38,6 +43,11 @@ public class MultiplayerManager {
         multiplayerGame();
     }
 
+    /**
+     * Play the music
+     *
+     * @param musicLocation the path
+     */
     private static void playMusic(String musicLocation) {
         try {
             File musicPath = new File(musicLocation);
@@ -55,6 +65,9 @@ public class MultiplayerManager {
         }
     }
 
+    /**
+     * Start the multiplayerGame
+     */
     private void multiplayerGame() {
         Controller.timeToChangePlayer = new SimpleBooleanProperty(false);
         Controller.timeToChangePlayer.addListener((observable, oldValue, newValue) -> {
@@ -65,6 +78,9 @@ public class MultiplayerManager {
         });
     }
 
+    /**
+     * Change the player
+     */
     private void changePlayer() {
         StringBuilder msg = new StringBuilder(board.getFen().reverse().toString() + 3);
         if (server == null) {
@@ -82,13 +98,16 @@ public class MultiplayerManager {
         changePlayerFX();
     }
 
+    /**
+     * Change player
+     */
     private void changePlayerFX() {
-        //if(currentPlayer!=chosenPlayer)
-        //Block all pieces
-        //checkLost();
         Controller.placeBoard(board, scene, chosenPlayer);
     }
 
+    /**
+     * Check if the game is lost
+     */
     private void checkLost() {
         if (!Move.canSomebodyDoSomething(board, chosenPlayer)) {
             Parent root = null;
@@ -123,7 +142,7 @@ public class MultiplayerManager {
      * Creates new board and a thread that manages the connection.
      */
     public void startServer(Player chosenPlayer, int port) {
-        StringBuilder fen = new StringBuilder("memememe/emememem/memememe/eeeeeeee/eeMeeeee/eeeeeeee/eeeeeeee/eeeeeeee");
+        StringBuilder fen = new StringBuilder("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
         if (chosenPlayer == Player.BLACK_PLAYER)
             fen = fen.reverse();
         board = new ItalianBoard(fen);
@@ -161,10 +180,8 @@ public class MultiplayerManager {
                 StringBuilder fen;
                 if (server == null) {
                     fen = client.readMessage();
-                    //System.out.println("Client has received: "+fen);
                 } else {
                     fen = server.readMessage();
-                    //System.out.println("Server has received: "+fen);
                 }
                 return fen;
             }
@@ -194,7 +211,7 @@ public class MultiplayerManager {
                         System.out.println("trying to placeboard " + received);
 
                         if (serverPlayer == 1 || serverPlayer == 0) {
-                            StringBuilder f = new StringBuilder("memememe/emememem/memememe/eeeeeeee/eeMeeeee/eeeeeeee/eeeeeeee/eeeeeeee");
+                            StringBuilder f = new StringBuilder("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
                             board = new ItalianBoard(f);
                             board.rotate();
                             chosenPlayer = Player.BLACK_PLAYER;
@@ -203,7 +220,7 @@ public class MultiplayerManager {
                             Platform.runLater(() -> Controller.changeTurnIndicator(scene, "It's enemies turn", 0));
                         } else if (serverPlayer == 2) {
                             chosenPlayer = Player.WHITE_PLAYER;
-                            StringBuilder f = new StringBuilder("memememe/emememem/memememe/eeeeeeee/eeMeeeee/eeeeeeee/eeeeeeee/eeeeeeee");
+                            StringBuilder f = new StringBuilder("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
                             board = new ItalianBoard(f);
                             Platform.runLater(() -> Controller.placeBoard(board, scene, chosenPlayer));
                             Platform.runLater(() -> Controller.changeTurnIndicator(scene, "It's your turn", 1));
@@ -250,45 +267,5 @@ public class MultiplayerManager {
         });
         receive.setName("rec");
         receive.start();
-
-/*
-        Platform.runLater(new Runnable() {
-
-            private StringBuilder readFen() {
-                StringBuilder fen = null;
-                try {
-                    if(server==null) {
-                        fen = client.readMessage();
-                        //System.out.println("Client has received: "+fen);
-                    }
-                    else {
-                        fen = server.readMessage();
-                        //System.out.println("Server has received: "+fen);
-                    }
-
-                } catch (IOException e) {
-                    readFen();
-                }
-                return fen;
-            }
-
-            @Override
-            public void run() {
-                StringBuilder received;
-                do{
-                    received = readFen();
-                }while(received==null);
-                board = new ItalianBoard(received);
-                try {
-                    System.out.println("trying to placeboard "+received);
-                    Controller.placeBoard(board, scene,chosenPlayer);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-*/
     }
-
-
 }

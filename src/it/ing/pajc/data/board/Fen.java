@@ -50,6 +50,12 @@ class Fen {
         return squares;
     }
 
+    /**
+     * Transform the board to fen
+     *
+     * @param squares the board
+     * @return the fen
+     */
     static StringBuilder multidimensionalArrayToFen(Square[][] squares) {
         StringBuilder fen = new StringBuilder();
         for (int x = 0; x < Board.DIMENSION_ITALIAN_BOARD; x++) {

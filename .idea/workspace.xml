@@ -6,35 +6,29 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Cleaned classes">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/Andrea.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/it/ing/pajc/movements/Move.java" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Cleaned classes&#10;Change from FIRST/SECOND to WHITE/BLACK_PLAYER">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/CheckPossibleMovements.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/movements/CheckPossibleMovements.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/Move.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectColorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectColorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectColorControllerMultiplayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectColorControllerMultiplayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectColorControllerVsAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectColorControllerVsAI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectMultiplayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/SelectMultiplayerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/controller/FXUtility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/controller/FXUtility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/Board.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/Fen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/Fen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/board/ItalianBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/movements/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/movements/Position.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/PlaceType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/PlaceType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/homeController/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/homeController/HomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/manager/LocalGameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/manager/LocalGameManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/data/pieces/Square.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/manager/LocalGameVsEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/manager/LocalGameVsEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/manager/MultiplayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/manager/MultiplayerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/manager/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/manager/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/serverClient/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/serverClient/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/ing/pajc/serverClient/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/ing/pajc/serverClient/Server.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution>
+      <executable />
+    </execution>
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -98,7 +92,6 @@
     <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="UPDATE_TYPE" value="MERGE" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectId" id="1OV8RsJtFCPmfejqRAxHChHRaDp" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectReloadState">
@@ -129,9 +122,9 @@
     <property name="dynamic.classpath" value="false" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="full.screen.before.presentation.mode" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Checkers 2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
@@ -468,7 +461,14 @@
       <workItem from="1590134544678" duration="331000" />
       <workItem from="1590156392150" duration="3052000" />
       <workItem from="1590220190206" duration="5713000" />
-      <workItem from="1590486380490" duration="5483000" />
+      <workItem from="1590486380490" duration="7005000" />
+      <workItem from="1590520514946" duration="647000" />
+      <workItem from="1590582757540" duration="1163000" />
+      <workItem from="1590656294122" duration="824000" />
+      <workItem from="1590657857707" duration="889000" />
+      <workItem from="1590669917421" duration="1412000" />
+      <workItem from="1591286971635" duration="350000" />
+      <workItem from="1595511141873" duration="6424000" />
     </task>
     <task id="LOCAL-00001" summary="added:&#10;Settings&#10;Possible Moves">
       <created>1564397017327</created>
@@ -792,7 +792,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590093495979</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="Cleaned classes&#10;Change from FIRST/SECOND to WHITE/BLACK_PLAYER">
+      <created>1590511309510</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1590511309511</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -814,7 +821,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
-    <MESSAGE value="Bugged version" />
     <MESSAGE value="Color selection and rotation of board" />
     <MESSAGE value="Broken recreation of list from leaf" />
     <MESSAGE value="Working one capture at a time" />
@@ -839,7 +845,8 @@
     <MESSAGE value="Working Engine and working Multiplayer with sound effects" />
     <MESSAGE value="Security commit before minimax" />
     <MESSAGE value="Working Engine and Changed to normal music" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working Engine and Changed to normal music" />
+    <MESSAGE value="Cleaned classes&#10;Change from FIRST/SECOND to WHITE/BLACK_PLAYER" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cleaned classes&#10;Change from FIRST/SECOND to WHITE/BLACK_PLAYER" />
   </component>
   <component name="WindowStateProjectService">
     <state x="223" y="72" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589099389948">
