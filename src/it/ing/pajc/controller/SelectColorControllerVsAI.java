@@ -49,7 +49,6 @@ public class SelectColorControllerVsAI {
         });
     }
 
-
     /**
      * Closes the current displayed.
      */
@@ -57,18 +56,28 @@ public class SelectColorControllerVsAI {
         Platform.exit();
     }
 
+    /**
+     * Create the object localGameVsEngine
+     *
+     * @throws IOException Exception caused by the CheckerBoard image
+     */
     public void white() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/CheckerBoard.fxml"));
         Scene scene = new Scene(root);
-        changeScene(root, scene,"board");
-        new LocalGameVsEngine(Player.WHITE_PLAYER,scene);
+        changeScene(root, scene, "board");
+        new LocalGameVsEngine(Player.WHITE_PLAYER, scene);
     }
 
+    /**
+     * Create the object multiplayerManager
+     *
+     * @throws IOException Exception caused by the CheckerBoard image
+     */
     public void black() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/CheckerBoard.fxml"));
         Scene scene = new Scene(root);
-        changeScene(root, scene,"board");
-        new LocalGameVsEngine(Player.BLACK_PLAYER,scene);
+        changeScene(root, scene, "board");
+        new LocalGameVsEngine(Player.BLACK_PLAYER, scene);
     }
 
 }

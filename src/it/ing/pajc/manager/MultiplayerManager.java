@@ -140,6 +140,9 @@ public class MultiplayerManager {
 
     /**
      * Creates new board and a thread that manages the connection.
+     *
+     * @param chosenPlayer the player chosen
+     * @param port         in order to start the server
      */
     public void startServer(Player chosenPlayer, int port) {
         StringBuilder fen = new StringBuilder("memememe/emememem/memememe/eeeeeeee/eeeeeeee/eMeMeMeM/MeMeMeMe/eMeMeMeM");
@@ -162,6 +165,8 @@ public class MultiplayerManager {
 
     /**
      * Creates a new board and a thread that manages the connection to the server.
+     *
+     * @param port in order to start a client
      */
     public void startClient(int port) {
         client = new Client(port);

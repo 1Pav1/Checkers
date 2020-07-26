@@ -39,13 +39,19 @@ public class Position {
 
 
     /**
-     * Returns the capture position
+     * Returns the row capture position
+     *
      * @return if both negative there is not a right capturing position
      */
     int getcPosR() {
         return cPosR;
     }
 
+    /**
+     * Returns the column capture position
+     *
+     * @return if both negative there is not a right capturing position
+     */
     int getcPosC() {
         return cPosC;
     }
@@ -68,10 +74,15 @@ public class Position {
         return posC;
     }
 
+    /**
+     * toString of position
+     *
+     * @return the description
+     */
     public String toString() {
-        String stringa="Moving to:" + " Position r:" + posR + " c:" + posC;
-        if(cPosC!=-1 && cPosR!=-1)
-            stringa+= " Capturing :" + " r:" + cPosR + " c:" + cPosC;
-        return  stringa;
+        String stringa = "Moving to:" + " Position r:" + posR + " c:" + posC;
+        if (cPosC != -1 && cPosR != -1)
+            stringa += " Capturing :" + " r:" + cPosR + " c:" + cPosC;
+        return stringa;
     }
 }

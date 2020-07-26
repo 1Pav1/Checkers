@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 import static it.ing.pajc.controller.FXUtility.changeScene;
 import static it.ing.pajc.data.board.Board.DIMENSION_ITALIAN_BOARD;
-    //TODO: commenta engine
+
 public class LocalGameVsEngine {
     private final static int INFINITY = Integer.MAX_VALUE;
     private static int MAX_DEPTH = 5;
@@ -138,9 +138,19 @@ public class LocalGameVsEngine {
         return punteggio;
     }
 
-
+    /**
+     * Maximize of minimax
+     *
+     * @param firstTurn the first player
+     * @param board     chosen
+     * @param depth     reached
+     * @param maxDepth  to reach
+     * @param player    turn
+     * @param bestMin   value of the function until now
+     * @param bestMax   value of the function until now
+     * @return the maximized value
+     */
     private int maximize(Player firstTurn, ItalianBoard board, int depth, int maxDepth, Player player, int bestMin, int bestMax) {
-        // System.out.println("maximize depth:"+depth);
         int score;
 
         if (depth >= maxDepth)
@@ -151,7 +161,7 @@ public class LocalGameVsEngine {
         else { //branch
             score = -INFINITY;
 
-            //CALCOLO MOSSE
+            //Move calculation
             ItalianBoard aiBoard = new ItalianBoard(board.getFen());
             ArrayList<ItalianBoard> tempBoards = calcoloMosse(aiBoard, player);
 
@@ -160,7 +170,7 @@ public class LocalGameVsEngine {
                 calculatedBoards.rotate();
                 score = Math.max(score, minimize(firstTurn, calculatedBoards, depth + 1, maxDepth, opponent(player), bestMin, bestMax));
                 System.out.println("testMAXIMIZE: " + score);
-                //Deve essere >=
+
                 if (score <= bestMin) {
                     return score;
                 }
@@ -170,8 +180,19 @@ public class LocalGameVsEngine {
         }
     } //end maximize
 
+    /**
+     * Minimize of minimax
+     *
+     * @param firstTurn the first player
+     * @param board     chosen
+     * @param depth     reached
+     * @param maxDepth  to reach
+     * @param player    turn
+     * @param bestMin   value of the function until now
+     * @param bestMax   value of the function until now
+     * @return the minimized value
+     */
     private int minimize(Player firstTurn, ItalianBoard board, int depth, int maxDepth, Player player, int bestMin, int bestMax) {
-        //  System.out.println("minimize depth:"+depth);
         int score;
 
         if (depth >= maxDepth)
@@ -182,7 +203,7 @@ public class LocalGameVsEngine {
         else { //branch
             score = INFINITY;
 
-            //CALCOLO MOSSE
+            //Moves calculation
             ItalianBoard aiBoard = new ItalianBoard(board.getFen());
             ArrayList<ItalianBoard> tempBoards = calcoloMosse(aiBoard, player);
 
@@ -192,7 +213,6 @@ public class LocalGameVsEngine {
                 score = Math.min(score, maximize(firstTurn, calculatedBoards, depth + 1, maxDepth, opponent(player), bestMin, bestMax));
                 System.out.println("testMINIMIZE: " + score);
 
-                //Deve essere <=
                 if (score <= bestMax) {
                     return score;
                 }
@@ -204,6 +224,9 @@ public class LocalGameVsEngine {
         }
     } //end minimize
 
+    /**
+     * Check if the game is lost or not
+     */
     private void checkLost() {
         if (currentPlayer != chosenPlayer)
             board.rotate();
@@ -233,7 +256,13 @@ public class LocalGameVsEngine {
         }
     }
 
-    private int evaluateBoard(ItalianBoard board) { //Valuto dal punto di vista del currentPlayer
+    /**
+     * Evaluate the board from the currentPlayer side
+     *
+     * @param board chosen
+     * @return the evaluation of the board
+     */
+    private int evaluateBoard(ItalianBoard board) {
         int score = 0;
         int numeroPedine = 0;
         boolean damaTrovata = false;
@@ -244,7 +273,7 @@ public class LocalGameVsEngine {
         final int PESO_AVERE_MOSSA = 20;
         final int PESO_RANDOM = 10;
 
-        //controllo in che fase di gioco siamo
+        //check the phase of the game
         for (int i = 0; i < 8 && !damaTrovata; i++)
             for (int j = 0; j < 8 && !damaTrovata; j++) {
                 if (board.getBoard()[i][j].getPlace() != PlaceType.EMPTY)
@@ -252,24 +281,24 @@ public class LocalGameVsEngine {
                 if (board.getBoard()[i][j].getPiece() == PieceType.KING || board.getBoard()[i][j].getPiece() == PieceType.KING)
                     damaTrovata = true;
             }
-        //Da 0 a 3 per lui ci sono i bianchi, per me il != currentPlayer
-        if (!damaTrovata || numeroPedine > LIMITE_PEDINE) { //fase iniziale
+        //from 0 to 3 there are white for the computer, for me the != currentPlayer
+        if (!damaTrovata || numeroPedine > LIMITE_PEDINE) { //Starting phase
             for (int i = 0; i < 8; i++)
                 for (int j = 0; j < 8; j++) {
                     if (PlaceType.confrontPlayer(board.getBoard()[i][j].getPlace(), currentPlayer)) {
-                        if ((7 - i) <= 5) //parte del currentPlayer
+                        if ((7 - i) <= 5) //currentPlayer side
                             score += PESO_PEDINA * (8 - j) * (8 - j) * (7 - i) * (7 - i);
                         else
                             score += PESO_PEDINA * j * j * (7 - i) * (7 - i);
                     }
                     if (!PlaceType.confrontPlayer(board.getBoard()[i][j].getPlace(), currentPlayer)) {
-                        if (i <= 3) //parte dell'avversario
+                        if (i <= 3) //enemy side
                             score -= PESO_PEDINA * (8 - j) * (8 - j) * i * i;
                         else
                             score -= PESO_PEDINA * j * j * i * i;
                     }
                 }
-        } else {//fase finale
+        } else {//final phase
             int r = 0, c = 0;
             int numeroCoppiePari = 0;
 
@@ -282,7 +311,7 @@ public class LocalGameVsEngine {
                             pedinaTrovata = true;
                         } else {
                             pedinaTrovata = false;
-                            if (Math.max(Math.abs(r - i), Math.abs(c - j)) % 2 == 0) { //distanza coppia e' pari
+                            if (Math.max(Math.abs(r - i), Math.abs(c - j)) % 2 == 0) { //the distance of the pair is even
                                 numeroCoppiePari++;
                             }
                         }
@@ -297,7 +326,7 @@ public class LocalGameVsEngine {
                         }
                     }
                 }
-            if ((numeroCoppiePari % 2) == 1) //chi muove e' privilegiato
+            if ((numeroCoppiePari % 2) == 1) //the one who move is privileged
                 if (chosenPlayer != currentPlayer)  //player DEVE essere WHITE o BLACK
                     score += PESO_AVERE_MOSSA;
                 else
@@ -308,6 +337,14 @@ public class LocalGameVsEngine {
         return score;
     }
 
+    /**
+     * Calculation for the best capture
+     *
+     * @param aiBoard a copy of the board
+     * @param i       row
+     * @param j       column
+     * @return the final board
+     */
     private ItalianBoard calculateBestCapture(ItalianBoard aiBoard, int i, int j) {
         int point = -INFINITY;
         Position init = new Position(i, j);
@@ -322,7 +359,6 @@ public class LocalGameVsEngine {
 
         for (ItalianBoard calculatedBoards : executedTempBoards) {
             int eval = evaluateBoard(calculatedBoards);
-            //int eval = miniMax(calculatedBoards, 5, currentPlayer);
             if (eval >= point) {
                 point = eval;
                 tempBoard = new ItalianBoard(calculatedBoards.getFen());
@@ -331,6 +367,14 @@ public class LocalGameVsEngine {
         return tempBoard;
     }
 
+    /**
+     * Calculation for the best movement
+     *
+     * @param aiBoard a copy of the board
+     * @param i       row
+     * @param j       column
+     * @return the final board
+     */
     private ItalianBoard calculateBestMovement(ItalianBoard aiBoard, int i, int j) {
         int point = -INFINITY;
         Position init = new Position(i, j);
@@ -345,7 +389,6 @@ public class LocalGameVsEngine {
 
         for (ItalianBoard calculatedBoards : executedTempBoards) {
             int eval = evaluateBoard(calculatedBoards);
-            //int eval = miniMax(calculatedBoards, 5, currentPlayer);
             if (eval >= point) {
                 point = eval;
                 tempBoard = new ItalianBoard(calculatedBoards.getFen());
@@ -354,32 +397,60 @@ public class LocalGameVsEngine {
         return tempBoard;
     }
 
+    /**
+     * Execute the move without capture
+     *
+     * @param tempBoard copy of the board
+     * @param init      initial position
+     * @param fin       final position
+     * @return the final board
+     */
     private ItalianBoard executeMoveWithoutCapture(ItalianBoard tempBoard, Position init, Position fin) {
         Move.executeMove(init, fin, tempBoard);
         return tempBoard;
     }
 
+    /**
+     * Execute all the moves on the copied board
+     *
+     * @param tempBoard copy of the board
+     * @param init      initial position
+     * @param fin       final position
+     * @return the final board
+     */
     private ItalianBoard executeMovesOnTempBoard(ItalianBoard tempBoard, Position init, Position fin) {
-        //Le prime posizioni su cui si può spostare
+        //First positions where it can move
         Move.executeMove(init, fin, tempBoard);
-        //Posizioni seconde
+        //Second positions
         ArrayList<Position> finalMovements = CheckPossibleMovements.allPossibleCaptures(tempBoard, fin.getPosR(), fin.getPosC());
-        //Se le posizioni seconde non sono di cattura
+        //if second position aren't of capture
         if (!CheckPossibleMovements.canCapture(tempBoard, fin.getPosR(), fin.getPosC())) {
             return tempBoard;
         }
-        //Se può invece ancora catturare
+        //if it can still capture
         for (Position secondCapture : finalMovements) {
             return executeMovesOnTempBoard(tempBoard, fin, secondCapture);
         }
         return null;
     }
 
-
+    /**
+     * Change turn
+     *
+     * @param turn actual turn
+     * @return the enemy
+     */
     private Player opponent(Player turn) {
         return turn == Player.BLACK_PLAYER ? Player.WHITE_PLAYER : Player.BLACK_PLAYER;
     }
 
+    /**
+     * Moves calculation
+     *
+     * @param board  chosen
+     * @param player who is playing
+     * @return all the moves
+     */
     private ArrayList<ItalianBoard> calcoloMosse(ItalianBoard board, Player player) {
         ArrayList<ItalianBoard> bestBoards = new ArrayList<>();
         if (CheckPossibleMovements.canSomebodyCapture(board, player)) {
@@ -391,7 +462,7 @@ public class LocalGameVsEngine {
                     }
                 }
             }
-        } else //altrimenti solo quelli che si possono spostare
+        } else //otherwise only the ones that can't move
             for (int i = 0; i < DIMENSION_ITALIAN_BOARD; i++) {
                 for (int j = 0; j < DIMENSION_ITALIAN_BOARD; j++) {
                     if (PlaceType.confrontPlayer(board.getBoard()[i][j].getPlace(), player) &&

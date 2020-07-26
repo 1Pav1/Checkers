@@ -32,7 +32,8 @@ public class SelectColorController {
 
     /**
      * Changes the current scene.
-     *  @param root  Graphics file.
+     *
+     * @param root  Graphics file.
      * @param scene Graphics file scene.
      */
     private void changeScene(Parent root, Scene scene) {
@@ -56,19 +57,27 @@ public class SelectColorController {
         Platform.exit();
     }
 
+    /**
+     * Create the object localGameManager
+     *
+     * @throws IOException Exception caused by the CheckerBoard image
+     */
     public void white() throws IOException {
-        //crea oggetto localGameManager @param contro persona
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/CheckerBoard.fxml"));
         Scene scene = new Scene(root);
         FXUtility.changeScene(root, scene);
-        new LocalGameManager(Player.WHITE_PLAYER,scene);
+        new LocalGameManager(Player.WHITE_PLAYER, scene);
     }
 
+    /**
+     * Create the object localGameManager
+     *
+     * @throws IOException Exception caused by the CheckerBoard image
+     */
     public void black() throws IOException {
-        //crea oggetto localGameManager @param contro persona
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/CheckerBoard.fxml"));
         Scene scene = new Scene(root);
         FXUtility.changeScene(root, scene);
-        new LocalGameManager(Player.BLACK_PLAYER,scene);
+        new LocalGameManager(Player.BLACK_PLAYER, scene);
     }
 }

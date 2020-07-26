@@ -263,11 +263,9 @@ public class Controller {
 
                 stackPanes[moveAndCapturedPosition.getPosR()][moveAndCapturedPosition.getPosC()].setOnMousePressed(event -> {
                     Move.executeMove(new Position(i, j), moveAndCapturedPosition, board);
-                    //resetBoardFXColors(stackPanes);
                     if (CheckPossibleMovements.canCapture(board, moveAndCapturedPosition.getPosR(), moveAndCapturedPosition.getPosC()))
                         keepCapturing(board, scene, moveAndCapturedPosition.getPosR(), moveAndCapturedPosition.getPosC(), player);
                     else {
-                        //placeBoard(board, scene, player);
                         String filepath = "src/it/ing/pajc/Audio/Move.wav";
                         playMusic(filepath);
                         timeToChangePlayer.setValue(true);
@@ -280,7 +278,6 @@ public class Controller {
                 stackPanes[position.getPosR()][position.getPosC()].setDisable(false);
                 stackPanes[position.getPosR()][position.getPosC()].setOnMousePressed(event -> {
                     Move.executeMove(new Position(i, j), position, board);
-                    //placeBoard(board, scene, player);
                     String filepath = "src/it/ing/pajc/Audio/Move.wav";
                     playMusic(filepath);
                     timeToChangePlayer.setValue(true);

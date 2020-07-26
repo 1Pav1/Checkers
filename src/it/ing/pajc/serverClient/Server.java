@@ -1,11 +1,12 @@
 package it.ing.pajc.serverClient;
 
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+
 import it.ing.pajc.data.board.ItalianBoard;
 import it.ing.pajc.manager.Player;
+
 import java.io.IOException;
 
 public class Server {
@@ -14,14 +15,23 @@ public class Server {
     private BufferedReader in;
     private PrintWriter out;
 
+    /**
+     * Server constructor
+     *
+     * @param port of the server
+     */
     public Server(int port) {
         this.port = port;
     }
 
-    public void serverStartup(ItalianBoard board, Player player){
-
+    /**
+     * Startup of the server
+     *
+     * @param board  chosen
+     * @param player chosen
+     */
+    public void serverStartup(ItalianBoard board, Player player) {
         Thread Server = new Thread(new Runnable() {
-
             private void tryToConnect() {
                 try {
                     System.out.println("Server is listening...");
@@ -38,49 +48,59 @@ public class Server {
                 try {
                     createCommunicationChannels();
                     StringBuilder msg;
-                    if(player==Player.WHITE_PLAYER)
-                         msg = new StringBuilder(board.getFen().reverse().toString()+1);
+                    if (player == Player.WHITE_PLAYER)
+                        msg = new StringBuilder(board.getFen().reverse().toString() + 1);
                     else
-                        msg = new StringBuilder(board.getFen().reverse().toString()+2);
+                        msg = new StringBuilder(board.getFen().reverse().toString() + 2);
                     boolean sent;
-                    do{
+                    do {
                         sent = sendMessage(msg);
-                    }while(!sent);
-                    /*Send first fen
-                    sendMessage(board.getFen().reverse());
-                    System.out.println("First fen sent");
-                    drawBoard(board,scene,player);
-                     */
-                } catch (Exception e) {System.out.println("error creating channels");}
+                    } while (!sent);
+                } catch (Exception e) {
+                    System.out.println("error creating channels");
+                }
             }
         });
         Server.setName("Server");
         Server.start();
-
     }
 
+    /**
+     * Create a communication channel with client
+     *
+     * @throws IOException Exception
+     */
     private void createCommunicationChannels() throws IOException {
         out = new PrintWriter(socket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
 
-    public boolean sendMessage(StringBuilder message){
+    /**
+     * Send a message
+     *
+     * @param message the fen
+     * @return true if it has send the message
+     */
+    public boolean sendMessage(StringBuilder message) {
         try {
             out.println(message.toString());
-        }catch (Exception e){
-            System.err.println("Chè ci fai quaa!?");
+        } catch (Exception e) {
             return false;
         }
-
-        System.out.println("Server has sent : "+message);
+        System.out.println("Server has sent : " + message);
         return true;
-
     }
 
-    public StringBuilder readMessage(){
+    /**
+     * Read a message
+     *
+     * @return the fen if possible
+     */
+    public StringBuilder readMessage() {
         try {
             return new StringBuilder(in.readLine());
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
         return null;
     }
 

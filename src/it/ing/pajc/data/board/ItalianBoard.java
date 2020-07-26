@@ -1,7 +1,6 @@
 package it.ing.pajc.data.board;
 
 import it.ing.pajc.data.pieces.*;
-
 import java.util.Arrays;
 
 /**

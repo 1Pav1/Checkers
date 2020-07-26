@@ -7,14 +7,22 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+
 import java.io.IOException;
+
 import static it.ing.pajc.controller.FXUtility.changeScene;
 
 public class LocalGameManager {
-    private Player currentPlayer;
     private final ItalianBoard board;
     private final Scene scene;
+    private Player currentPlayer;
 
+    /**
+     * Constructor of the localGameManager
+     *
+     * @param chosenPlayer before the start of the game
+     * @param scene        selected
+     */
     public LocalGameManager(Player chosenPlayer, Scene scene) {
         StringBuilder fen = new StringBuilder("MeMeMeMe/eMeMeMeM/MeMeMeMe/eeeeeeee/eeeeeeee/emememem/memememe/emememem");
         board = new ItalianBoard(fen);
@@ -24,12 +32,15 @@ public class LocalGameManager {
         Controller.placeBoard(board, scene, chosenPlayer);
         Controller.activateTurnIndicator(scene);
 
-        Controller.changeTurnIndicator(scene,"Whites turn",1);
+        Controller.changeTurnIndicator(scene, "Whites turn", 1);
 
         gameVsPerson();
 
     }
 
+    /**
+     * Starts the game
+     */
     private void gameVsPerson() {
         Controller.timeToChangePlayer = new SimpleBooleanProperty(false);
         Controller.timeToChangePlayer.addListener((observable, oldValue, newValue) -> {
@@ -41,23 +52,31 @@ public class LocalGameManager {
 
     }
 
+    /**
+     * Change turn
+     */
     private void changePlayer() {
         Controller.timeToChangePlayer.setValue(false);
         currentPlayer = currentPlayer == Player.WHITE_PLAYER ? Player.BLACK_PLAYER : Player.WHITE_PLAYER;
-        if(currentPlayer==Player.WHITE_PLAYER)
-            Controller.changeTurnIndicator(scene,"White turn",1);
+        if (currentPlayer == Player.WHITE_PLAYER)
+            Controller.changeTurnIndicator(scene, "White turn", 1);
         else
-            Controller.changeTurnIndicator(scene,"Black turn",1);
+            Controller.changeTurnIndicator(scene, "Black turn", 1);
         changePlayerFX();
     }
 
+    /**
+     * Change player graphically
+     */
     private void changePlayerFX() {
-            board.rotate();
-            checkLost();
-            Controller.placeBoard(board, scene, currentPlayer);
+        board.rotate();
+        checkLost();
+        Controller.placeBoard(board, scene, currentPlayer);
     }
 
-
+    /**
+     * Check if the game is lost
+     */
     private void checkLost() {
         if (!Move.canSomebodyDoSomething(board, currentPlayer)) {
             Parent root = null;

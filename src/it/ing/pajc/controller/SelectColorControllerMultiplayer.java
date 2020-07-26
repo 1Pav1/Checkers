@@ -15,6 +15,7 @@ import java.io.IOException;
  */
 public class SelectColorControllerMultiplayer {
     private double x, y;
+
     /**
      * Changes the screen to the home page.
      */
@@ -56,20 +57,30 @@ public class SelectColorControllerMultiplayer {
         Platform.exit();
     }
 
+    /**
+     * Create the object multiplayerManager
+     *
+     * @throws IOException Exception caused by the CheckerBoard image
+     */
     public void white() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/CheckerBoard.fxml"));
         Scene scene = new Scene(root);
         changeScene(root, scene, "Board");
         MultiplayerManager multiplayerManager = new MultiplayerManager(scene);
-        multiplayerManager.startServer(Player.WHITE_PLAYER,3333);
+        multiplayerManager.startServer(Player.WHITE_PLAYER, 3333);
     }
 
+    /**
+     * Create the object multiplayerManager
+     *
+     * @throws IOException Exception caused by the CheckerBoard image
+     */
     public void black() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/CheckerBoard.fxml"));
         Scene scene = new Scene(root);
         changeScene(root, scene, "Board");
         MultiplayerManager multiplayerManager = new MultiplayerManager(scene);
-        multiplayerManager.startServer(Player.BLACK_PLAYER,3333);
+        multiplayerManager.startServer(Player.BLACK_PLAYER, 3333);
     }
 
 }

@@ -15,21 +15,22 @@ import static it.ing.pajc.controller.FXUtility.changeScene;
 public class HomeController {
 
     /**
-     * Creates the board and displays it.
+     * Create the object localGameManager vs person
      *
      * @throws IOException In case the graphical file is not found.
      */
     public void singlePlayer() throws IOException {
-        //crea oggetto localGameManager @param contro persona
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/SelectColor.fxml"));
         Scene scene = new Scene(root);
         changeScene(root, scene);
     }
 
-
-
+    /**
+     * Create the object localGameManager vs pc
+     *
+     * @throws IOException In case the graphical file is not found.
+     */
     public void singlePlayerWithAI() throws IOException {
-        //crea oggetto LocalGameManager @param contro pc
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/SelectColorVsAI.fxml"));
         Scene scene = new Scene(root);
         changeScene(root, scene);

@@ -15,15 +15,22 @@ import java.io.IOException;
 public class SelectMultiplayerController {
     private double x, y;
 
-
-
+    /**
+     * Create the server
+     *
+     * @throws IOException by selectColorMultiplayer.fxml
+     */
     public void createServer() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/SelectColorMultiplayer.fxml"));
         Scene scene = new Scene(root);
         changeScene(root, scene, "Select color");
     }
 
-
+    /**
+     * Connect the server
+     *
+     * @throws IOException by CheckerBoard.fxml
+     */
     public void connect() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../GUI/CheckerBoard.fxml"));
         Scene scene = new Scene(root);
@@ -31,6 +38,7 @@ public class SelectMultiplayerController {
         MultiplayerManager multiplayerManager = new MultiplayerManager(scene);
         multiplayerManager.startClient(3333);
     }
+
     /**
      * Changes the screen to the home page.
      */
