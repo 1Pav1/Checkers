@@ -20,7 +20,7 @@ import static it.ing.pajc.data.board.Board.DIMENSION_ITALIAN_BOARD;
 
 public class LocalGameVsEngine {
     private final static int INFINITY = Integer.MAX_VALUE;
-    private static int MAX_DEPTH = 5;
+    private static int MAX_DEPTH = 7;
     private final Scene scene;
     private final Player chosenPlayer;
     private ItalianBoard board;
@@ -94,12 +94,9 @@ public class LocalGameVsEngine {
     private ItalianBoard execute(ItalianBoard board) {
         ItalianBoard aiBoard = new ItalianBoard(board.getFen());
         aiBoard.rotate();
-
         int eval = miniMax(aiBoard, MAX_DEPTH, currentPlayer);
         System.out.println("EVAL: " + eval);
-
         aiBoard = bestBoard;
-
         return aiBoard;
     }
 
@@ -120,7 +117,7 @@ public class LocalGameVsEngine {
         int bestMin = INFINITY;
 
         ItalianBoard aiBoard = new ItalianBoard(board.getFen());
-        ArrayList<ItalianBoard> tempBoards = calcoloMosse(aiBoard, player);
+        ArrayList<ItalianBoard> tempBoards = calculateMoves(aiBoard, player);
 
         for (ItalianBoard calculatedBoards : tempBoards) {
             calculatedBoards.rotate();
@@ -163,15 +160,15 @@ public class LocalGameVsEngine {
 
             //Move calculation
             ItalianBoard aiBoard = new ItalianBoard(board.getFen());
-            ArrayList<ItalianBoard> tempBoards = calcoloMosse(aiBoard, player);
+            ArrayList<ItalianBoard> tempBoards = calculateMoves(aiBoard, player);
 
 
             for (ItalianBoard calculatedBoards : tempBoards) {
                 calculatedBoards.rotate();
                 score = Math.max(score, minimize(firstTurn, calculatedBoards, depth + 1, maxDepth, opponent(player), bestMin, bestMax));
-                System.out.println("testMAXIMIZE: " + score);
 
                 if (score <= bestMin) {
+                    System.out.println("testMAXIMIZE: " + score);
                     return score;
                 }
                 bestMax = Math.max(bestMax, score);
@@ -205,15 +202,15 @@ public class LocalGameVsEngine {
 
             //Moves calculation
             ItalianBoard aiBoard = new ItalianBoard(board.getFen());
-            ArrayList<ItalianBoard> tempBoards = calcoloMosse(aiBoard, player);
+            ArrayList<ItalianBoard> tempBoards = calculateMoves(aiBoard, player);
 
 
             for (ItalianBoard calculatedBoards : tempBoards) {
                 calculatedBoards.rotate();
                 score = Math.min(score, maximize(firstTurn, calculatedBoards, depth + 1, maxDepth, opponent(player), bestMin, bestMax));
-                System.out.println("testMINIMIZE: " + score);
 
                 if (score <= bestMax) {
+                    System.out.println("testMINIMIZE: " + score);
                     return score;
                 }
 
@@ -264,76 +261,76 @@ public class LocalGameVsEngine {
      */
     private int evaluateBoard(ItalianBoard board) {
         int score = 0;
-        int numeroPedine = 0;
-        boolean damaTrovata = false;
-        boolean pedinaTrovata = false;
-        final int LIMITE_PEDINE = 18;
-        final int PESO_PEDINA = 100;
-        final int PESO_DAMA = 200;
-        final int PESO_AVERE_MOSSA = 20;
-        final int PESO_RANDOM = 10;
+        int manNumberOnTheBoard = 0;
+        boolean kingFound = false;
+        boolean manFound = false;
+        final int manLimit = 18;
+        final int manWeight = 100;
+        final int kingWeight = 200;
+        final int weightToHaveMove = 20;
+        final int RandomWeight = 10;
 
         //check the phase of the game
-        for (int i = 0; i < 8 && !damaTrovata; i++)
-            for (int j = 0; j < 8 && !damaTrovata; j++) {
+        for (int i = 0; i < 8 && !kingFound; i++)
+            for (int j = 0; j < 8 && !kingFound; j++) {
                 if (board.getBoard()[i][j].getPlace() != PlaceType.EMPTY)
-                    numeroPedine++;
-                if (board.getBoard()[i][j].getPiece() == PieceType.KING || board.getBoard()[i][j].getPiece() == PieceType.KING)
-                    damaTrovata = true;
+                    manNumberOnTheBoard++;
+                if (board.getBoard()[i][j].getPiece() == PieceType.KING)
+                    kingFound = true;
             }
         //from 0 to 3 there are white for the computer, for me the != currentPlayer
-        if (!damaTrovata || numeroPedine > LIMITE_PEDINE) { //Starting phase
+        if (!kingFound || manNumberOnTheBoard > manLimit) { //Starting phase
             for (int i = 0; i < 8; i++)
                 for (int j = 0; j < 8; j++) {
                     if (PlaceType.confrontPlayer(board.getBoard()[i][j].getPlace(), currentPlayer)) {
                         if ((7 - i) <= 5) //currentPlayer side
-                            score += PESO_PEDINA * (8 - j) * (8 - j) * (7 - i) * (7 - i);
+                            score += manWeight * (8 - j) * (8 - j) * (7 - i) * (7 - i);
                         else
-                            score += PESO_PEDINA * j * j * (7 - i) * (7 - i);
+                            score += manWeight * j * j * (7 - i) * (7 - i);
                     }
                     if (!PlaceType.confrontPlayer(board.getBoard()[i][j].getPlace(), currentPlayer)) {
                         if (i <= 3) //enemy side
-                            score -= PESO_PEDINA * (8 - j) * (8 - j) * i * i;
+                            score -= manWeight * (8 - j) * (8 - j) * i * i;
                         else
-                            score -= PESO_PEDINA * j * j * i * i;
+                            score -= manWeight * j * j * i * i;
                     }
                 }
         } else {//final phase
             int r = 0, c = 0;
-            int numeroCoppiePari = 0;
+            int numberEvenCouple = 0;
 
             for (int i = 0; i < 8; i++)
                 for (int j = 0; j < 8; j++) {
                     if (board.getBoard()[i][j].getPlace() != PlaceType.EMPTY) {
-                        if (!pedinaTrovata) {
+                        if (!manFound) {
                             r = i;
                             c = j;
-                            pedinaTrovata = true;
+                            manFound = true;
                         } else {
-                            pedinaTrovata = false;
+                            manFound = false;
                             if (Math.max(Math.abs(r - i), Math.abs(c - j)) % 2 == 0) { //the distance of the pair is even
-                                numeroCoppiePari++;
+                                numberEvenCouple++;
                             }
                         }
                         if (PlaceType.confrontPlayer(board.getBoard()[i][j].getPlace(), currentPlayer) && board.getBoard()[i][j].getPiece() == PieceType.MAN) {
-                            score += PESO_PEDINA * (7 - i) * (7 - i);
+                            score += manWeight * (7 - i) * (7 - i);
                         } else if (!PlaceType.confrontPlayer(board.getBoard()[i][j].getPlace(), currentPlayer) && board.getBoard()[i][j].getPiece() == PieceType.MAN) {
-                            score -= PESO_PEDINA * i * i;
+                            score -= manWeight * i * i;
                         } else if (PlaceType.confrontPlayer(board.getBoard()[i][j].getPlace(), currentPlayer) && board.getBoard()[i][j].getPiece() == PieceType.KING) {
-                            score += PESO_DAMA;
+                            score += kingWeight;
                         } else if (!PlaceType.confrontPlayer(board.getBoard()[i][j].getPlace(), currentPlayer) && board.getBoard()[i][j].getPiece() == PieceType.KING) {
-                            score -= PESO_DAMA;
+                            score -= kingWeight;
                         }
                     }
                 }
-            if ((numeroCoppiePari % 2) == 1) //the one who move is privileged
+            if ((numberEvenCouple % 2) == 1) //the one who move is privileged
                 if (chosenPlayer != currentPlayer)  //player DEVE essere WHITE o BLACK
-                    score += PESO_AVERE_MOSSA;
+                    score += weightToHaveMove;
                 else
-                    score -= PESO_AVERE_MOSSA;
+                    score -= weightToHaveMove;
 
         }
-        score += (int) (Math.random() * PESO_RANDOM);
+        score += (int) (Math.random() * RandomWeight);
         return score;
     }
 
@@ -451,7 +448,7 @@ public class LocalGameVsEngine {
      * @param player who is playing
      * @return all the moves
      */
-    private ArrayList<ItalianBoard> calcoloMosse(ItalianBoard board, Player player) {
+    private ArrayList<ItalianBoard> calculateMoves(ItalianBoard board, Player player) {
         ArrayList<ItalianBoard> bestBoards = new ArrayList<>();
         if (CheckPossibleMovements.canSomebodyCapture(board, player)) {
             for (int i = 0; i < DIMENSION_ITALIAN_BOARD; i++) {
@@ -462,7 +459,7 @@ public class LocalGameVsEngine {
                     }
                 }
             }
-        } else //otherwise only the ones that can't move
+        } else //otherwise only the ones that can move
             for (int i = 0; i < DIMENSION_ITALIAN_BOARD; i++) {
                 for (int j = 0; j < DIMENSION_ITALIAN_BOARD; j++) {
                     if (PlaceType.confrontPlayer(board.getBoard()[i][j].getPlace(), player) &&

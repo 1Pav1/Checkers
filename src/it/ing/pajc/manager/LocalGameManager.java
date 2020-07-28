@@ -61,7 +61,7 @@ public class LocalGameManager {
         if (currentPlayer == Player.WHITE_PLAYER)
             Controller.changeTurnIndicator(scene, "White turn", 1);
         else
-            Controller.changeTurnIndicator(scene, "Black turn", 1);
+            Controller.changeTurnIndicator(scene, "Black turn", 0);
         changePlayerFX();
     }
 

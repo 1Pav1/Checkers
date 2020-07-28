@@ -60,6 +60,25 @@ public class Controller {
     }
 
     /**
+     * Create the click event for all pieces
+     *
+     * @param circle     of the piece
+     * @param board      chosen
+     * @param stackPanes the board
+     * @param i          row
+     * @param j          column
+     * @param scene      chosen
+     * @param player     chosen
+     */
+    private static void createClickEventPiece(Circle circle, ItalianBoard board, StackPane[][] stackPanes, int i, int j, Scene scene, Player player) {
+        circle.setOnMousePressed(event -> {
+            resetBoardFXColors(stackPanes);
+            ArrayList<Position> moves = CheckPossibleMovements.allPossibleMoves(board, i, j);
+            createClickEventForMoveAndDeletion(board, stackPanes, i, j, moves, scene, player);
+        });
+    }
+
+    /**
      * place board with disabled clicks
      *
      * @param board  chosen
@@ -224,24 +243,6 @@ public class Controller {
         return circle;
     }
 
-    /**
-     * Create the click event for all pieces
-     *
-     * @param circle     of the piece
-     * @param board      chosen
-     * @param stackPanes the board
-     * @param i          row
-     * @param j          column
-     * @param scene      chosen
-     * @param player     chosen
-     */
-    private static void createClickEventPiece(Circle circle, ItalianBoard board, StackPane[][] stackPanes, int i, int j, Scene scene, Player player) {
-        circle.setOnMousePressed(event -> {
-            resetBoardFXColors(stackPanes);
-            ArrayList<Position> moves = CheckPossibleMovements.allPossibleMoves(board, i, j);
-            createClickEventForMoveAndDeletion(board, stackPanes, i, j, moves, scene, player);
-        });
-    }
 
     /**
      * Create the click event for move and deletion for each piece on the board
@@ -283,11 +284,8 @@ public class Controller {
                     timeToChangePlayer.setValue(true);
                 });
             }
-
         }
-
     }
-
 
     /**
      * Changes the current scene.
